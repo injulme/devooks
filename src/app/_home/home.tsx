@@ -1,7 +1,24 @@
-"use client";
-import Logo from "@/assets/devooks_logo.png";
+'use client';
 
-import { Fragment } from "react";
+import { Fragment } from 'react';
+
+import { visibleLoginState } from '@/states';
+import { Separator } from '@radix-ui/react-separator';
+import Image from 'next/image';
+import { useRecoilState } from 'recoil';
+
+import Naver from '@/assets/icons/naver.svg';
+import Logo from '@/assets/images/devooks_logo.png';
+
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
 import {
   Dialog,
   DialogContent,
@@ -9,20 +26,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import { visibleLoginState } from "@/states";
-import { useRecoilState } from "recoil";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@radix-ui/react-separator";
+} from '@/components/ui/dialog';
+
 const dummy = Array(15)
   .fill({})
   .map((_, i) => i);
@@ -138,7 +143,9 @@ export default function Home() {
             <Separator className="my-4" />
             간편로그인
             <Separator className="my-4" />
-            <Button>naver</Button>
+            <button className="border-full bg-slate-500">
+              <Naver />
+            </button>
             <Button>kakao</Button>
             <Button>google</Button>
           </DialogHeader>
