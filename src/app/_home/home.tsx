@@ -1,4 +1,5 @@
 "use client";
+import Logo from "@/assets/devooks_logo.png";
 
 import { Fragment } from "react";
 import {
@@ -18,13 +19,16 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { visibleLoginState } from "@/states";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@radix-ui/react-separator";
 const dummy = Array(15)
   .fill({})
   .map((_, i) => i);
 
 export default function Home() {
-  const visibleLogin = useRecoilValue(visibleLoginState);
+  const [visibleLogin, setVisibleLogin] = useRecoilState(visibleLoginState);
 
   return (
     <Fragment>
@@ -124,15 +128,19 @@ export default function Home() {
           </Carousel>
         </CardContent>
       </Card>
-      <Dialog open={visibleLogin}>
-        <DialogTrigger>Open</DialogTrigger>
+      <Dialog open={visibleLogin} onOpenChange={setVisibleLogin}>
+        {/* <DialogTrigger>Open</DialogTrigger> */}
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Are you absolutely sure?</DialogTitle>
-            <DialogDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
-            </DialogDescription>
+            <DialogTitle>
+              <Image src={Logo} alt="devooks 로고" height={40} />
+            </DialogTitle>
+            <Separator className="my-4" />
+            간편로그인
+            <Separator className="my-4" />
+            <Button>naver</Button>
+            <Button>kakao</Button>
+            <Button>google</Button>
           </DialogHeader>
         </DialogContent>
       </Dialog>
