@@ -25,7 +25,7 @@ export default function RootLayout({
         <RecoilRootProvider>
           <Header />
           {children}
-          <footer>footer</footer>
+          {/* <footer>footer</footer> */}
         </RecoilRootProvider>
       </body>
     </html>

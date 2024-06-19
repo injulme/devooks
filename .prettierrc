@@ -10,6 +10,7 @@
   "orderedImports": true,
   "importOrder": [
     "^react",
+    "^next",
     "<THIRD_PARTY_MODULES>",
     "@/assets/.*$",
     "@/components/.*$",
