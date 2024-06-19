@@ -1,7 +1,9 @@
 'use client';
 
-import { visibleLoginState } from '@/states';
 import Image from 'next/image';
+import Link from 'next/link';
+
+import { visibleLoginState } from '@/states';
 import { useSetRecoilState } from 'recoil';
 
 import Logo from '@/assets/images/devooks_logo.png';
@@ -12,8 +14,10 @@ import { Input } from '@/components/ui/input';
 export default function Header() {
   const setVisibleLogin = useSetRecoilState(visibleLoginState);
   return (
-    <header className="h-[56px] bg-slate-400 flex items-center px-[16px] justify-between gap-6">
-      <Image src={Logo} alt="devooks 로고" height={40} />
+    <header className="flex h-[56px] items-center justify-between gap-6 bg-slate-400 px-[16px]">
+      <Link href={'/'}>
+        <Image src={Logo} alt="devooks 로고" height={40} />
+      </Link>
       <Input />
       <Button onClick={() => setVisibleLogin(true)}>로그인</Button>
     </header>
