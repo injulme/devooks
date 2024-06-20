@@ -53,7 +53,7 @@ const config = {
           foreground: 'hsl(var(--card-foreground))',
         },
         brand: {
-          naver: '#1EC800',
+          naver: '#03C75A',
           kakao: '#F9E000',
           google: '#FFFFFF',
         },

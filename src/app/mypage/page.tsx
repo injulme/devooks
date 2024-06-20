@@ -1,3 +1,9 @@
+import UserInfo from '@/components/mypage/UserInfo';
+
 export default function MyPage() {
-  return <main>this login page</main>;
+  return (
+    <section>
+      <UserInfo />
+    </section>
+  );
 }
