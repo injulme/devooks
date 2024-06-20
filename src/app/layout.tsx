@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={inter.className}>
+      <body className={inter.className + ' mt-[56px]'}>
         <RecoilRootProvider>
           <Header />
           {children}

@@ -14,7 +14,7 @@ import { Input } from '@/components/ui/input';
 export default function Header() {
   const setVisibleLogin = useSetRecoilState(visibleLoginState);
   return (
-    <header className="flex h-[56px] items-center justify-between gap-6 bg-slate-400 px-[16px]">
+    <header className="fixed top-0 z-50 flex h-[56px] w-full items-center justify-between gap-6 bg-white px-[16px] shadow">
       <Link href={'/'}>
         <Image src={Logo} alt="devooks 로고" height={40} />
       </Link>
