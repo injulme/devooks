@@ -69,3 +69,23 @@ export const CategoryTypeCode: CodeType<CategoryType> = {
     value: 'START_UP',
   },
 };
+
+export type BookDetailTabType = 'INTRODUCTION' | 'TABLE_OF_CONTENTS' | 'REFUND' | 'REVIEW_INQUIRY';
+export const BookDetailTabTypeCode: CodeType<BookDetailTabType> = {
+  INTRODUCTION: {
+    label: '책 소개',
+    value: 'INTRODUCTION',
+  },
+  TABLE_OF_CONTENTS: {
+    label: '목차',
+    value: 'TABLE_OF_CONTENTS',
+  },
+  REFUND: {
+    label: '환불규정',
+    value: 'REFUND',
+  },
+  REVIEW_INQUIRY: {
+    label: '리뷰 & 문의',
+    value: 'REVIEW_INQUIRY',
+  },
+};
