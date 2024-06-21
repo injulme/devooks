@@ -2,6 +2,7 @@
 
 import { Fragment, useState } from 'react';
 
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
 import { codeToOptions } from '@/lib/utils';
@@ -47,9 +48,11 @@ export default function Main() {
               <div className="grid grid-cols-4 gap-4">
                 {dummy.map((d) => {
                   return (
-                    <div className="h-[250px] bg-slate-700" key={d}>
-                      box {menu.label}
-                    </div>
+                    <Link href={{ pathname: `/book/${d}` }}>
+                      <div className="h-[250px] bg-slate-700" key={d}>
+                        box {menu.label}
+                      </div>
+                    </Link>
                   );
                 })}
               </div>
