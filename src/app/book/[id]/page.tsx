@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { IoSettingsOutline } from 'react-icons/io5';
 
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
 import { codeToOptions } from '@/lib/utils';
@@ -34,7 +35,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import { BookDetailTabTypeCode } from '@/constant/common';
@@ -45,17 +45,20 @@ type PageParams = {
 const bookTabs = codeToOptions(BookDetailTabTypeCode);
 
 export default function ({ params }: { params: PageParams }) {
-  const [selectTab, setSelectTab] = useState('INTRODUCTION');
+  const [selectTab, setSelectTab] = useState('REVIEW_INQUIRY');
+  const DynamicComponent = dynamic(() => import(`@/components/book/tabs/${selectTab}`), {
+    loading: () => <div>loading...</div>,
+  });
   return (
     <section className="grid grid-cols-5 gap-4">
       <div className="col-span-3 flex flex-col gap-8">
-        <div className="h-[480px]">
+        {/* <div className="h-[480px]">
           <Image
             src={DummyImage}
             alt="썸네일"
             className="h-full w-full bg-no-repeat object-contain"
           />
-        </div>
+        </div> */}
         <div>
           <Tabs
             defaultValue={bookTabs[0].value}
@@ -79,16 +82,7 @@ export default function ({ params }: { params: PageParams }) {
             {bookTabs.map((menu) => {
               return (
                 <TabsContent value={menu.value} key={menu.value}>
-                  <p className="leading-7 [&:not(:first-child)]:mt-6">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                    unknown printer took a galley of type and scrambled it to make a type specimen
-                    book. It has survived not only five centuries, but also the leap into electronic
-                    typesetting, remaining essentially unchanged. It was popularised in the 1960s
-                    with the release of Letraset sheets containing Lorem Ipsum passages, and more
-                    recently with desktop publishing software like Aldus PageMaker including
-                    versions of Lorem Ipsum.
-                  </p>
+                  <DynamicComponent />
                 </TabsContent>
               );
             })}
