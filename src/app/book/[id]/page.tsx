@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { IoSettingsOutline } from 'react-icons/io5';
 
 import Image from 'next/image';
 
@@ -16,6 +17,24 @@ import DummyImage from '@/assets/images/dummy_img1.jpeg';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import { BookDetailTabTypeCode } from '@/constant/common';
@@ -29,7 +48,7 @@ export default function ({ params }: { params: PageParams }) {
   const [selectTab, setSelectTab] = useState('INTRODUCTION');
   return (
     <section className="grid grid-cols-5 gap-4">
-      <div className="col-span-3">
+      <div className="col-span-3 flex flex-col gap-8">
         <div className="h-[480px]">
           <Image
             src={DummyImage}
@@ -37,7 +56,7 @@ export default function ({ params }: { params: PageParams }) {
             className="h-full w-full bg-no-repeat object-contain"
           />
         </div>
-        <div className="">
+        <div>
           <Tabs
             defaultValue={bookTabs[0].value}
             className="w-full"
@@ -76,10 +95,10 @@ export default function ({ params }: { params: PageParams }) {
           </Tabs>
         </div>
       </div>
-      <div className="col-span-2">
+      <div className="col-span-2 flex flex-col gap-8">
         <Card className="p-6 shadow-lg">
           <div className="flex justify-between text-sm text-zinc-700">
-            <span className="flex items-center gap-1">
+            <span className="mb-4 flex items-center gap-1">
               <Heart /> 123
             </span>
             <span>2024-06-21</span>
@@ -92,13 +111,51 @@ export default function ({ params }: { params: PageParams }) {
             <Star /> 4.9 (37)
           </div>
 
-          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-            3,980,000원{' '}
-            <span className="text-sm font-medium text-muted-foreground">(VAT 포함)</span>
-          </h4>
-          <p className="text-gray-800">300 페이지</p>
-          <div className="flex flex-col gap-2">
-            <Button variant="outline">미리보기</Button>
+          <div className="mt-48 flex items-center justify-between">
+            <div className="flex flex-col gap-2">
+              <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+                3,980,000원{' '}
+                <span className="text-sm font-medium text-muted-foreground">(VAT 포함)</span>
+              </h4>
+              <p className="text-gray-800">300 페이지</p>
+            </div>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <IoSettingsOutline size={24} />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent side="left" align="start">
+                <DropdownMenuItem className="flex flex-col items-start">
+                  <div className="text-lg font-semibold">수정</div>
+                  <p className="text-sm text-muted-foreground">전자책을 수정할 수 있습니다.</p>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="flex flex-col items-start">
+                  <div className="text-lg font-semibold">삭제</div>
+                  <p className="text-sm text-muted-foreground">전자책을 삭제할 수 있습니다.</p>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+
+          <div className="mt-6 flex flex-col gap-2">
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline">미리보기</Button>
+              </DialogTrigger>
+
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>미리보기</DialogTitle>
+                  <DialogDescription>The People of the Kingdom</DialogDescription>
+                </DialogHeader>
+                <div className="p-4">미리보기 이미지</div>
+                <DialogFooter className="justify-center sm:justify-center">
+                  <Button type="submit">구매하기</Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+
             <Button>구매하기</Button>
           </div>
         </Card>
