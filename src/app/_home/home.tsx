@@ -16,6 +16,7 @@ import Kakao from '@/assets/icons/kakao.svg';
 import Naver from '@/assets/icons/naver.svg';
 import Logo from '@/assets/images/devooks_logo.png';
 
+import BookBox from '@/components/main/BookBox';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -74,7 +75,9 @@ export default function Home() {
                   {dummy.map((d) => {
                     return (
                       <CarouselItem key={d} className="basis-1/3">
-                        <div className="h-[250px] bg-slate-700">box {d}</div>
+                        <Link href={`/book/${d}`}>
+                          <BookBox bookId={d} />
+                        </Link>
                       </CarouselItem>
                     );
                   })}
@@ -99,13 +102,13 @@ export default function Home() {
               <Separator className="my-4 h-[1px] w-full bg-gray-300" />
             </div>
             <div className="flex justify-evenly">
-              <button className="bg-brand-naver border-brand-naver flex h-12 w-12 items-center justify-center rounded-full border">
+              <button className="flex h-12 w-12 items-center justify-center rounded-full border border-brand-naver bg-brand-naver">
                 <Naver />
               </button>
-              <button className="bg-brand-kakao border-brand-kakao flex h-12 w-12 items-center justify-center rounded-full border">
+              <button className="flex h-12 w-12 items-center justify-center rounded-full border border-brand-kakao bg-brand-kakao">
                 <Kakao />
               </button>
-              <button className="bg-brand-google flex h-12 w-12 items-center justify-center rounded-full border border-gray-300">
+              <button className="flex h-12 w-12 items-center justify-center rounded-full border border-gray-300 bg-brand-google">
                 <Google />
               </button>
             </div>

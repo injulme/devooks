@@ -7,6 +7,7 @@ import { useSearchParams } from 'next/navigation';
 
 import { codeToOptions } from '@/lib/utils';
 
+import BookBox from '@/components/main/BookBox';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import { TabTypeCode } from '@/constant/common';
@@ -48,10 +49,8 @@ export default function Main() {
               <div className="grid grid-cols-4 gap-4">
                 {dummy.map((d) => {
                   return (
-                    <Link href={{ pathname: `/book/${d}` }}>
-                      <div className="h-[250px] bg-slate-700" key={d}>
-                        box {menu.label}
-                      </div>
+                    <Link href={{ pathname: `/book/${d}` }} key={d}>
+                      <BookBox bookId={d} />
                     </Link>
                   );
                 })}
