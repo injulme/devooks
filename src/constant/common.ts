@@ -89,3 +89,15 @@ export const BookDetailTabTypeCode: CodeType<BookDetailTabType> = {
     value: 'REVIEW_INQUIRY',
   },
 };
+
+export type BookCategoryType = 'REVIEW' | 'INQUIRY';
+export const BookCategoryTypeCode: CodeType<BookCategoryType> = {
+  REVIEW: {
+    label: '리뷰',
+    value: 'REVIEW',
+  },
+  INQUIRY: {
+    label: '문의',
+    value: 'INQUIRY',
+  },
+};
