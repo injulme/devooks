@@ -45,7 +45,7 @@ export default function MyPage() {
 
         {mypageMenus.map((menu) => {
           return (
-            <TabsContent value={menu.value} key={menu.value}>
+            <TabsContent value={menu.value} key={menu.value} className="mx-8 my-4">
               <DynamicComponent />
             </TabsContent>
           );
