@@ -12,14 +12,15 @@ export default function BookBox({ bookId }: { bookId: number }) {
 
   return (
     <div className="">
-      <div className="">
+      <div className="relative h-[150px]">
         <Image
           src={imgs[bookId % 3]}
           alt={`image_${bookId}`}
-          className="rounded-lg bg-no-repeat object-contain shadow-lg"
+          className="rounded-lg bg-no-repeat object-cover shadow-lg"
+          fill
         />
       </div>
-      <h4 className="line-clamp-2 min-h-[56px] scroll-m-20 overflow-hidden text-ellipsis text-xl font-semibold">
+      <h4 className="line-clamp-2 min-h-[56px] scroll-m-20 overflow-hidden text-ellipsis text-lg font-semibold">
         Section 1.10.33 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
       </h4>
 
