@@ -14,7 +14,7 @@ const editMenus = [
   { label: '회원 탈퇴', value: 'WITHDRAWAL' },
 ];
 export default function MyPageEdit() {
-  const [selectTab, setSelectTab] = useState('WITHDRAWAL');
+  const [selectTab, setSelectTab] = useState(editMenus[0].value);
   const DynamicComponent = dynamic(() => import(`@/components/mypage/edit/${selectTab}`), {
     loading: () => <div>loading...</div>,
   });
