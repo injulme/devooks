@@ -18,7 +18,7 @@ import Logo from '@/assets/images/devooks_logo.png';
 
 import BookBox from '@/components/main/BookBox';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Carousel,
   CarouselContent,
@@ -60,14 +60,15 @@ export default function Home() {
         return (
           <Card key={menu.value}>
             <CardHeader>
-              <CardTitle>{menu.label}</CardTitle>
-              <CardDescription className="flex justify-end">
+              <CardTitle className="flex items-center justify-between">
+                {menu.label}
+
                 <Link href={{ pathname: `/main`, query: { tab: menu.value } }}>
                   <Button variant="link" className="flex items-center gap-1">
                     더 보러가기 <FaChevronRight />
                   </Button>
                 </Link>
-              </CardDescription>
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <Carousel>
