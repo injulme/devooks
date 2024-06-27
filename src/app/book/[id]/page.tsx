@@ -60,11 +60,7 @@ export default function ({ params }: { params: PageParams }) {
           />
         </div> */}
         <div>
-          <Tabs
-            defaultValue={bookTabs[0].value}
-            className="w-full"
-            value={selectTab ?? bookTabs[0].value}
-          >
+          <Tabs defaultValue={bookTabs[0].value} value={selectTab ?? bookTabs[0].value}>
             <TabsList className="h-[56px]">
               {bookTabs.map((menu) => {
                 return (

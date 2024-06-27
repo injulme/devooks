@@ -60,8 +60,8 @@ export default function ReviewInquiry() {
         </div>
       </Card>
       <div className="mt-4 flex justify-between">
-        <Tabs defaultValue={tabs[0].value} className="w-full" value={selectTab ?? tabs[0].value}>
-          <TabsList className="h-[56px]">
+        <Tabs defaultValue={tabs[0].value} value={selectTab ?? tabs[0].value}>
+          <TabsList>
             {tabs.map((menu) => {
               return (
                 <TabsTrigger

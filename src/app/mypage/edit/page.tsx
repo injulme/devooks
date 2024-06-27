@@ -32,10 +32,9 @@ export default function MyPageEdit() {
         <div className="w-full">
           <Tabs
             defaultValue={editMenus[0].value}
-            className="w-full"
             value={selectTab ?? editMenus[0].value}
           >
-            <TabsList className="h-[56px]">
+            <TabsList >
               {editMenus.map((menu) => {
                 return (
                   <TabsTrigger

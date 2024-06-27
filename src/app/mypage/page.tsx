@@ -24,12 +24,8 @@ export default function MyPage() {
     <section>
       <UserInfo />
 
-      <Tabs
-        defaultValue={mypageMenus[0].value}
-        className="w-full"
-        value={selectTab ?? mypageMenus[0].value}
-      >
-        <TabsList className="h-[56px]">
+      <Tabs defaultValue={mypageMenus[0].value} value={selectTab ?? mypageMenus[0].value}>
+        <TabsList>
           {mypageMenus.map((menu) => {
             return (
               <TabsTrigger

@@ -24,12 +24,8 @@ export default function Main() {
 
   return (
     <Fragment>
-      <Tabs
-        defaultValue={mainMenus[0].value}
-        className="w-full"
-        value={selectTab ?? mainMenus[0].value}
-      >
-        <TabsList className="h-[56px]">
+      <Tabs defaultValue={mainMenus[0].value} value={selectTab ?? mainMenus[0].value}>
+        <TabsList>
           {mainMenus.map((menu) => {
             return (
               <TabsTrigger
@@ -46,7 +42,7 @@ export default function Main() {
         {mainMenus.map((menu) => {
           return (
             <TabsContent value={menu.value} key={menu.value}>
-              <div className="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-4 gap-4 sm:grid-cols-1">
                 {dummy.map((d) => {
                   return (
                     <Link href={{ pathname: `/book/${d}` }} key={d}>
