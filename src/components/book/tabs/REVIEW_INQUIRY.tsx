@@ -34,31 +34,16 @@ import Comment from './Comment';
 
 const tabs = codeToOptions(BookCategoryTypeCode);
 
+const dummy = Array(15)
+  .fill({})
+  .map((_, i) => i);
+
 export default function ReviewInquiry() {
   const [selectTab, setSelectTab] = useState('REVIEW');
   const [isReviewDialogOpen, setIsReviewDialogOpen] = useState(false);
   const [isInquiryDialogOpen, setIsInquiryDialogOpen] = useState(false);
   return (
     <section>
-      <Card className="flex flex-col gap-4 bg-slate-300 text-slate-800 shadow">
-        <div className="mx-auto my-8 w-[360px]">
-          <div className="flex items-center justify-between">
-            <span className="text-xl font-semibold">리뷰</span>
-            <div className="flex gap-1">
-              <FaStar size={28} />
-              <FaStar size={28} />
-              <FaStar size={28} />
-              <FaStar size={28} />
-              <FaRegStar size={28} />
-            </div>
-            <span>4.0 (1297)</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="text-xl font-semibold">문의</span>
-            <span>132개</span>
-          </div>
-        </div>
-      </Card>
       <div className="mt-4 flex justify-between">
         <Tabs defaultValue={tabs[0].value} value={selectTab ?? tabs[0].value}>
           <TabsList>
@@ -75,11 +60,12 @@ export default function ReviewInquiry() {
             })}
           </TabsList>
 
-          {tabs.map(({ label, value }: { label: string; value: BookCategoryType }) => {
+          {tabs.map(({ value }: { value: BookCategoryType }) => {
             return (
-              <TabsContent value={value} key={value}>
-                {label}
-                <Comment tag={value} />
+              <TabsContent value={value} key={value} className="space-y-4">
+                {dummy.map((i) => {
+                  return <Comment tag={value} key={i} />;
+                })}
               </TabsContent>
             );
           })}

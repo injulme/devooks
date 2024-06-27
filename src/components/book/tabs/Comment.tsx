@@ -3,19 +3,14 @@
 import { FaRegStar, FaStar } from 'react-icons/fa';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge, BadgeProps } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
-import { BookCategoryType, BookCategoryTypeCode } from '@/constant/common';
+import { BookCategoryType } from '@/constant/common';
 
 type CommentProps = {
   tag: BookCategoryType;
 };
 export default function Comment({ tag }: CommentProps) {
-  const tagVariants: Record<BookCategoryType, BadgeProps['variant']> = {
-    REVIEW: 'sky',
-    INQUIRY: 'secondary',
-  };
   return (
     <Card>
       <CardHeader>
@@ -41,11 +36,8 @@ export default function Comment({ tag }: CommentProps) {
           </div>
         </div>
       </CardHeader>
-      <CardContent className="grid grid-cols-12">
-        <div className="col-span-1">
-          <Badge variant={tagVariants[tag]}>{BookCategoryTypeCode[tag].label}</Badge>
-        </div>
-        <p className="col-span-11 leading-7">
+      <CardContent className="">
+        <p className="leading-7">
           The king, seeing how much happier his subjects were, realized the error of his ways and
           repealed the joke tax.
         </p>
