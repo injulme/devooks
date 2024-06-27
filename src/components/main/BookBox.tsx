@@ -7,7 +7,7 @@ import DummyImg2 from '@/assets/images/dummy_img2.jpg';
 import DummyImg3 from '@/assets/images/dummy_img3.jpg';
 import DummyImg4 from '@/assets/images/dummy_img4.png';
 
-import { Badge } from '../ui/badge';
+import { Badge } from '@/components/ui/badge';
 
 export default function BookBox({ bookId }: { bookId: number }) {
   const imgs = [DummyImg2, DummyImg3, DummyImg4];
