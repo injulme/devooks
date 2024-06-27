@@ -58,7 +58,7 @@ export default function Home() {
 
       {mainMenus.map((menu) => {
         return (
-          <Card key={menu.value}>
+          <Card key={menu.value} className="mx-8">
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 {menu.label}
