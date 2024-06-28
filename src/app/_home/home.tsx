@@ -1,220 +1,144 @@
 'use client';
 
-import { Fragment, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { FaChevronRight } from 'react-icons/fa6';
+import { FaRegStar, FaStar } from 'react-icons/fa';
 
 import Image from 'next/image';
-import Link from 'next/link';
 
-import { codeToOptions } from '@/lib/utils';
-import { visibleLoginState } from '@/states';
-import { Separator } from '@radix-ui/react-separator';
-import { useRecoilState } from 'recoil';
+import Heart from '@/assets/icons/heart.svg';
+import HomeIcon from '@/assets/icons/home.svg';
+import Instagram from '@/assets/icons/instagram.svg';
+import Star from '@/assets/icons/star.svg';
+import Youtube from '@/assets/icons/youtube.svg';
+import Cover1 from '@/assets/images/cover1.png';
+import Cover2 from '@/assets/images/cover2.png';
+import Cover3 from '@/assets/images/cover3.png';
+import Cover4 from '@/assets/images/cover4.png';
 
-import Google from '@/assets/icons/google.svg';
-import Kakao from '@/assets/icons/kakao.svg';
-import Naver from '@/assets/icons/naver.svg';
-import Logo from '@/assets/images/devooks_logo.png';
-
-import BookBox from '@/components/main/BookBox';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
+import { Card, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 
-import { LoginType, TabType, TabTypeCode } from '@/constant/common';
+import Header from '../header';
 
-const dummy = Array(15)
-  .fill({})
-  .map((_, i) => i);
-
-const mainMenus = codeToOptions(TabTypeCode);
+const data = [
+  {
+    imgSrc: Cover1,
+    subject: '1퍼센트 부자들의 법칙',
+  },
+  {
+    imgSrc: Cover2,
+    subject: '나의 채식 라이프 365',
+  },
+  {
+    imgSrc: Cover3,
+    subject: '시작이 어려운 당신에게',
+  },
+];
 export default function Home() {
-  const form = useForm();
-
-  const [visibleLogin, setVisibleLogin] = useRecoilState(visibleLoginState);
-  const [isJoinPopup, setIsJoinPopup] = useState<boolean>(false);
-  const onJoinPopupOpen = (loginType: LoginType) => {
-    setVisibleLogin(false);
-    setIsJoinPopup(true);
-  };
-  const onJoinSubmit = () => {
-    console.log('on join submit');
-  };
   return (
-    <Fragment>
-      <Carousel>
-        <CarouselContent>
-          <CarouselItem>
-            <div className="h-[430px] bg-slate-700">box1</div>
-          </CarouselItem>
-          <CarouselItem>
-            <div className="h-[430px] bg-slate-600">box2</div>
-          </CarouselItem>
-          <CarouselItem>
-            <div className="h-[430px] bg-slate-500">box3</div>
-          </CarouselItem>
-        </CarouselContent>
-        <CarouselPrevious className="left-[32px]" />
-        <CarouselNext className="right-[32px]" />
-      </Carousel>
-
-      {mainMenus.map((menu) => {
-        return (
-          <Card key={menu.value} className="mx-8">
-            <CardHeader>
-              <CardTitle className="flex items-center justify-between">
-                {menu.label}
-
-                <Link href={{ pathname: `/main`, query: { tab: menu.value } }}>
-                  <Button variant="link" className="flex items-center gap-1">
-                    더 보러가기 <FaChevronRight />
-                  </Button>
-                </Link>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Carousel>
-                <CarouselContent>
-                  {dummy.map((d) => {
-                    return (
-                      <CarouselItem key={d} className="basis-1/3">
-                        <Link href={`/book/${d}`}>
-                          <BookBox bookId={d} />
-                        </Link>
-                      </CarouselItem>
-                    );
-                  })}
-                </CarouselContent>
-                <CarouselPrevious className="left-6" />
-                <CarouselNext className="right-6" />
-              </Carousel>
-            </CardContent>
-          </Card>
-        );
-      })}
-
-      <Dialog open={visibleLogin} onOpenChange={setVisibleLogin}>
-        <DialogContent className="max-w-[400px]">
-          <DialogHeader className="gap-4">
-            <DialogTitle className="flex justify-center">
-              <Image src={Logo} alt="devooks 로고" height={50} />
-            </DialogTitle>
-            <div className="flex items-center gap-5">
-              <Separator className="my-4 h-[1px] w-full bg-gray-300" />
-              <span className="w-3/5">간편로그인</span>
-              <Separator className="my-4 h-[1px] w-full bg-gray-300" />
-            </div>
-            <div className="flex justify-evenly">
-              <button
-                onClick={() => onJoinPopupOpen('NAVER')}
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-brand-naver bg-brand-naver"
-              >
-                <Naver />
-              </button>
-              <button
-                onClick={() => onJoinPopupOpen('KAKAO')}
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-brand-kakao bg-brand-kakao"
-              >
-                <Kakao />
-              </button>
-              <button
-                onClick={() => onJoinPopupOpen('GOOGLE')}
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-gray-300 bg-brand-google"
-              >
-                <Google />
-              </button>
-            </div>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
-      <Dialog open={isJoinPopup} onOpenChange={setIsJoinPopup}>
-        <DialogContent className="max-w-[400px]">
-          <DialogHeader className="gap-4">
-            <DialogTitle className="flex justify-center">
-              <Image src={Logo} alt="devooks 로고" height={50} />
-            </DialogTitle>
-            <div className="flex items-center gap-5">
-              <Separator className="my-4 h-[1px] w-full bg-gray-300" />
-              <span className="w-3/5">회원가입</span>
-              <Separator className="my-4 h-[1px] w-full bg-gray-300" />
-            </div>
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onJoinSubmit)} className="space-y-4">
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>닉네임</FormLabel>
-                      <FormControl>
-                        <Input placeholder="입력하세요" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>관심 카테고리</FormLabel>
-                      <FormControl>
-                        <Input placeholder="입력하세요" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <Card className="space-y-3 p-3">
-                  <div className="flex items-center space-x-2">
-                    <Checkbox id="all_terms" />
-                    <Label htmlFor="all_terms">모두 동의합니다.</Label>
+    <div className="px-28 py-12">
+      <Card className="bg-classic-200 relative h-[100dvh] rounded-3xl p-8">
+        <Header />
+        <div className="grid h-1/2 grid-cols-3 items-center gap-4">
+          <div className="flex flex-col">
+            <h1 className="select-none font-serif text-4xl">
+              베스트셀러
+              <br />
+              TOP 3
+            </h1>
+            <p className="mb-8 mt-4 text-lg text-muted-foreground">오늘의 인기 책을 구경해보세요</p>
+            <Input placeholder="제목, 작가, 카테고리" />
+          </div>
+          <Image src={Cover4} alt="책1" className="h-full w-full bg-no-repeat object-contain" />
+          <div className="flex gap-6">
+            <Card className="p-6 shadow-lg">
+              <div className="flex h-full flex-col justify-between">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-1">
+                    <FaStar size={24} fill="gold" />
+                    <FaStar size={24} fill="gold" />
+                    <FaStar size={24} fill="gold" />
+                    <FaStar size={24} fill="gold" />
+                    <FaRegStar size={24} fill="gold" />
+                    (124)
                   </div>
-                  <Separator className="h-[0.5px] w-full bg-gray-300" />
-                  <div className="flex items-center space-x-2">
-                    <Checkbox id="terms1" />
-                    <Label htmlFor="terms1">만 14세 이상입니다.</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox id="terms2" />
-                    <Label htmlFor="terms2">서비스 이용약관에 동의합니다.</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox id="terms3" />
-                    <Label htmlFor="terms3">개인정보 수집/이용에 동의합니다.</Label>
-                  </div>
-                </Card>
-
-                <div className="text-center">
-                  <Button type="submit">회원가입</Button>
+                  <h2 className="scroll-m-20 text-lg font-semibold tracking-tight">
+                    여행을 떠나요
+                  </h2>
+                  <h3 className="text-sm tracking-tight text-muted-foreground">김민수</h3>
+                  <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+                    3,980,000원{' '}
+                    <span className="text-sm font-medium text-muted-foreground">(VAT 포함)</span>
+                  </h4>
                 </div>
-              </form>
-            </Form>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
-    </Fragment>
+                <Button variant="outline-gold" size="xs">
+                  Buy Now
+                </Button>
+              </div>
+            </Card>
+            <Card className="p-6 shadow-lg">
+              <div className="flex flex-col items-center gap-8">
+                <Avatar className="h-[120px] w-[120px] shadow-xl">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center gap-2">
+                    <HomeIcon />
+                    <Instagram />
+                    <Youtube />
+                  </div>
+                  <h3 className="text-2xl font-semibold tracking-tight">upn2n</h3>
+                  <p className="text-md text-gray-700">여기, 내가 그대로 있어요.</p>
+                </div>
+              </div>
+            </Card>
+          </div>
+        </div>
+        <div
+          className="absolute left-[-78px] right-[-78px] top-[60%] h-8"
+          style={{
+            clipPath: 'polygon(78px 0%, calc(100% - 78px) 0%, 100% 100%, 0% 100%)',
+
+            background: 'linear-gradient(180deg, rgba(230,221,207,1) 0%, rgba(238,229,218,1) 100%)',
+          }}
+        />
+        <div
+          className="shadow-right-bottom absolute left-[-78px] right-[-78px] top-[calc(60%+2rem)] h-4"
+          style={{
+            background: 'linear-gradient(0deg, rgba(252,247,239,1) 0%, rgba(229,223,217,1) 100%)',
+          }}
+        />
+        <div className="grid h-1/2 grid-cols-3 gap-4 pb-12 pt-32">
+          {data.map((d) => {
+            return (
+              <div className="grid grid-cols-2 items-center gap-4">
+                <Image
+                  src={d.imgSrc}
+                  alt="책1"
+                  className="h-full w-full bg-no-repeat object-contain"
+                />
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center gap-1">
+                    <FaStar size={12} fill="gold" />
+                    <FaStar size={12} fill="gold" />
+                    <FaStar size={12} fill="gold" />
+                    <FaStar size={12} fill="gold" />
+                    <FaRegStar size={12} fill="gold" />
+                  </div>
+                  <h2 className="text-md scroll-m-20 font-semibold tracking-tight">{d.subject}</h2>
+                  <h3 className="text-xs tracking-tight text-muted-foreground">upn2n</h3>
+                  <Button variant="outline-gold" className="w-1/2">
+                    Buy Now
+                  </Button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </Card>
+    </div>
   );
 }

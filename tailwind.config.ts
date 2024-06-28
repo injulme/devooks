@@ -57,6 +57,18 @@ const config = {
           kakao: '#F9E000',
           google: '#FFFFFF',
         },
+        classic: {
+          200: '#F8F3ED',
+          300: '#F3EAE0',
+          400: '#F2E2CE',
+          500: '#DBAA63',
+        },
+        modern: {
+          200: '#FCF8F5',
+          300: '#EFEDE1',
+          400: '#EEE5DA',
+          500: '#D2C2B5',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -76,6 +88,9 @@ const config = {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+      },
+      boxShadow: {
+        'right-bottom': '0px 20px 24px 0px rgba(184,171,153,1)',
       },
     },
   },
