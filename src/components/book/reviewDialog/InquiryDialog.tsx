@@ -1,6 +1,6 @@
 'use client';
 
-import { DialogProps } from '@radix-ui/react-dialog';
+import { DialogTriggerProps } from '@radix-ui/react-dialog';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -9,17 +9,18 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 type InquiryDialogProps = {
-  open: DialogProps['open'];
-  onOpenChange: DialogProps['onOpenChange'];
+  triggerComponent: DialogTriggerProps['children'];
 };
-export default function InquiryDialog({ open, onOpenChange }: InquiryDialogProps) {
+export default function InquiryDialog({ triggerComponent }: InquiryDialogProps) {
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog>
+      <DialogTrigger asChild>{triggerComponent}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>문의</DialogTitle>

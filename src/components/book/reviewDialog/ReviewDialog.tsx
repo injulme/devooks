@@ -2,7 +2,7 @@
 
 import { FaRegStar, FaStar } from 'react-icons/fa';
 
-import { DialogProps, DialogTriggerProps } from '@radix-ui/react-dialog';
+import { DialogTriggerProps } from '@radix-ui/react-dialog';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -17,14 +17,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 type ReviewDialogProps = {
-  open: DialogProps['open'];
-  onOpenChange: DialogProps['onOpenChange'];
-  Trigger: DialogTriggerProps['children'];
+  triggerComponent: DialogTriggerProps['children'];
 };
-export default function ReviewDialog({ open, onOpenChange, Trigger }: ReviewDialogProps) {
+export default function ReviewDialog({ triggerComponent }: ReviewDialogProps) {
   return (
     <Dialog>
-      <DialogTrigger asChild>{Trigger}</DialogTrigger>
+      <DialogTrigger asChild>{triggerComponent}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>리뷰</DialogTitle>
