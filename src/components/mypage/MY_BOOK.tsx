@@ -77,8 +77,8 @@ export default function MyBook() {
           <ScrollArea className="h-3/4 space-y-4 pb-12">
             {dummy.map((i) => {
               return (
-                <div className="my-4">
-                  <Comment key={i} />
+                <div className="my-4" key={i}>
+                  <Comment />
                 </div>
               );
             })}
