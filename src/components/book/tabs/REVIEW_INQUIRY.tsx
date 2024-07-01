@@ -4,13 +4,14 @@ import { useState } from 'react';
 import { FaRegStar, FaStar } from 'react-icons/fa';
 
 import { codeToOptions } from '@/lib/utils';
+import { DialogProps } from '@radix-ui/react-dialog';
 
+import InquiryDialog from '@/components/book/reviewDialog/InquiryDialog';
+import ReviewDialog from '@/components/book/reviewDialog/ReviewDialog';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -20,7 +21,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
@@ -42,6 +42,8 @@ export default function ReviewInquiry() {
   const [selectTab, setSelectTab] = useState('REVIEW');
   const [isReviewDialogOpen, setIsReviewDialogOpen] = useState(false);
   const [isInquiryDialogOpen, setIsInquiryDialogOpen] = useState(false);
+
+  console.log('isreview ', isReviewDialogOpen);
   return (
     <section>
       <div className="mt-4 flex justify-between">
@@ -76,7 +78,40 @@ export default function ReviewInquiry() {
             <Button variant="ghost">글쓰기</Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent side="left" align="start">
-            <DropdownMenuItem
+            <Dialog>
+              <DialogTrigger asChild>
+                <DropdownMenuItem
+                  className="flex flex-col items-start"
+                  onSelect={(e) => e.preventDefault()}
+                >
+                  <div className="text-lg font-semibold">리뷰</div>
+                  <p className="text-sm text-muted-foreground">
+                    전자책을 구매한 이후에 리뷰를 남겨보세요.
+                  </p>
+                </DropdownMenuItem>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>리뷰</DialogTitle>
+                </DialogHeader>
+                <Label>평점</Label>
+                <div className="flex gap-1">
+                  <FaStar size={28} />
+                  <FaStar size={28} />
+                  <FaStar size={28} />
+                  <FaStar size={28} />
+                  <FaRegStar size={28} />
+                </div>
+                <div className="grid w-full max-w-sm items-center gap-1.5">
+                  <Label htmlFor="review_content">내용</Label>
+                  <Input id="review_content" type="text" />
+                </div>
+                <DialogFooter className="justify-center sm:justify-center">
+                  <Button type="submit">등록하기</Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+            {/* <DropdownMenuItem
               className="flex flex-col items-start"
               onClick={() => setIsReviewDialogOpen(true)}
             >
@@ -84,8 +119,20 @@ export default function ReviewInquiry() {
               <p className="text-sm text-muted-foreground">
                 전자책을 구매한 이후에 리뷰를 남겨보세요.
               </p>
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
             <DropdownMenuSeparator />
+            <ReviewDialog
+              Trigger={
+                <DropdownMenuItem className="flex flex-col items-start">
+                  <div className="text-lg font-semibold">xptmxm</div>
+                  <p className="text-sm text-muted-foreground">
+                    전자책을 구매하기 전에 문의를 남겨보세요.
+                  </p>
+                </DropdownMenuItem>
+              }
+              open={isReviewDialogOpen}
+              onOpenChange={setIsReviewDialogOpen}
+            />
             <DropdownMenuItem
               className="flex flex-col items-start"
               onClick={() => setIsInquiryDialogOpen(true)}
@@ -98,42 +145,12 @@ export default function ReviewInquiry() {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <Dialog open={isReviewDialogOpen} onOpenChange={setIsReviewDialogOpen}>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>리뷰</DialogTitle>
-          </DialogHeader>
-          <Label>평점</Label>
-          <div className="flex gap-1">
-            <FaStar size={28} />
-            <FaStar size={28} />
-            <FaStar size={28} />
-            <FaStar size={28} />
-            <FaRegStar size={28} />
-          </div>
-          <div className="grid w-full max-w-sm items-center gap-1.5">
-            <Label htmlFor="review_content">내용</Label>
-            <Input id="review_content" type="text" />
-          </div>
-          <DialogFooter className="justify-center sm:justify-center">
-            <Button type="submit">등록하기</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-      <Dialog open={isInquiryDialogOpen} onOpenChange={setIsInquiryDialogOpen}>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>문의</DialogTitle>
-          </DialogHeader>
-          <div className="grid w-full max-w-sm items-center gap-1.5">
-            <Label htmlFor="review_content">내용</Label>
-            <Input id="review_content" type="text" />
-          </div>
-          <DialogFooter className="justify-center sm:justify-center">
-            <Button type="submit">등록하기</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      {/* {isReviewDialogOpen && (
+        <ReviewDialog open={isReviewDialogOpen} onOpenChange={setIsReviewDialogOpen} />
+      )} */}
+      {isInquiryDialogOpen && (
+        <InquiryDialog open={isInquiryDialogOpen} onOpenChange={setIsInquiryDialogOpen} />
+      )}
     </section>
   );
 }
