@@ -64,7 +64,7 @@ export default function ReviewInquiry() {
             return (
               <TabsContent value={value} key={value} className="space-y-4">
                 {dummy.map((i) => {
-                  return <Comment tag={value} key={i} />;
+                  return <Comment key={i} />;
                 })}
               </TabsContent>
             );

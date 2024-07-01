@@ -7,10 +7,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
 import { BookCategoryType } from '@/constant/common';
 
-type CommentProps = {
-  tag: BookCategoryType;
-};
-export default function Comment({ tag }: CommentProps) {
+export default function Comment() {
   return (
     <Card>
       <CardHeader>

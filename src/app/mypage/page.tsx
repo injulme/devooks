@@ -8,14 +8,13 @@ import UserInfo from '@/components/mypage/UserInfo';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const mypageMenus = [
-  { label: '책', value: 'MY_BOOK' },
-  { label: '받은 리뷰', value: 'REVIEWS' },
+  { label: '등록 내역', value: 'MY_BOOK' },
   { label: '구매 내역', value: 'PURCHASE_HISTORY' },
   { label: '판매 관리', value: 'SALES_MANAGEMENT' },
 ];
 
 export default function MyPage() {
-  const [selectTab, setSelectTab] = useState('PURCHASE_HISTORY');
+  const [selectTab, setSelectTab] = useState('MY_BOOK');
   const DynamicComponent = dynamic(() => import(`@/components/mypage/${selectTab}`), {
     loading: () => <div>loading...</div>,
   });
@@ -24,7 +23,11 @@ export default function MyPage() {
     <section>
       <UserInfo />
 
-      <Tabs defaultValue={mypageMenus[0].value} value={selectTab ?? mypageMenus[0].value}>
+      <Tabs
+        defaultValue={mypageMenus[0].value}
+        value={selectTab ?? mypageMenus[0].value}
+        className="mt-2"
+      >
         <TabsList>
           {mypageMenus.map((menu) => {
             return (
