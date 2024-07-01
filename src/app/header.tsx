@@ -19,7 +19,13 @@ import Logo from '@/assets/images/devooks_logo.png';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import {
   Form,
   FormControl,
@@ -51,8 +57,13 @@ export default function Header() {
         <Image src={Logo} alt="devooks 로고" height={40} />
       </Link>
       <Input />
-      <Button onClick={() => setVisibleLogin(true)}>로그인</Button>
-      <Dialog open={visibleLogin} onOpenChange={setVisibleLogin}>
+      <Button variant="outline">
+        <Link href="/book/add">책 등록</Link>
+      </Button>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button>로그인</Button>
+        </DialogTrigger>
         <DialogContent className="max-w-[400px]">
           <DialogHeader className="gap-4">
             <DialogTitle className="flex justify-center">
