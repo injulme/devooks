@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
@@ -46,6 +46,19 @@ export default function BookAdd() {
     introductionImageRef?.current?.click();
   };
 
+  const [mainImagePreview, setMainImagePreview] = useState<string>();
+
+  const saveImgFile = () => {
+    if (!mainImageRef.current?.files) return;
+
+    const file = mainImageRef?.current?.files[0];
+    console.log(file);
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setMainImagePreview(reader.result as string);
+    };
+  };
   return (
     <section className="grid grid-cols-5 gap-4">
       <div className="col-span-2 flex flex-col gap-8">
@@ -76,19 +89,60 @@ export default function BookAdd() {
             />
             <FormField
               control={form.control}
-              name="pageTotalCount"
+              name="mainImage"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                    페이지 수 <span className="text-red-600">(필수)</span>
+                    메인 이미지 업로드 <span className="text-red-600">(필수)</span>
                   </FormLabel>
                   <FormControl>
-                    <Input placeholder="페이지 수를 입력해 주세요." type="number" {...field} />
+                    <div>
+                      <Button variant="outline" className="w-full" onClick={onHandleMainImage}>
+                        메인 이미지 업로드
+                      </Button>
+                      <Input
+                        type="file"
+                        className="hidden"
+                        ref={mainImageRef}
+                        accept="image/*"
+                        onChange={saveImgFile}
+                      />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="introductionImage"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    책소개 이미지 <span className="text-stone-600">(선택)</span>
+                  </FormLabel>
+                  <FormControl>
+                    <div>
+                      <Button
+                        variant="outline"
+                        className="w-full"
+                        onClick={onHandleIntroductionImage}
+                      >
+                        책 소개 이미지 업로드
+                      </Button>
+                      <Input
+                        type="file"
+                        className="hidden"
+                        ref={introductionImageRef}
+                        accept="image/*"
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="name"
@@ -121,6 +175,21 @@ export default function BookAdd() {
             />
             <FormField
               control={form.control}
+              name="pageTotalCount"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    페이지 수 <span className="text-red-600">(필수)</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input placeholder="페이지 수를 입력해 주세요." type="number" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="amount"
               render={({ field }) => (
                 <FormItem>
@@ -134,50 +203,7 @@ export default function BookAdd() {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="mainImage"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    메인 이미지 업로드 <span className="text-red-600">(필수)</span>
-                  </FormLabel>
-                  <FormControl>
-                    <div>
-                      <Button variant="outline" className="w-full" onClick={onHandleMainImage}>
-                        메인 이미지 업로드
-                      </Button>
-                      <Input type="file" className="hidden" ref={mainImageRef} />
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="introductionImage"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    책소개 이미지 <span className="text-stone-600">(선택)</span>
-                  </FormLabel>
-                  <FormControl>
-                    <div>
-                      <Button
-                        variant="outline"
-                        className="w-full"
-                        onClick={onHandleIntroductionImage}
-                      >
-                        책 소개 이미지 업로드
-                      </Button>
-                      <Input type="file" className="hidden" ref={introductionImageRef} />
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+
             <FormField
               control={form.control}
               name="introduction"
@@ -220,7 +246,9 @@ export default function BookAdd() {
           </form>
         </Form>
       </div>
-      <div className="col-span-3">box</div>
+      <div className="col-span-3">
+        <img src={mainImagePreview} className="h-[430px] bg-no-repeat object-cover" />
+      </div>
     </section>
   );
 }
