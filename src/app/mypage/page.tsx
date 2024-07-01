@@ -26,7 +26,7 @@ export default function MyPage() {
       <Tabs
         defaultValue={mypageMenus[0].value}
         value={selectTab ?? mypageMenus[0].value}
-        className="mt-2"
+        className="my-4 px-12"
       >
         <TabsList>
           {mypageMenus.map((menu) => {
