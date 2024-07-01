@@ -13,11 +13,23 @@ import Home from '@/assets/icons/home.svg';
 import Instagram from '@/assets/icons/instagram.svg';
 import Star from '@/assets/icons/star.svg';
 import Youtube from '@/assets/icons/youtube.svg';
+import cover1 from '@/assets/images/cover1.png';
+import cover2 from '@/assets/images/cover2.png';
+import cover3 from '@/assets/images/cover3.png';
+import cover4 from '@/assets/images/cover4.png';
+import cover5 from '@/assets/images/cover5.png';
 import DummyImage from '@/assets/images/dummy_img2.jpg';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
 import {
   Dialog,
   DialogContent,
@@ -48,16 +60,37 @@ export default function ({ params }: { params: PageParams }) {
   const DynamicComponent = dynamic(() => import(`@/components/book/tabs/${selectTab}`), {
     loading: () => <div>loading...</div>,
   });
+  const images = [cover1, cover2, cover3, cover4, cover5];
   return (
     <section className="grid grid-cols-5 gap-4">
       <div className="col-span-3 flex flex-col gap-8">
-        <div className="h-[480px]">
+        <div className="h-[880px]">
           <Image
             src={DummyImage}
             alt="썸네일"
-            className="h-full w-full rounded bg-no-repeat object-cover"
+            className="mb-4 h-[430px] w-full rounded bg-no-repeat object-cover"
           />
+          <Carousel opts={{ loop: true }} className="rounded">
+            <CarouselContent>
+              {images.map((image, index) => {
+                return (
+                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                    <div className="h-[330px] bg-slate-700">
+                      <Image
+                        src={image}
+                        alt={`cover_${index}`}
+                        className="h-full w-full rounded bg-no-repeat object-cover"
+                      />
+                    </div>
+                  </CarouselItem>
+                );
+              })}
+            </CarouselContent>
+            <CarouselPrevious className="left-[32px]" />
+            <CarouselNext className="right-[32px]" />
+          </Carousel>
         </div>
+
         <div>
           <Tabs defaultValue={bookTabs[0].value} value={selectTab ?? bookTabs[0].value}>
             <TabsList>
