@@ -64,7 +64,7 @@ export default function ({ params }: { params: PageParams }) {
   return (
     <section className="grid grid-cols-5 gap-4">
       <div className="col-span-3 flex flex-col gap-8">
-        <div className="h-[880px]">
+        <div>
           <Image
             src={DummyImage}
             alt="썸네일"
@@ -75,7 +75,7 @@ export default function ({ params }: { params: PageParams }) {
               {images.map((image, index) => {
                 return (
                   <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                    <div className="h-[330px] bg-slate-700">
+                    <div className="h-[230px] bg-slate-700">
                       <Image
                         src={image}
                         alt={`cover_${index}`}
