@@ -48,7 +48,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-import { BookDetailTabTypeCode } from '@/constant/common';
+import { BookDetailTabType, BookDetailTabTypeCode } from '@/constant/common';
 
 type PageParams = {
   id: string;
@@ -56,7 +56,7 @@ type PageParams = {
 const bookTabs = codeToOptions(BookDetailTabTypeCode);
 
 export default function ({ params }: { params: PageParams }) {
-  const [selectTab, setSelectTab] = useState('REVIEW_INQUIRY');
+  const [selectTab, setSelectTab] = useState<BookDetailTabType>('REVIEW_INQUIRY');
   const DynamicComponent = dynamic(() => import(`@/components/book/tabs/${selectTab}`), {
     loading: () => <div>loading...</div>,
   });
