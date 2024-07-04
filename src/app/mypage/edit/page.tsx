@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { MdModeEdit } from 'react-icons/md';
 
 import dynamic from 'next/dynamic';
 
@@ -22,19 +23,24 @@ export default function MyPageEdit() {
   return (
     <section className="mx-[120px] mt-[80px]">
       <div className="flex gap-16">
-        <div className="flex flex-col items-center gap-6">
-          <Avatar className="h-[200px] w-[200px] shadow-xl">
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <Button>프로필 변경</Button>
+        <div>
+          <div className="relative">
+            <Avatar className="h-[200px] w-[200px] shadow-xl">
+              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+            <Button
+              variant="outline"
+              size="icon"
+              className="absolute bottom-1 right-2 rounded-full"
+            >
+              <MdModeEdit className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
         <div className="w-full">
-          <Tabs
-            defaultValue={editMenus[0].value}
-            value={selectTab ?? editMenus[0].value}
-          >
-            <TabsList >
+          <Tabs defaultValue={editMenus[0].value} value={selectTab ?? editMenus[0].value}>
+            <TabsList>
               {editMenus.map((menu) => {
                 return (
                   <TabsTrigger
