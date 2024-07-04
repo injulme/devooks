@@ -28,7 +28,7 @@ const mainMenus = codeToOptions(TabTypeCode);
 export default function Home() {
   return (
     <Fragment>
-      <Carousel>
+      <Carousel opts={{ loop: true }}>
         <CarouselContent>
           <CarouselItem>
             <div className="h-[430px] bg-slate-700">box1</div>
