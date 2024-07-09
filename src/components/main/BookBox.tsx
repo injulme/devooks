@@ -3,20 +3,22 @@
 import Image from 'next/image';
 
 import Star from '@/assets/icons/star.svg';
-import DummyImg2 from '@/assets/images/dummy_img2.jpg';
-import DummyImg3 from '@/assets/images/dummy_img3.jpg';
-import DummyImg4 from '@/assets/images/dummy_img4.png';
+import cover1 from '@/assets/images/cover1.png';
+import cover2 from '@/assets/images/cover2.png';
+import cover3 from '@/assets/images/cover3.png';
+import cover4 from '@/assets/images/cover4.png';
+import cover5 from '@/assets/images/cover5.png';
 
 import { Badge } from '@/components/ui/badge';
 
 export default function BookBox({ bookId }: { bookId: number }) {
-  const imgs = [DummyImg2, DummyImg3, DummyImg4];
+  const imgs = [cover1, cover2, cover3, cover4, cover5];
 
   return (
     <div className="flex flex-col sm:flex-row sm:gap-4">
       <div className="relative mb-2 box-border h-[150px] overflow-hidden rounded-lg border border-gray-300 shadow-lg sm:w-[150px]">
         <Image
-          src={imgs[bookId % 3]}
+          src={imgs[bookId % 5]}
           alt={`image_${bookId}`}
           className="bg-no-repeat object-cover transition-all hover:scale-110"
           fill
