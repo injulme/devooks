@@ -72,10 +72,15 @@ const config = {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
         },
+        'rotate-axis': {
+          from: { transform: 'perspective(800px) rotateY(0deg)' },
+          to: { transform: 'perspective(800px) rotateY(360deg)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'rotate-axis': 'rotate-axis 30s linear infinite',
       },
     },
   },
