@@ -16,6 +16,7 @@ import Kakao from '@/assets/icons/kakao.svg';
 import Naver from '@/assets/icons/naver.svg';
 import Logo from '@/assets/images/devooks_logo.png';
 
+import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -64,6 +65,7 @@ export default function Header() {
         <DialogTrigger asChild>
           <Button>로그인</Button>
         </DialogTrigger>
+        <ThemeToggle />
         <DialogContent className="max-w-[400px]">
           <DialogHeader className="gap-4">
             <DialogTitle className="flex justify-center">
