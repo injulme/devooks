@@ -70,12 +70,12 @@ export default function ({ params }: { params: PageParams }) {
             alt="썸네일"
             className="mb-4 h-[430px] w-full rounded bg-no-repeat object-cover"
           />
-          <Carousel opts={{ loop: true }} className="rounded">
+          <Carousel opts={{ loop: true }}>
             <CarouselContent>
               {images.map((image, index) => {
                 return (
                   <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                    <div className="h-[230px] bg-slate-700">
+                    <div className="h-[230px] rounded border">
                       <Image
                         src={image}
                         alt={`cover_${index}`}
