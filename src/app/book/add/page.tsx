@@ -1,7 +1,8 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { AiFillPicture } from 'react-icons/ai';
 
 import { codeToOptions } from '@/lib/utils';
 import dayjs from 'dayjs';
@@ -298,29 +299,49 @@ export default function BookAdd() {
             </div>
           </div>
           <div className="col-span-3">
-            <img
-              src={mainImagePreview}
-              className="mb-4 h-[430px] w-full rounded bg-no-repeat object-cover"
-            />
-            <Carousel opts={{ loop: true }} className="rounded">
+            {mainImagePreview ? (
+              <img
+                src={mainImagePreview}
+                className="mb-4 h-[430px] w-full rounded bg-no-repeat object-cover"
+              />
+            ) : (
+              <div className="mb-4 flex h-[430px] w-full items-center justify-center rounded border">
+                <AiFillPicture size={140} className="bg-no-repeat object-cover text-gray-300" />
+              </div>
+            )}
+            <Carousel opts={{ loop: true }} className="mb-4">
               <CarouselContent>
-                {introductionImagePreviews.map((image, index) => {
-                  return (
-                    <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                      <div className="h-[230px] bg-slate-700">
-                        <img
-                          src={image}
-                          alt={`cover_${index}`}
-                          className="h-full w-full rounded bg-no-repeat object-cover"
-                        />
-                      </div>
-                    </CarouselItem>
-                  );
-                })}
+                {introductionImagePreviews.length > 0
+                  ? introductionImagePreviews.map((image, index) => {
+                      return (
+                        <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                          <div className="h-[230px] rounded border">
+                            <img
+                              src={image}
+                              alt={`cover_${index}`}
+                              className="h-full w-full rounded bg-no-repeat object-cover"
+                            />
+                          </div>
+                        </CarouselItem>
+                      );
+                    })
+                  : [0, 1, 2].map((i) => {
+                      return (
+                        <CarouselItem key={i} className="md:basis-1/2 lg:basis-1/3">
+                          <div className="flex h-[230px] items-center justify-center rounded border">
+                            <AiFillPicture
+                              size={80}
+                              className="bg-no-repeat object-cover text-gray-300"
+                            />
+                          </div>
+                        </CarouselItem>
+                      );
+                    })}
               </CarouselContent>
               <CarouselPrevious className="left-[32px]" />
               <CarouselNext className="right-[32px]" />
             </Carousel>
+
             <Card className="p-6 shadow-lg">
               <div className="flex justify-between text-sm text-zinc-700">
                 <span className="mb-4 flex items-center gap-1">
