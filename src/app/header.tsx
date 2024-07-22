@@ -1,5 +1,4 @@
 'use client';
-'use client';
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -7,9 +6,7 @@ import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { visibleLoginState } from '@/states';
 import { Separator } from '@radix-ui/react-separator';
-import { useRecoilState } from 'recoil';
 
 import Google from '@/assets/icons/google.svg';
 import Kakao from '@/assets/icons/kakao.svg';
@@ -42,7 +39,7 @@ import { LoginType } from '@/constant/common';
 
 export default function Header() {
   const form = useForm();
-  const [visibleLogin, setVisibleLogin] = useRecoilState(visibleLoginState);
+  const [visibleLogin, setVisibleLogin] = useState<boolean>(false);
   const [isJoinPopup, setIsJoinPopup] = useState<boolean>(false);
   const onJoinPopupOpen = (loginType: LoginType) => {
     setVisibleLogin(false);

@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
-import RecoilRootProvider from '@/components/RecoilRootProvider';
 import { ThemeProvider } from '@/components/theme-provider';
 
 import Header from './header';
@@ -23,18 +22,16 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <body className={inter.className + ' mt-[56px]'}>
-        <RecoilRootProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="light"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <Header />
-            {children}
-            {/* <footer>footer</footer> */}
-          </ThemeProvider>
-        </RecoilRootProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Header />
+          {children}
+          {/* <footer>footer</footer> */}
+        </ThemeProvider>
       </body>
     </html>
   );
