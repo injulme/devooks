@@ -9,6 +9,7 @@ import cover3 from '@/assets/images/cover3.png';
 import cover4 from '@/assets/images/cover4.png';
 import cover5 from '@/assets/images/cover5.png';
 
+import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Badge } from '@/components/ui/badge';
 
 export default function BookBox({ bookId }: { bookId: number }) {
@@ -16,13 +17,15 @@ export default function BookBox({ bookId }: { bookId: number }) {
 
   return (
     <div className="flex flex-col sm:flex-row sm:gap-4">
-      <div className="relative mb-2 box-border h-[150px] overflow-hidden rounded-lg border border-gray-300 shadow-lg sm:w-[150px]">
-        <Image
-          src={imgs[bookId % 5]}
-          alt={`image_${bookId}`}
-          className="bg-no-repeat object-cover transition-all hover:scale-110"
-          fill
-        />
+      <div className="relative mb-2 box-border h-[150px] min-w-[150px] overflow-hidden rounded-lg border border-gray-300 shadow-lg">
+        <AspectRatio ratio={3 / 4}>
+          <Image
+            src={imgs[bookId % 5]}
+            alt={`image_${bookId}`}
+            className="bg-no-repeat object-cover transition-all hover:scale-110"
+            fill
+          />
+        </AspectRatio>
       </div>
       <div>
         <h4 className="line-clamp-2 min-h-[56px] scroll-m-20 overflow-hidden text-ellipsis text-lg font-semibold">
