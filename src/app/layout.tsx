@@ -1,9 +1,9 @@
-import Header from './header';
-
 import './globals.css';
 
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+
+import Header from '@/components/layout/header';
 
 import ReactQueryProvider from '@/providers/reactQueryProvider';
 import { ThemeProvider } from '@/providers/themeProvider';
@@ -33,7 +33,6 @@ export default function RootLayout({
             <Header />
 
             {children}
-            {/* <footer>footer</footer> */}
           </ThemeProvider>
         </ReactQueryProvider>
       </body>
