@@ -1,6 +1,3 @@
-/**
- *
- */
 import axios, { AxiosRequestConfig } from 'axios';
 
 import { getAccessToken, getRefreshToken, logout, setTokens } from '@/lib/auth';
