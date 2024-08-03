@@ -68,9 +68,9 @@ export default function Header() {
               <Image src={Logo} alt="devooks 로고" height={50} />
             </DialogTitle>
             <div className="flex items-center gap-5">
-              <Separator className="my-4 h-[1px] w-full bg-gray-300" />
-              <span className="w-3/5">간편로그인</span>
-              <Separator className="my-4 h-[1px] w-full bg-gray-300" />
+              <Separator className="shrink bg-gray-300" />
+              <div className="w-3/5">간편로그인</div>
+              <Separator className="shrink bg-gray-300" />
             </div>
             <div className="flex justify-evenly">
               <button
