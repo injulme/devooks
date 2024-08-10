@@ -5,8 +5,6 @@ import { FaChevronRight } from 'react-icons/fa6';
 
 import Link from 'next/link';
 
-import { codeToOptions } from '@/lib/utils';
-
 import BookBox from '@/components/main/BookBox';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -20,12 +18,18 @@ import {
 
 import { TabTypeCode } from '@/constant/common';
 
+import { codeToOptions } from '@/lib/utils';
+
+import { useGetEbooks } from '@/modules/ebook/hooks/useGetEbooks';
+
 const dummy = Array(15)
   .fill({})
   .map((_, i) => i);
 
 const mainMenus = codeToOptions(TabTypeCode);
 export default function Home() {
+  const { data } = useGetEbooks();
+  console.log('책 전체 리스트 호출:: ', data);
   return (
     <Fragment>
       <Carousel opts={{ loop: true }}>

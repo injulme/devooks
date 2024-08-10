@@ -5,9 +5,10 @@ import { useQuery } from '@tanstack/react-query';
 
 import { ApiError } from '@/lib/api-error';
 
-export const useGetEbooks = <T = EbookListGetResponse>() => {
+export const useGetEbooks = () => {
   return useQuery({
     queryKey: [getEbooks.name],
-    queryFn: () => getEbooks(),
+    queryFn: getEbooks,
+    select: (data) => data,
   });
 };
