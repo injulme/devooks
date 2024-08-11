@@ -22,18 +22,14 @@ export default function Header() {
   const router = useRouter();
   const [isRegisterDialogOpen, setIsRegisterDialogOpen] = useState<boolean>(false);
 
-  const onJoinSubmit = () => {
-    console.log('on join submit');
-  };
-
   const loginLinkParams: LoginLinkParams = {
     KAKAO: `${process.env.NEXT_PUBLIC_KAKAO_LOGIN_API_URL}?response_type=code&client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}`,
     NAVER: `${process.env.NEXT_PUBLIC_NAVER_LOGIN_API_URL}?response_type=code&client_id=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_NAVER_REDIRECT_URI}&state=${process.env.NEXT_PUBLIC_NAVER_STATE}`,
     GOOGLE: `${process.env.NEXT_PUBLIC_GOOGLE_LOGIN_API_URL}?response_type=code&client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&scope=profile`,
   };
 
-  const onSignin = (loginType: OauthType) => {
-    router.push(loginLinkParams[loginType]);
+  const onSignin = (oauthType: OauthType) => {
+    router.push(loginLinkParams[oauthType]);
   };
   return (
     <header className="fixed top-0 z-50 flex h-[56px] w-full items-center justify-between gap-6 bg-white px-[16px] shadow">

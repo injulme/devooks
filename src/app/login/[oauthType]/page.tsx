@@ -2,12 +2,11 @@
 
 import { useEffect } from 'react';
 
-import { LoginType } from '@/constant/common';
-
 import { usePostLogin } from '@/modules/login/hooks/usePostLogin';
+import { OauthType } from '@/modules/login/type';
 
 type OauthTypeParams = {
-  oauthType: LoginType;
+  oauthType: OauthType;
 };
 
 type OauthTypeSearchParams = {
@@ -19,7 +18,7 @@ interface Props {
 }
 
 export default function ({ params, searchParams }: Props) {
-  const oauthType = params.oauthType.toUpperCase() as LoginType;
+  const oauthType = params.oauthType.toUpperCase() as OauthType;
 
   const { code: authorizationCode } = searchParams;
   console.table({ authorizationCode, oauthType });

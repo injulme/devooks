@@ -18,10 +18,10 @@ import {
 } from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
 
-import { LoginType } from '@/constant/common';
+import { OauthType } from '@/modules/login/type';
 
 type LoginDialogProps = {
-  onSignin: (loginType: LoginType) => void;
+  onSignin: (oauthType: OauthType) => void;
 };
 
 export default function LoginDialog({ onSignin }: LoginDialogProps) {
