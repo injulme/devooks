@@ -1,7 +1,9 @@
+type oauthType = 'NAVER' | 'GOOGLE' | 'KAKAO';
+
 /** @post login request */
 export type LoginRequest = {
   authorizationCode: string;
-  oauthType: string;
+  oauthType: oauthType;
 };
 
 /** @post login response */
