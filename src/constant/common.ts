@@ -1,7 +1,5 @@
 export type CodeType<T extends string> = Record<T, { label: string; value: T }>;
 
-export type LoginType = 'NAVER' | 'KAKAO' | 'GOOGLE';
-
 export type TabType = 'BEST' | 'NEW' | 'MONTH' | 'WEEK';
 export const TabTypeCode: CodeType<TabType> = {
   BEST: {

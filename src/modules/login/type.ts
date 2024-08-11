@@ -1,4 +1,4 @@
-type oauthType = 'NAVER' | 'GOOGLE' | 'KAKAO';
+export type OauthType = 'NAVER' | 'GOOGLE' | 'KAKAO';
 
 type TokenGroupType = {
   accessToken: string | null;
@@ -8,7 +8,7 @@ type TokenGroupType = {
 /** @post login request */
 export type LoginRequest = {
   authorizationCode: string;
-  oauthType: oauthType;
+  oauthType: OauthType;
 };
 
 /** @post login response */

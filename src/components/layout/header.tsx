@@ -14,9 +14,9 @@ import Logo from '@/assets/images/devooks_logo.png';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-import { LoginType } from '@/constant/common';
+import { OauthType } from '@/modules/login/type';
 
-type LoginLinkParams = Record<LoginType, string>;
+type LoginLinkParams = Record<OauthType, string>;
 
 export default function Header() {
   const router = useRouter();
@@ -32,7 +32,7 @@ export default function Header() {
     GOOGLE: `${process.env.NEXT_PUBLIC_GOOGLE_LOGIN_API_URL}?response_type=code&client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&scope=profile`,
   };
 
-  const onSignin = (loginType: LoginType) => {
+  const onSignin = (loginType: OauthType) => {
     router.push(loginLinkParams[loginType]);
   };
   return (
