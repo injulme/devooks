@@ -1,7 +1,11 @@
 export interface ApiError {
-  error: string;
-  timestamp: number;
-  status: number;
+  code?: string;
+  error?: string;
+  message?: string | any;
+  path?: string;
+  requestId?: string;
+  status?: number;
+  timestamp?: string;
 }
 
 export const AUTH4001 = 'AUTH-400-1';
