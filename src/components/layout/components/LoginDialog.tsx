@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 import { OauthType } from '@/services/login/type';
 
@@ -9,7 +10,6 @@ import Kakao from '@/assets/icons/kakao.svg';
 import Naver from '@/assets/icons/naver.svg';
 import Logo from '@/assets/images/devooks_logo.png';
 
-import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -20,17 +20,27 @@ import {
 } from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
 
-type LoginDialogProps = {
-  onSignin: (oauthType: OauthType) => void;
-};
+type LoginLinkParams = Record<OauthType, string>;
 
-export default function LoginDialog({ onSignin }: LoginDialogProps) {
+export default function LoginDialog() {
+  const router = useRouter();
+
+  const loginLinkParams: LoginLinkParams = {
+    KAKAO: `${process.env.NEXT_PUBLIC_KAKAO_LOGIN_API_URL}?response_type=code&client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}`,
+    NAVER: `${process.env.NEXT_PUBLIC_NAVER_LOGIN_API_URL}?response_type=code&client_id=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_NAVER_REDIRECT_URI}&state=${process.env.NEXT_PUBLIC_NAVER_STATE}`,
+    GOOGLE: `${process.env.NEXT_PUBLIC_GOOGLE_LOGIN_API_URL}?response_type=code&client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&scope=profile`,
+  };
+
+  const onSignin = (oauthType: OauthType) => {
+    router.push(loginLinkParams[oauthType]);
+  };
+
   return (
+
     <Dialog>
       <DialogTrigger asChild>
         <Button>로그인</Button>
       </DialogTrigger>
-      <ThemeToggle />
       <DialogContent className="max-w-[400px]">
         <DialogHeader className="gap-4">
           <DialogTitle className="flex justify-center">
