@@ -31,15 +31,15 @@ import { Separator } from '@/components/ui/separator';
 
 import { CategoryTypeCode } from '@/constant/common';
 
-import { codeToOptions } from '@/lib/utils';
+import { codeToArray } from '@/lib/utils';
 
 import { useRegisterStore } from '@/stores/useRegisterStore';
 
+const categoryList = codeToArray(CategoryTypeCode);
 export default function RegisterDialog() {
   const store = useRegisterStore((state) => state);
   const form = useForm<SignupRequest>();
   const [agreeChecks, setAgreeChecks] = useState([false, false, false]);
-  const categoryList = codeToOptions(CategoryTypeCode);
 
   const [allAgreeCheck, setAllAgreeCheck] = useState(false);
 

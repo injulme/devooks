@@ -20,13 +20,13 @@ import {
 
 import { TabTypeCode } from '@/constant/common';
 
-import { codeToOptions } from '@/lib/utils';
+import { codeToArray } from '@/lib/utils';
 
 const dummy = Array(15)
   .fill({})
   .map((_, i) => i);
 
-const mainMenus = codeToOptions(TabTypeCode);
+const mainMenus = codeToArray(TabTypeCode);
 export default function Home() {
   const { data } = useGetEbooks();
   console.log('책 전체 리스트 호출:: ', data);

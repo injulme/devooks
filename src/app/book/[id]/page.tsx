@@ -6,8 +6,6 @@ import { IoSettingsOutline } from 'react-icons/io5';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
-import { codeToOptions } from '@/lib/utils';
-
 import Heart from '@/assets/icons/heart.svg';
 import Home from '@/assets/icons/home.svg';
 import Instagram from '@/assets/icons/instagram.svg';
@@ -50,10 +48,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import { BookDetailTabType, BookDetailTabTypeCode } from '@/constant/common';
 
+import { codeToArray } from '@/lib/utils';
+
 type PageParams = {
   id: string;
 };
-const bookTabs = codeToOptions(BookDetailTabTypeCode);
+const bookTabs = codeToArray(BookDetailTabTypeCode);
 
 export default function ({ params }: { params: PageParams }) {
   const [selectTab, setSelectTab] = useState<BookDetailTabType>('REVIEW_INQUIRY');

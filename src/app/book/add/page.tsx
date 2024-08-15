@@ -4,7 +4,6 @@ import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AiFillPicture } from 'react-icons/ai';
 
-import { codeToOptions } from '@/lib/utils';
 import dayjs from 'dayjs';
 
 import Heart from '@/assets/icons/heart.svg';
@@ -33,7 +32,9 @@ import { Textarea } from '@/components/ui/textarea';
 
 import { BookDetailTabType, BookDetailTabTypeCode } from '@/constant/common';
 
-const bookTabs = codeToOptions(BookDetailTabTypeCode).slice(0, -1);
+import { codeToArray } from '@/lib/utils';
+
+const bookTabs = codeToArray(BookDetailTabTypeCode).slice(0, -1);
 
 type BookSummary = {
   pdfFile: File;

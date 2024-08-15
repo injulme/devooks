@@ -1,8 +1,8 @@
 'use client';
 
-import { SyntheticEvent, useState } from 'react';
+import Comment from './Comment';
 
-import { codeToOptions } from '@/lib/utils';
+import { SyntheticEvent, useState } from 'react';
 
 import InquiryDialog from '@/components/book/reviewDialog/InquiryDialog';
 import ReviewDialog from '@/components/book/reviewDialog/ReviewDialog';
@@ -18,9 +18,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import { BookCategoryType, BookCategoryTypeCode } from '@/constant/common';
 
-import Comment from './Comment';
+import { codeToArray } from '@/lib/utils';
 
-const tabs = codeToOptions(BookCategoryTypeCode);
+const tabs = codeToArray(BookCategoryTypeCode);
 
 const dummy = Array(15)
   .fill({})

@@ -8,9 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 // 기본 옵션 파싱
-export function codeToOptions<T extends string>(
-  code: CodeType<T>,
-): { label: string; value: T }[] {
+export function codeToArray<T extends string>(code: CodeType<T>): { label: string; value: T }[] {
   return Object.keys(code).map((key) => ({
     label: code[key as T].label,
     value: code[key as T].value,

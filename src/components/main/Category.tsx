@@ -1,12 +1,12 @@
 import { PiBookBookmarkLight } from 'react-icons/pi';
 
-import { codeToOptions } from '@/lib/utils';
-
 import { Button } from '@/components/ui/button';
 
 import { CategoryTypeCode } from '@/constant/common';
 
-const categories = codeToOptions(CategoryTypeCode);
+import { codeToArray } from '@/lib/utils';
+
+const categories = codeToArray(CategoryTypeCode);
 
 export default function Category() {
   return (

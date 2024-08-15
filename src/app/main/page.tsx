@@ -5,18 +5,18 @@ import { Fragment, useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
-import { codeToOptions } from '@/lib/utils';
-
 import BookBox from '@/components/main/BookBox';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import { TabTypeCode } from '@/constant/common';
 
+import { codeToArray } from '@/lib/utils';
+
 const dummy = Array(15)
   .fill({})
   .map((_, i) => i);
 
-const mainMenus = codeToOptions(TabTypeCode);
+const mainMenus = codeToArray(TabTypeCode);
 export default function Main() {
   const params = useSearchParams();
   const tab = params.get('tab');
