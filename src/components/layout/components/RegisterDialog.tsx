@@ -7,6 +7,9 @@ import { useForm } from 'react-hook-form';
 
 import Image from 'next/image';
 
+import { usePostSignup } from '@/services/member/hooks/usePostSignup';
+import { SignupRequest } from '@/services/member/type';
+
 import Logo from '@/assets/images/devooks_logo.png';
 
 import { Button } from '@/components/ui/button';
@@ -29,9 +32,6 @@ import { Separator } from '@/components/ui/separator';
 import { CategoryTypeCode } from '@/constant/common';
 
 import { codeToOptions } from '@/lib/utils';
-
-import { usePostSignup } from '@/modules/member/hooks/usePostSignup';
-import { SignupRequest } from '@/modules/member/type';
 
 import { useRegisterStore } from '@/stores/useRegisterStore';
 

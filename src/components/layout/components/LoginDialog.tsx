@@ -2,6 +2,8 @@
 
 import Image from 'next/image';
 
+import { OauthType } from '@/services/login/type';
+
 import Google from '@/assets/icons/google.svg';
 import Kakao from '@/assets/icons/kakao.svg';
 import Naver from '@/assets/icons/naver.svg';
@@ -17,8 +19,6 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
-
-import { OauthType } from '@/modules/login/type';
 
 type LoginDialogProps = {
   onSignin: (oauthType: OauthType) => void;

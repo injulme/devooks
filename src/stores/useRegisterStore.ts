@@ -1,6 +1,5 @@
+import { SignupRequest } from '@/services/member/type';
 import { create } from 'zustand';
-
-import { SignupRequest } from '@/modules/member/type';
 
 type State = {
   open: boolean;

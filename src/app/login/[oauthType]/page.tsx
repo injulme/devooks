@@ -4,10 +4,10 @@ import { useEffect } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import { ApiError, MEMBER4041 } from '@/lib/api-error';
+import { usePostLogin } from '@/services/login/hooks/usePostLogin';
+import { OauthType } from '@/services/login/type';
 
-import { usePostLogin } from '@/modules/login/hooks/usePostLogin';
-import { OauthType } from '@/modules/login/type';
+import { ApiError, MEMBER4041 } from '@/lib/api-error';
 
 import { useRegisterStore } from '@/stores/useRegisterStore';
 

@@ -1,9 +1,8 @@
+import { LoginResponse } from '@/services/login/type';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
 import cookieStorage from '@/lib/cookie-storage';
-
-import { LoginResponse } from '@/modules/login/type';
 
 type State = Pick<LoginResponse['tokenGroup'], 'accessToken' | 'refreshToken'>;
 

@@ -9,12 +9,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
+import { OauthType } from '@/services/login/type';
+
 import Logo from '@/assets/images/devooks_logo.png';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-
-import { OauthType } from '@/modules/login/type';
 
 import { useRegisterStore } from '@/stores/useRegisterStore';
 
