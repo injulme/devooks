@@ -25,7 +25,7 @@ interface Props {
 
 export default function ({ params, searchParams }: Props) {
   const router = useRouter();
-  const onOpenChange = useRegisterStore((state) => state.onOpenChange);
+  const store = useRegisterStore((state) => state);
   const oauthType = params.oauthType.toUpperCase() as OauthType;
 
   const { code: authorizationCode } = searchParams;
@@ -44,8 +44,8 @@ export default function ({ params, searchParams }: Props) {
             // 회원가입 하기
             console.log('login error!! ', errorResponse);
             router.push('/');
-            onOpenChange({
-              open: true,
+            store.onOpenChange(true);
+            store.setState({
               oauthId: errorResponse.message.oauthId,
               oauthType: oauthType,
             });

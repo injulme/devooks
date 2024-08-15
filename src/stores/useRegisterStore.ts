@@ -8,13 +8,15 @@ type State = {
 
 type Actions = {
   onOpenChange: React.Dispatch<React.SetStateAction<any>>;
+  setState: (data: SignupRequest) => void;
 };
 
 export const useRegisterStore = create<State & Actions>((set, get) => ({
-  open: true,
+  open: false,
   oauthId: '',
   oauthType: null,
   nickname: '',
   favoriteCategories: [],
-  onOpenChange: (data: State) => set({ ...data }),
+  onOpenChange: (open: boolean) => set({ open }),
+  setState: (data: SignupRequest) => set({ ...data }),
 }));
