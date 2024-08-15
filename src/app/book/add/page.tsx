@@ -27,12 +27,15 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { MultiSelect } from '@/components/ui/multi-select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
 
-import { BookDetailTabType, BookDetailTabTypeCode } from '@/constant/common';
+import { BookDetailTabType, BookDetailTabTypeCode, CategoryTypeCode } from '@/constant/common';
 
 import { codeToArray } from '@/lib/utils';
+
+const categoryList = codeToArray(CategoryTypeCode);
 
 const bookTabs = codeToArray(BookDetailTabTypeCode).slice(0, -1);
 
@@ -40,7 +43,7 @@ type BookSummary = {
   pdfFile: File;
   pageTotalCount: number;
   name: string;
-  category: string;
+  category: string[];
   amount: number;
   mainImage: File;
   introductionImage: File;
@@ -204,7 +207,17 @@ export default function BookAdd() {
                       카테고리 <span className="text-red-600">(필수)</span>
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="카테고리를 입력해 주세요." {...field} />
+                      <MultiSelect
+                        options={categoryList}
+                        onValueChange={field.onChange}
+                        defaultValue={field.value ?? []}
+                        placeholder="카테고리를 선택해주세요"
+                        variant="inverted"
+                        animation={2}
+                        maxCount={5}
+                        modalPopover
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -350,7 +363,9 @@ export default function BookAdd() {
                 </span>
                 <span>{dayjs().format('YYYY-MM-DD')}</span>
               </div>
-              <p className="text-sm text-zinc-500">#category #category #category</p>
+              <p className="text-sm text-zinc-500">
+                {form.watch('category').map((cate) => `#${cate} `)}
+              </p>
               <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
                 {form.watch('name')}
               </h2>
