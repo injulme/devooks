@@ -16,11 +16,12 @@ import { Input } from '@/components/ui/input';
 
 import { OauthType } from '@/modules/login/type';
 
+import { useRegisterStore } from '@/stores/useRegisterStore';
+
 type LoginLinkParams = Record<OauthType, string>;
 
 export default function Header() {
   const router = useRouter();
-  const [isRegisterDialogOpen, setIsRegisterDialogOpen] = useState<boolean>(false);
 
   const loginLinkParams: LoginLinkParams = {
     KAKAO: `${process.env.NEXT_PUBLIC_KAKAO_LOGIN_API_URL}?response_type=code&client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}`,
@@ -33,7 +34,7 @@ export default function Header() {
   };
   return (
     <header className="fixed top-0 z-50 flex h-[56px] w-full items-center justify-between gap-6 bg-white px-[16px] shadow">
-      <Link href={'/'}>
+      <Link href="/">
         <Image src={Logo} alt="devooks 로고" height={40} />
       </Link>
       <Input />
@@ -42,7 +43,7 @@ export default function Header() {
       </Button>
 
       <LoginDialog onSignin={onSignin} />
-      <RegisterDialog open={isRegisterDialogOpen} onOpenChange={setIsRegisterDialogOpen} />
+      <RegisterDialog />
     </header>
   );
 }
