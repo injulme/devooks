@@ -4,7 +4,8 @@ import { useState } from 'react';
 
 import dynamic from 'next/dynamic';
 
-import UserInfo from '@/components/mypage/UserInfo';
+import UserInfo from '@/app/mypage/_components/UserInfo';
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const mypageMenus = [

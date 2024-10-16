@@ -1,4 +1,4 @@
-import Category from '@/components/main/Category';
+import Category from '@/app/main/_components/Category';
 
 export default function MainLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (

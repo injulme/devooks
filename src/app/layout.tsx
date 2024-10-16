@@ -5,8 +5,8 @@ import { Inter } from 'next/font/google';
 
 import Header from '@/components/layout/header';
 
-import ReactQueryProvider from '@/providers/reactQueryProvider';
-import { ThemeProvider } from '@/providers/themeProvider';
+import ReactQueryProvider from '@/providers/react-query-provider';
+import { ThemeProvider } from '@/providers/theme-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 

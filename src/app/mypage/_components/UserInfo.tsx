@@ -1,5 +1,7 @@
 'use client';
 
+import { Button } from '../../../components/ui/button';
+
 import Link from 'next/link';
 
 import Home from '@/assets/icons/home.svg';
@@ -7,8 +9,6 @@ import Instagram from '@/assets/icons/instagram.svg';
 import Youtube from '@/assets/icons/youtube.svg';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-
-import { Button } from '../ui/button';
 
 export default function UserInfo() {
   return (
