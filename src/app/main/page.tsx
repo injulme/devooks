@@ -5,7 +5,8 @@ import { Fragment, useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
-import BookBox from '@/components/main/BookBox';
+import BookBox from '@/app/main/_components/BookBox';
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import { TabTypeCode } from '@/constant/common';
