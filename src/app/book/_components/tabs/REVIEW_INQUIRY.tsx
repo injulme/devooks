@@ -4,8 +4,9 @@ import Comment from './Comment';
 
 import { SyntheticEvent, useState } from 'react';
 
-import InquiryDialog from '@/components/book/reviewDialog/InquiryDialog';
-import ReviewDialog from '@/components/book/reviewDialog/ReviewDialog';
+import InquiryDialog from '@/app/book/_components/reviewDialog/InquiryDialog';
+import ReviewDialog from '@/app/book/_components/reviewDialog/ReviewDialog';
+
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,

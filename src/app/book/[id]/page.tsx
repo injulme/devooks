@@ -57,7 +57,7 @@ const bookTabs = codeToArray(BookDetailTabTypeCode);
 
 export default function ({ params }: { params: PageParams }) {
   const [selectTab, setSelectTab] = useState<BookDetailTabType>('REVIEW_INQUIRY');
-  const DynamicComponent = dynamic(() => import(`@/components/book/tabs/${selectTab}`), {
+  const DynamicComponent = dynamic(() => import(`@/app/book/_components/tabs/${selectTab}`), {
     loading: () => <div>loading...</div>,
   });
   const images = [cover1, cover2, cover3, cover4, cover5];

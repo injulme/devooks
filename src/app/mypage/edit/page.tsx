@@ -16,7 +16,7 @@ const editMenus = [
 ];
 export default function MyPageEdit() {
   const [selectTab, setSelectTab] = useState(editMenus[0].value);
-  const DynamicComponent = dynamic(() => import(`@/components/mypage/edit/${selectTab}`), {
+  const DynamicComponent = dynamic(() => import(`@/app/mypage/_components/edit/${selectTab}`), {
     loading: () => <div>loading...</div>,
   });
 

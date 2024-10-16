@@ -7,7 +7,8 @@ import Link from 'next/link';
 
 import { useGetEbooks } from '@/services/ebook/hooks/useGetEbooks';
 
-import BookBox from '@/components/main/BookBox';
+import BookBox from '@/app/main/_components/BookBox';
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {

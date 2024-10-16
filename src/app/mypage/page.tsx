@@ -16,7 +16,7 @@ const mypageMenus = [
 
 export default function MyPage() {
   const [selectTab, setSelectTab] = useState('MY_BOOK');
-  const DynamicComponent = dynamic(() => import(`@/components/mypage/${selectTab}`), {
+  const DynamicComponent = dynamic(() => import(`@/app/mypage/_components/${selectTab}`), {
     loading: () => <div>loading...</div>,
   });
 
