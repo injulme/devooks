@@ -364,7 +364,7 @@ export default function BookAdd() {
                 <span>{dayjs().format('YYYY-MM-DD')}</span>
               </div>
               <p className="text-sm text-zinc-500">
-                {form.watch('category').map((cate) => `#${cate} `)}
+                {/* {form.watch('category').map((cate) => `#${cate} `)} */}
               </p>
               <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
                 {form.watch('name')}
