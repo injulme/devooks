@@ -32,7 +32,7 @@ export default function ({ params }: { params: PageParams }) {
   return (
     <Fragment>
       <h2 className="scroll-m-20 pb-8 text-center text-3xl font-semibold tracking-tight first:mt-0">
-        The People of the Kingdom
+        The People of the Kingdom [book ID: {params.id}]
       </h2>
       <section className="grid grid-cols-6 gap-20">
         <div className="col-span-4 flex flex-col gap-8">

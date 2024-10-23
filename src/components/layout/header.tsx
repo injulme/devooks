@@ -19,19 +19,24 @@ type LoginLinkParams = Record<OauthType, string>;
 export default function Header() {
   return (
     <header className="sticky top-0 z-50 bg-white shadow dark:bg-background">
-      <div className="mx-auto flex h-[64px] max-w-screen-xl items-center justify-between gap-6 px-12">
-        <Link href="/">
-          <Image src={Logo} alt="devooks 로고" height={40} />
-        </Link>
-        <Input />
-        <div className="flex items-center gap-2">
-          <Button variant="outline">
-            <Link href="/book/add">책 등록</Link>
-          </Button>
+      <div className="mx-auto flex max-w-screen-xl flex-col justify-center gap-4 px-12 py-3">
+        <div className="flex items-center justify-between gap-2">
+          <Link href="/">
+            <Image src={Logo} alt="devooks 로고" height={32} />
+          </Link>
+          <div className="flex items-center gap-2">
+            <Button variant="outline">
+              <Link href="/book/add">책 등록</Link>
+            </Button>
 
-          <LoginDialog />
-          <RegisterDialog />
-          <ThemeToggle />
+            <LoginDialog />
+            <RegisterDialog />
+            <ThemeToggle />
+          </div>
+        </div>
+        <div className="flex items-center justify-between">
+          <div>categories</div>
+          <Input placeholder="검색어를 입력해주세요." className="w-[240px] bg-gray-200" />
         </div>
       </div>
     </header>
