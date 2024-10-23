@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import Comment from '@/app/book/_components/tabs/Comment';
+import Comment from '@/app/book/_components/tabs/comment';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';

@@ -5,9 +5,7 @@ import { useForm } from 'react-hook-form';
 import { AiFillPicture } from 'react-icons/ai';
 
 import dayjs from 'dayjs';
-
-import Heart from '@/assets/icons/heart.svg';
-import Star from '@/assets/icons/star.svg';
+import { Heart, Star } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';

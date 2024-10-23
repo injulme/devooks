@@ -1,6 +1,6 @@
 'use client';
 
-import Comment from './Comment';
+import Comment from './comment';
 
 import { SyntheticEvent, useState } from 'react';
 
@@ -27,11 +27,12 @@ const dummy = Array(15)
   .fill({})
   .map((_, i) => i);
 
-export default function ReviewInquiry() {
+export default function Review() {
   const [selectTab, setSelectTab] = useState('REVIEW');
 
   return (
     <section>
+      <div className="text-lg font-bold">리뷰</div>
       <div className="mt-4 flex justify-between">
         <Tabs defaultValue={tabs[0].value} value={selectTab ?? tabs[0].value}>
           <TabsList>

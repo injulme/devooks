@@ -2,7 +2,8 @@
 
 import Image from 'next/image';
 
-import Star from '@/assets/icons/star.svg';
+import { Star } from 'lucide-react';
+
 import cover1 from '@/assets/images/cover1.png';
 import cover2 from '@/assets/images/cover2.png';
 import cover3 from '@/assets/images/cover3.png';
