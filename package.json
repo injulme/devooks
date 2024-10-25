@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -37,7 +37,7 @@
     "dayjs": "^1.11.11",
     "embla-carousel-react": "^8.1.5",
     "js-cookie": "^3.0.5",
-    "lucide-react": "^0.395.0",
+    "lucide-react": "^0.453.0",
     "next": "14.2.4",
     "next-themes": "^0.3.0",
     "react": "^18",

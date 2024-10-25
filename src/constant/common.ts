@@ -70,7 +70,7 @@ export const CategoryTypeCode: CodeType<CategoryType> = {
   },
 };
 
-export type BookDetailTabType = 'INTRODUCTION' | 'TABLE_OF_CONTENTS' | 'REFUND' | 'REVIEW_INQUIRY';
+export type BookDetailTabType = 'INTRODUCTION' | 'TABLE_OF_CONTENTS' | 'CLAIM' | 'REVIEW';
 export const BookDetailTabTypeCode: CodeType<BookDetailTabType> = {
   INTRODUCTION: {
     label: '책 소개',
@@ -80,24 +80,12 @@ export const BookDetailTabTypeCode: CodeType<BookDetailTabType> = {
     label: '목차',
     value: 'TABLE_OF_CONTENTS',
   },
-  REFUND: {
-    label: '환불규정',
-    value: 'REFUND',
-  },
-  REVIEW_INQUIRY: {
-    label: '리뷰 & 문의',
-    value: 'REVIEW_INQUIRY',
-  },
-};
-
-export type BookCategoryType = 'REVIEW' | 'INQUIRY';
-export const BookCategoryTypeCode: CodeType<BookCategoryType> = {
   REVIEW: {
     label: '리뷰',
     value: 'REVIEW',
   },
-  INQUIRY: {
-    label: '문의',
-    value: 'INQUIRY',
+  CLAIM: {
+    label: '환불/문의',
+    value: 'CLAIM',
   },
 };

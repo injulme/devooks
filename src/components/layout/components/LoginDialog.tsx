@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import { OauthType } from '@/services/login/type';
+import { CircleUserRound } from 'lucide-react';
 
 import Google from '@/assets/icons/google.svg';
 import Kakao from '@/assets/icons/kakao.svg';
@@ -36,10 +37,11 @@ export default function LoginDialog() {
   };
 
   return (
-
     <Dialog>
       <DialogTrigger asChild>
-        <Button>로그인</Button>
+        <Button variant="outline" className="gap-2">
+          <CircleUserRound strokeWidth={1.5} size={16} /> 로그인
+        </Button>
       </DialogTrigger>
       <DialogContent className="max-w-[400px]">
         <DialogHeader className="gap-4">

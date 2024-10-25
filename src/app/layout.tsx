@@ -3,8 +3,6 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
-import Header from '@/components/layout/header';
-
 import ReactQueryProvider from '@/providers/react-query-provider';
 import { ThemeProvider } from '@/providers/theme-provider';
 
@@ -22,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" suppressHydrationWarning>
-      <body className={inter.className + ' mt-[56px]'}>
+      <body className={inter.className}>
         <ReactQueryProvider>
           <ThemeProvider
             attribute="class"
@@ -30,8 +28,6 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Header />
-
             {children}
           </ThemeProvider>
         </ReactQueryProvider>
