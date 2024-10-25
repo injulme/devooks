@@ -1,42 +1,45 @@
 'use client';
 
-import { FaRegStar, FaStar } from 'react-icons/fa';
+import { Crown, Heart, MessageCircleMore, MessageSquareMore, Star } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 export default function Comment() {
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex flex-col">
-          <div className="flex items-center gap-4">
-            <Avatar className="h-[40px] w-[40px]">
-              <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-            <div className="flex flex-col gap-1">
-              <span className="text-sm font-medium leading-none">
-                <div className="flex items-center gap-1">
-                  <FaStar size={12} />
-                  <FaStar size={12} />
-                  <FaStar size={12} />
-                  <FaStar size={12} />
-                  <FaRegStar size={12} />
-                  <span>4.0</span>
-                </div>
-              </span>
-              <span className="text-sm text-muted-foreground">이상민 | 2023.12.21 12:43</span>
+    <div className="flex flex-col border-b py-4 first-of-type:border-t-2">
+      <div className="flex items-center gap-3">
+        <Avatar className="h-[32px] w-[32px]">
+          <AvatarImage src="https://github.com/shadcn.png" />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
+        <div className="flex w-full justify-between gap-1">
+          <span className="flex items-center gap-2 text-xs text-muted-foreground">
+            in******* <div className="h-3 w-[1px] bg-gray-300" />
+            2023.12.21
+          </span>
+          <span className="text-xs font-medium leading-none">
+            <div className="flex items-center gap-1">
+              <Star size={12} fill="yellow" strokeWidth={1} />
+              <Star size={12} fill="yellow" strokeWidth={1} />
+              <Star size={12} fill="yellow" strokeWidth={1} />
+              <Star size={12} fill="yellow" strokeWidth={1} />
+              <Star size={12} strokeWidth={1} />
             </div>
-          </div>
+          </span>
         </div>
-      </CardHeader>
-      <CardContent className="">
-        <p className="leading-7">
-          The king, seeing how much happier his subjects were, realized the error of his ways and
-          repealed the joke tax.
-        </p>
-      </CardContent>
-    </Card>
+      </div>
+      <p className="text-sm leading-5 text-gray-800">
+        역사를 잊고 살아갈 순 없습니다.
+        <br />
+        정작 읽어야할 사람들은 안 읽는 것 같네요.
+      </p>
+      <div className="flex justify-end">
+        <Button variant="link" size="sm">
+          <MessageSquareMore size={20} strokeWidth={1.5} className="mr-1 scale-x-[-1]" />
+          12
+        </Button>
+      </div>
+    </div>
   );
 }

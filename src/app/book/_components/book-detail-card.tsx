@@ -47,22 +47,29 @@ export default function BookDetailCard() {
       </div>
 
       <div className="mt-6 flex flex-col gap-2">
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button variant="outline">미리보기</Button>
-          </DialogTrigger>
+        <div className="flex gap-2">
+          <Button variant="outline" size="icon">
+            <Heart size={16} />
+          </Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline" className="w-full">
+                미리보기
+              </Button>
+            </DialogTrigger>
 
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>미리보기</DialogTitle>
-              <DialogDescription>The People of the Kingdom</DialogDescription>
-            </DialogHeader>
-            <div className="p-4">미리보기 이미지</div>
-            <DialogFooter className="justify-center sm:justify-center">
-              <Button type="submit">구매하기</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>미리보기</DialogTitle>
+                <DialogDescription>The People of the Kingdom</DialogDescription>
+              </DialogHeader>
+              <div className="p-4">미리보기 이미지</div>
+              <DialogFooter className="justify-center sm:justify-center">
+                <Button type="submit">구매하기</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </div>
 
         <Button>구매하기</Button>
       </div>
