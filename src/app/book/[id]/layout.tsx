@@ -1,6 +1,6 @@
-import { Fragment } from 'react';
+import Header from '../_components/header';
 
-import Header from '@/components/layout/header';
+import { Fragment } from 'react';
 
 export default function BookLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (

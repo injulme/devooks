@@ -80,24 +80,12 @@ export const BookDetailTabTypeCode: CodeType<BookDetailTabType> = {
     label: '목차',
     value: 'TABLE_OF_CONTENTS',
   },
+  REVIEW: {
+    label: '리뷰',
+    value: 'REVIEW',
+  },
   CLAIM: {
     label: '환불/문의',
     value: 'CLAIM',
-  },
-  REVIEW: {
-    label: '리뷰',
-    value: 'REVIEW',
-  },
-};
-
-export type BookCategoryType = 'REVIEW' | 'INQUIRY';
-export const BookCategoryTypeCode: CodeType<BookCategoryType> = {
-  REVIEW: {
-    label: '리뷰',
-    value: 'REVIEW',
-  },
-  INQUIRY: {
-    label: '문의',
-    value: 'INQUIRY',
   },
 };
