@@ -9,8 +9,8 @@ import UserInfo from '@/app/mypage/_components/UserInfo';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const mypageMenus = [
-  { label: '등록 내역', value: 'MY_BOOK' },
-  { label: '구매 내역', value: 'PURCHASE_HISTORY' },
+  { label: '판매중인 책', value: 'MY_BOOK' },
+  { label: '구매한 책', value: 'PURCHASE_HISTORY' },
   { label: '판매 관리', value: 'SALES_MANAGEMENT' },
   { label: '찜 목록', value: 'WISHLIST' },
 ];

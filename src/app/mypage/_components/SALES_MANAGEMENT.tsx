@@ -1,5 +1,6 @@
 import { Banknote, Gem, ReceiptText } from 'lucide-react';
 
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -55,12 +56,11 @@ export default function SalesManagement() {
 
       <div className="mt-8 grid grid-cols-2 gap-6">
         <div>
-          <h2 className="mb-2 text-2xl font-bold">수익금 내역</h2>
+          <h5 className="mb-2 text-xl font-bold">수익금 내역</h5>
           <div className="flex flex-col gap-4">
             {dummy.map((d) => {
               return (
-                <Card className="flex gap-4 p-2" key={d}>
-                  <div className="w-[200px] rounded-sm bg-slate-700">box</div>
+                <Card className="p-2" key={d}>
                   <div className="flex flex-col justify-between">
                     <h4 className="text-md font-semibold">The People of the Kingdom</h4>
                     <div className="mt-12">
@@ -81,18 +81,18 @@ export default function SalesManagement() {
         </div>
 
         <div>
-          <h2 className="mb-2 text-2xl font-bold">출금 내역</h2>
+          <h5 className="mb-2 text-xl font-bold">출금 내역</h5>
           <div className="flex flex-col gap-4">
             {dummy.map((d) => {
               return (
-                <Card className="flex gap-4 p-2" key={d}>
-                  <div className="flex w-[120px] items-center justify-center rounded-sm bg-slate-400 text-xl font-semibold text-white">
-                    대기
-                  </div>
+                <Card className="p-2" key={d}>
                   <div className="space-y-2">
                     <div className="flex items-center">
-                      <Label className="w-[80px]">출금 은행</Label>
-                      <span className="text-slate-700">국민은행</span>
+                      <Label className="min-w-[80px] max-w-[80px]">출금 은행</Label>
+                      <div className="flex w-full items-center justify-between">
+                        <span className="text-slate-700">국민은행</span>
+                        <Badge variant="secondary">대기</Badge>
+                      </div>
                     </div>
                     <div className="flex items-center">
                       <Label className="w-[80px]">출금 계좌</Label>
