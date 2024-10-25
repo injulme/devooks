@@ -43,7 +43,9 @@ export default function UserInfo() {
           </div>
         </div>
         <Link href={'/mypage/edit'}>
-          <Button>프로필 수정</Button>
+          <Button size="sm" variant="secondary">
+            프로필 수정
+          </Button>
         </Link>
       </div>
     </div>

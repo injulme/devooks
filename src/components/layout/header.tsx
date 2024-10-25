@@ -19,7 +19,7 @@ type LoginLinkParams = Record<OauthType, string>;
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 bg-white shadow dark:bg-background">
+    <header className="sticky top-0 z-[99] bg-white shadow dark:bg-background">
       <div className="mx-auto flex max-w-screen-xl flex-col justify-center gap-4 px-12 py-3">
         <div className="flex items-center justify-between gap-2">
           <Link href="/">
