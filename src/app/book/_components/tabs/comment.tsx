@@ -15,7 +15,7 @@ export default function Comment() {
         </Avatar>
         <div className="flex w-full justify-between gap-1">
           <span className="flex items-center gap-2 text-xs text-muted-foreground">
-            in******* <div className="h-3 w-[1px] bg-gray-300" />
+            injulme0309 <div className="h-3 w-[1px] bg-gray-300" />
             2023.12.21
           </span>
           <span className="text-xs font-medium leading-none">
