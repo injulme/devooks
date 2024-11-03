@@ -18,14 +18,15 @@ const dummy = Array(15)
   .map((_, i) => i);
 
 const mainMenus = codeToArray(TabTypeCode);
+
 export default function Main() {
   const params = useSearchParams();
-  const tab = params.get('tab');
-  const [selectTab, setSelectTab] = useState(tab);
+  const tab = params?.get('tab');
+  const [selectTab, setSelectTab] = useState(tab || mainMenus[0].value);
 
   return (
     <Fragment>
-      <Tabs defaultValue={mainMenus[0].value} value={selectTab ?? mainMenus[0].value}>
+      <Tabs defaultValue={mainMenus[0].value} value={selectTab}>
         <TabsList>
           {mainMenus.map((menu) => {
             return (
@@ -46,7 +47,7 @@ export default function Main() {
               <div className="grid grid-cols-4 gap-4 sm:grid-cols-1">
                 {dummy.map((d) => {
                   return (
-                    <Link href={{ pathname: `/book/${d}` }} key={d}>
+                    <Link href={`/book/${d}`} key={d}>
                       <BookBox bookId={d} />
                     </Link>
                   );

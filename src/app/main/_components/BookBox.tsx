@@ -30,7 +30,7 @@ export default function BookBox({ bookId }: { bookId: number }) {
       </div>
       <div>
         <h4 className="line-clamp-2 min-h-[56px] scroll-m-20 overflow-hidden text-ellipsis text-lg font-semibold">
-          Section 1.10.33 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
+          Section 1.10.33 of &ldquo;de Finibus Bonorum et Malorum&rdquo;, written by Cicero in 45 BC
         </h4>
 
         <div className="text-md flex items-center gap-1 text-zinc-400">

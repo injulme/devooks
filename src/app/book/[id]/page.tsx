@@ -21,7 +21,7 @@ type PageParams = {
 };
 const bookTabs = codeToArray(BookDetailTabTypeCode);
 
-export default function ({ params }: { params: PageParams }) {
+export default function BookById({ params }: { params: PageParams }) {
   const [selectedTabId, setSelectedTabId] = useState<BookDetailTabType>('INTRODUCTION');
   const introductionRef = useRef<HTMLDivElement>(null);
   const tableOfContentsRef = useRef<HTMLDivElement>(null);

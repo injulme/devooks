@@ -28,9 +28,10 @@ const dummy = Array(15)
   .map((_, i) => i);
 
 const mainMenus = codeToArray(TabTypeCode);
+
 export default function Home() {
-  const { data } = useGetEbooks();
-  console.log('책 전체 리스트 호출:: ', data);
+  // const { data } = useGetEbooks();
+  // console.log('책 전체 리스트 호출:: ', data);
   return (
     <Fragment>
       <Carousel opts={{ loop: true }}>

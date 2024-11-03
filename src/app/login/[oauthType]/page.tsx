@@ -23,7 +23,7 @@ interface Props {
   searchParams: OauthTypeSearchParams;
 }
 
-export default function ({ params, searchParams }: Props) {
+export default function LoginByOauthType({ params, searchParams }: Props) {
   const router = useRouter();
   const store = useRegisterStore((state) => state);
   const oauthType = params.oauthType.toUpperCase() as OauthType;
