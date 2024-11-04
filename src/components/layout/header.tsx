@@ -21,12 +21,16 @@ type LoginLinkParams = Record<OauthType, string>;
 export default function Header() {
   const router = useRouter();
   return (
-    <header className="sticky top-0 z-[99] bg-white shadow dark:bg-background">
+    <header className="sticky top-0 z-[99] bg-white shadow dark:bg-background sm:bg-red-300 md:bg-yellow-300 lg:bg-green-300 xl:bg-blue-300">
       <div className="mx-auto flex max-w-screen-xl flex-col justify-center gap-4 px-12 py-3">
         <div className="flex items-center justify-between gap-2">
           <Link href="/">
             <Image src={Logo} alt="devooks 로고" height={32} />
           </Link>
+          <div className="hidden sm:block">sm</div>
+          <div className="hidden md:block">md</div>
+          <div className="hidden lg:block">lg</div>
+          <div className="hidden xl:block">xl</div>
           <div className="flex items-center gap-2">
             <Button variant="outline">
               <Link href="/book/add">책 등록</Link>
