@@ -3,23 +3,37 @@
 import LoginDialog from './components/LoginDialog';
 import RegisterDialog from './components/RegisterDialog';
 
+import { useEffect } from 'react';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import { OauthType } from '@/services/login/type';
+import { useGetCategories } from '@/services/category/hooks/useGetCategories';
 import { Heart } from 'lucide-react';
 
 import Logo from '@/assets/images/devooks_logo.png';
 
 import { ThemeToggle } from '@/components/theme-toggle';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-type LoginLinkParams = Record<OauthType, string>;
+import { useUserStore } from '@/stores/useAuthStore';
+import { useCategoriesStore, useRegisterStore } from '@/stores/useRegisterStore';
 
 export default function Header() {
   const router = useRouter();
+  const store = useRegisterStore((state) => state);
+  const userStore = useUserStore((state) => state);
+  const categorySetData = useCategoriesStore((state) => state.setData);
+  const { data: getCategoriesData } = useGetCategories();
+
+  useEffect(() => {
+    if (!getCategoriesData || getCategoriesData.length === 0) return;
+    categorySetData(getCategoriesData);
+  }, [getCategoriesData]);
+
   return (
     <header className="sticky top-0 z-[99] bg-white shadow dark:bg-background sm:bg-red-300 md:bg-yellow-300 lg:bg-green-300 xl:bg-blue-300">
       <div className="mx-auto flex max-w-screen-xl flex-col justify-center gap-4 px-12 py-3">
@@ -36,8 +50,15 @@ export default function Header() {
               <Link href="/book/add">책 등록</Link>
             </Button>
 
-            <LoginDialog />
-            <RegisterDialog />
+            {userStore.id ? (
+              <Avatar>
+                <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+            ) : (
+              <LoginDialog />
+            )}
+            {store.open && <RegisterDialog />}
             <ThemeToggle />
             <Button variant="outline" size="icon" onClick={() => router.push('/mypage')}>
               <Heart className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
@@ -46,7 +67,9 @@ export default function Header() {
           </div>
         </div>
         <div className="flex items-center justify-between">
-          <div>categories</div>
+          <div className="flex items-center gap-2">
+            {getCategoriesData?.map((category) => <div key={category.value}>{category.label}</div>)}
+          </div>
           <Input placeholder="검색어를 입력해주세요." className="w-[240px] bg-gray-200" />
         </div>
       </div>

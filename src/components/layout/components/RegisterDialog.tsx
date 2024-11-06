@@ -2,7 +2,7 @@
 
 import RegisterSuccessDialog from './RegisterSuccessDialog';
 
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, use, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Image from 'next/image';
@@ -29,15 +29,11 @@ import { Label } from '@/components/ui/label';
 import { MultiSelect } from '@/components/ui/multi-select';
 import { Separator } from '@/components/ui/separator';
 
-import { CategoryTypeCode } from '@/constant/common';
+import { useCategoriesStore, useRegisterStore } from '@/stores/useRegisterStore';
 
-import { codeToArray } from '@/lib/utils';
-
-import { useRegisterStore } from '@/stores/useRegisterStore';
-
-const categoryList = codeToArray(CategoryTypeCode);
 export default function RegisterDialog() {
   const store = useRegisterStore((state) => state);
+  const cateogories = useCategoriesStore((state) => state.data);
   const form = useForm<SignupRequest>();
   const [agreeChecks, setAgreeChecks] = useState([false, false, false]);
 
@@ -54,15 +50,14 @@ export default function RegisterDialog() {
 
     setAgreeChecks([...agrees]);
   };
-
   const [isSubmitOk, setIsSubmitOk] = useState(false);
 
   useEffect(() => {
     const agreeOk = agreeChecks.every((agree) => agree);
     const nickname = form.watch('nickname');
-    const favoriteCategories = form.watch('favoriteCategories');
+    const favoriteCategoryIdList = form.watch('favoriteCategoryIdList');
 
-    if (agreeOk && nickname && favoriteCategories && favoriteCategories.length > 0) {
+    if (agreeOk && nickname && favoriteCategoryIdList && favoriteCategoryIdList.length > 0) {
       setIsSubmitOk(true);
     } else {
       setIsSubmitOk(false);
@@ -73,6 +68,7 @@ export default function RegisterDialog() {
     console.log('on join submit', data);
     console.log('on join store', store);
     store.setState(data);
+
     postSignup({ ...data, oauthId: store.oauthId, oauthType: store.oauthType });
   };
   useEffect(() => {
@@ -83,7 +79,7 @@ export default function RegisterDialog() {
   // TODO: 카카오 회원가입 탈퇴시키고 다시 회원가입 테스트하기 register success dialog 잘 뜨는지 봐야됨
   return (
     <Fragment>
-      {isSuccess && <RegisterSuccessDialog />}
+      {<RegisterSuccessDialog />}
       <Dialog open={store.open} onOpenChange={() => store.onOpenChange(!store.open)}>
         <DialogContent className="max-w-[400px]">
           <DialogHeader className="gap-4">
@@ -112,13 +108,13 @@ export default function RegisterDialog() {
                 />
                 <FormField
                   control={form.control}
-                  name="favoriteCategories"
+                  name="favoriteCategoryIdList"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>관심 카테고리</FormLabel>
                       <FormControl>
                         <MultiSelect
-                          options={categoryList}
+                          options={cateogories || []}
                           onValueChange={field.onChange}
                           defaultValue={field.value ?? []}
                           placeholder="카테고리를 선택해주세요"

@@ -6,8 +6,9 @@ export async function postLogin({
   authorizationCode,
   oauthType,
 }: LoginRequest): Promise<LoginResponse> {
-  return await axios.post(process.env.NEXT_PUBLIC_BASE_URL + '/api/v1/auth/login', {
+  const { data } = await axios.post(process.env.NEXT_PUBLIC_BASE_URL + '/api/v1/auth/login', {
     authorizationCode,
     oauthType,
   });
+  return data;
 }

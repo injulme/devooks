@@ -4,7 +4,7 @@ export type SignupRequest = {
   oauthId?: string;
   oauthType?: OauthType | null;
   nickname?: string;
-  favoriteCategories?: string[];
+  favoriteCategoryIdList?: string[];
 };
 
 export type SignupResponse = LoginResponse;
