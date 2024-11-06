@@ -31,3 +31,23 @@ export const useAuthStore = create(
     },
   ),
 );
+
+type UserState = LoginResponse['member'];
+type UserActions = {
+  setUser: (data: UserState) => void;
+};
+export const useUserStore = create(
+  persist<UserState & UserActions>(
+    (set) => ({
+      id: '',
+      nickname: '',
+      profileImagePath: '',
+      authority: '',
+      setUser: (data) => set({ ...data }),
+    }),
+    {
+      name: 'user-metadata',
+      storage: createJSONStorage(() => cookieStorage),
+    },
+  ),
+);

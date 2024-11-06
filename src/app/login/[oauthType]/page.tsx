@@ -9,6 +9,7 @@ import { OauthType } from '@/services/login/type';
 
 import { ApiError, MEMBER4041 } from '@/lib/api-error';
 
+import { useUserStore } from '@/stores/useAuthStore';
 import { useRegisterStore } from '@/stores/useRegisterStore';
 
 type OauthTypeParams = {
@@ -26,16 +27,21 @@ interface Props {
 export default function LoginByOauthType({ params, searchParams }: Props) {
   const router = useRouter();
   const store = useRegisterStore((state) => state);
+  const userStore = useUserStore((state) => state);
   const oauthType = params.oauthType.toUpperCase() as OauthType;
 
   const { code: authorizationCode } = searchParams;
-  console.table({ authorizationCode, oauthType });
   const { mutateAsync: login } = usePostLogin();
 
   useEffect(() => {
     if (!oauthType || !authorizationCode) return;
     login({ authorizationCode: authorizationCode, oauthType: oauthType })
-      .then((response) => console.log('login response:: ', response))
+      .then((response) => {
+        console.log('login response:: ', response);
+        userStore.setUser(response.member);
+        router.push('/');
+      })
+
       .catch((error) => {
         const errorResponse: ApiError = error.response.data;
         if (!errorResponse) return;

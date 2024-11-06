@@ -1,8 +1,11 @@
 'use client';
 
+import { useEffect } from 'react';
+
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { useGetCategories } from '@/services/category/hooks/useGetCategories';
 import { OauthType } from '@/services/login/type';
 
 import Logo from '@/assets/images/devooks_logo.png';
@@ -13,9 +16,20 @@ import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
+import { useCategoriesStore, useRegisterStore } from '@/stores/useRegisterStore';
+
 type LoginLinkParams = Record<OauthType, string>;
 
 export default function Header() {
+  const store = useRegisterStore((state) => state);
+  const categorySetData = useCategoriesStore((state) => state.setData);
+  const { data: getCategoriesData } = useGetCategories();
+
+  useEffect(() => {
+    if (!getCategoriesData || getCategoriesData.length === 0) return;
+    categorySetData(getCategoriesData);
+  }, [getCategoriesData]);
+
   return (
     <header className="top-0 z-50 bg-white shadow dark:bg-background">
       <div className="mx-auto flex max-w-screen-xl flex-col justify-center gap-4 px-12 py-3">
@@ -29,7 +43,7 @@ export default function Header() {
             </Button>
 
             <LoginDialog />
-            <RegisterDialog />
+            {store.open && <RegisterDialog />}
             <ThemeToggle />
           </div>
         </div>

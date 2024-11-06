@@ -50,7 +50,7 @@ export default function LoginDialog() {
           </DialogTitle>
           <div className="flex items-center gap-5">
             <Separator className="shrink bg-gray-300" />
-            <div className="w-3/5">간편로그인</div>
+            <span className="w-3/5 text-gray-500">간편로그인</span>
             <Separator className="shrink bg-gray-300" />
           </div>
           <div className="flex justify-evenly">
