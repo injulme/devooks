@@ -1,9 +1,15 @@
 import Withdrawal from './WITHDRAWAL';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+import { EmailRequest } from '@/services/auth/type';
+import { useGetMemberProfileById } from '@/services/member/hooks/useGetMemberProfileById';
+import { usePatchMemberProfile } from '@/services/member/hooks/usePatchMemberProfile';
+import { MemberProfileUpdateRequest } from '@/services/member/type';
+
 import { Button } from '@/components/ui/button';
+import { FacetedFilter } from '@/components/ui/faceted-filter';
 import {
   Form,
   FormControl,
@@ -16,14 +22,49 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
-export default function Profile() {
-  const form = useForm();
+import { useUserStore } from '@/stores/useAuthStore';
+import { useCategoriesStore } from '@/stores/useRegisterStore';
 
-  const onSubmit = () => {
-    console.log('submit');
+type FormField = MemberProfileUpdateRequest & EmailRequest;
+
+export default function Profile() {
+  // TODO: @src/services/member/type.ts 파일에서 MemberProfile 타입과 MemberProfileUpdateRequest 타입을 확인하세요.
+  const form = useForm<FormField>({
+    defaultValues: {
+      nickname: '',
+      phoneNumber: '',
+      blogLink: '',
+      instagramLink: '',
+      youtubeLink: '',
+      introduction: '',
+      favoriteCategoryIdList: [],
+      email: '',
+    },
+  });
+  const cateogories = useCategoriesStore((state) => state.data);
+  const userStore = useUserStore((state) => state);
+
+  const { data: memberData } = useGetMemberProfileById(userStore.id);
+  const { mutate: patchMemberProfile } = usePatchMemberProfile();
+
+  const onSubmit = (data: FormField) => {
+    console.log('submit', data);
+    // patchMemberProfile(data);
   };
 
   const [isWithdrawal, setIsWithdrawal] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!memberData) return;
+    form.setValue('nickname', memberData.nickname);
+    // form.setValue('email', memberData.email);
+
+    form.setValue('favoriteCategoryIdList', memberData.favoriteCategoryIdList);
+    form.setValue('introduction', memberData.profile.introduction);
+    form.setValue('blogLink', memberData.profile.blogLink);
+    form.setValue('instagramLink', memberData.profile.instagramLink);
+    form.setValue('youtubeLink', memberData.profile.youtubeLink);
+  }, [memberData]);
 
   return (
     <section className="relative max-w-screen-sm">
@@ -34,20 +75,22 @@ export default function Profile() {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>닉네임</FormLabel>
-                  <FormControl>
-                    <Input placeholder="입력하세요" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              name="nickname"
+              render={({ field }) => {
+                return (
+                  <FormItem>
+                    <FormLabel>닉네임</FormLabel>
+                    <FormControl>
+                      <Input placeholder="입력하세요" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                );
+              }}
             />
             <FormField
               control={form.control}
-              name="username"
+              name="email"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>이메일</FormLabel>
@@ -58,9 +101,10 @@ export default function Profile() {
                 </FormItem>
               )}
             />
+            {/* TODO: 전화번호 인증 로직 구현 필요 */}
             <FormField
               control={form.control}
-              name="username"
+              name="phoneNumber"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>전화번호</FormLabel>
@@ -73,20 +117,44 @@ export default function Profile() {
             />
             <FormField
               control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>관심 카테고리</FormLabel>
-                  <FormControl>
-                    <Input placeholder="입력하세요" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              name="favoriteCategoryIdList"
+              render={({ field }) => {
+                // console.log('field', field.value);
+                return (
+                  <FormItem>
+                    {/* <FormLabel>관심 카테고리</FormLabel> */}
+                    <FormControl>
+                      <FacetedFilter
+                        title="관심 카테고리"
+                        options={cateogories || []}
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        // {...field}
+                      />
+                      {/* <MultiSelect
+                        options={cateogories || []}
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        // defaultValue={[
+                        //   '335e249c-ae39-4074-90d7-b3aaa7683d9b',
+                        //   'e327d7df-01fa-4963-b65f-567b1379713f',
+                        // ]}
+                        placeholder="카테고리를 선택해주세요"
+                        variant="inverted"
+                        animation={2}
+                        maxCount={5}
+                        modalPopover
+                        {...field}
+                      /> */}
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                );
+              }}
             />
             <FormField
               control={form.control}
-              name="username"
+              name="introduction"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>자기소개</FormLabel>
@@ -103,7 +171,7 @@ export default function Profile() {
             />
             <FormField
               control={form.control}
-              name="username"
+              name="blogLink"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>개인 블로그</FormLabel>
@@ -116,7 +184,7 @@ export default function Profile() {
             />
             <FormField
               control={form.control}
-              name="username"
+              name="instagramLink"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>인스타그램</FormLabel>
@@ -129,7 +197,7 @@ export default function Profile() {
             />
             <FormField
               control={form.control}
-              name="username"
+              name="youtubeLink"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>유튜브</FormLabel>
