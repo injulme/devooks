@@ -16,18 +16,19 @@ import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-import { useCategoriesStore, useRegisterStore } from '@/stores/useRegisterStore';
+import { useRegisterStore } from '@/stores/auth-store';
+import { useCategoryStore } from '@/stores/global-store';
 
 type LoginLinkParams = Record<OauthType, string>;
 
 export default function Header() {
-  const store = useRegisterStore((state) => state);
-  const categorySetData = useCategoriesStore((state) => state.setData);
+  const registerOpen = useRegisterStore((state) => state.open);
+  const updateCategory = useCategoryStore((state) => state.updateCategory);
   const { data: getCategoriesData } = useGetCategories();
 
   useEffect(() => {
     if (!getCategoriesData || getCategoriesData.length === 0) return;
-    categorySetData(getCategoriesData);
+    updateCategory({ categories: getCategoriesData });
   }, [getCategoriesData]);
 
   return (
@@ -43,7 +44,7 @@ export default function Header() {
             </Button>
 
             <LoginDialog />
-            {store.open && <RegisterDialog />}
+            {registerOpen && <RegisterDialog />}
             <ThemeToggle />
           </div>
         </div>

@@ -1,6 +1,6 @@
 export type OauthType = 'NAVER' | 'GOOGLE' | 'KAKAO';
 
-type TokenGroupType = {
+export type TokenGroupType = {
   accessToken: string | null;
   refreshToken: string | null;
 };

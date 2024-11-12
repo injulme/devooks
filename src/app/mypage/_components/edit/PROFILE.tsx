@@ -22,8 +22,8 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
-import { useUserStore } from '@/stores/useAuthStore';
-import { useCategoriesStore } from '@/stores/useRegisterStore';
+import { useAuthStore } from '@/stores/auth-store';
+import { useCategoryStore } from '@/stores/global-store';
 
 type FormField = MemberProfileUpdateRequest & EmailRequest;
 
@@ -41,10 +41,10 @@ export default function Profile() {
       email: '',
     },
   });
-  const cateogories = useCategoriesStore((state) => state.data);
-  const userStore = useUserStore((state) => state);
+  const categories = useCategoryStore((state) => state.categories);
+  const userId = useAuthStore((state) => state.id);
 
-  const { data: memberData } = useGetMemberProfileById(userStore.id);
+  const { data: memberData } = useGetMemberProfileById(userId);
   const { mutate: patchMemberProfile } = usePatchMemberProfile();
 
   const onSubmit = (data: FormField) => {
@@ -126,13 +126,13 @@ export default function Profile() {
                     <FormControl>
                       <FacetedFilter
                         title="관심 카테고리"
-                        options={cateogories || []}
+                        options={categories || []}
                         onValueChange={field.onChange}
                         defaultValue={field.value}
                         // {...field}
                       />
                       {/* <MultiSelect
-                        options={cateogories || []}
+                        options={categories || []}
                         onValueChange={field.onChange}
                         defaultValue={field.value}
                         // defaultValue={[

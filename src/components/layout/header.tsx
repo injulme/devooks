@@ -19,19 +19,20 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-import { useUserStore } from '@/stores/useAuthStore';
-import { useCategoriesStore, useRegisterStore } from '@/stores/useRegisterStore';
+import { useAuthStore } from '@/stores/auth-store';
+import { useRegisterStore } from '@/stores/auth-store';
+import { useCategoryStore } from '@/stores/global-store';
 
 export default function Header() {
   const router = useRouter();
-  const store = useRegisterStore((state) => state);
-  const userStore = useUserStore((state) => state);
-  const categorySetData = useCategoriesStore((state) => state.setData);
+  const registerOpen = useRegisterStore((state) => state.open);
+  const userId = useAuthStore((state) => state.id);
+  const updateCategory = useCategoryStore((state) => state.updateCategory);
   const { data: getCategoriesData } = useGetCategories();
 
   useEffect(() => {
     if (!getCategoriesData || getCategoriesData.length === 0) return;
-    categorySetData(getCategoriesData);
+    updateCategory({ categories: getCategoriesData });
   }, [getCategoriesData]);
 
   return (
@@ -50,7 +51,7 @@ export default function Header() {
               <Link href="/book/add">책 등록</Link>
             </Button>
 
-            {userStore.id ? (
+            {userId ? (
               <Avatar>
                 <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
                 <AvatarFallback>CN</AvatarFallback>
@@ -58,7 +59,7 @@ export default function Header() {
             ) : (
               <LoginDialog />
             )}
-            {store.open && <RegisterDialog />}
+            {registerOpen && <RegisterDialog />}
             <ThemeToggle />
             <Button variant="outline" size="icon" onClick={() => router.push('/mypage')}>
               <Heart className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />

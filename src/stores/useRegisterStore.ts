@@ -19,15 +19,3 @@ export const useRegisterStore = create<State & Actions>((set, get) => ({
   onOpenChange: (open: boolean) => set({ open }),
   setState: (data: SignupRequest) => set({ ...data }),
 }));
-
-type CategoryState = {
-  data: { label: string; value: string }[];
-};
-type CategoryActions = {
-  setData: (data: { label: string; value: string }[]) => void;
-};
-
-export const useCategoriesStore = create<CategoryState & CategoryActions>((set) => ({
-  data: [],
-  setData: (data) => set({ data }),
-}));
