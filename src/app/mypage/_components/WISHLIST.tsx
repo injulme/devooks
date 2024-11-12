@@ -11,7 +11,7 @@ export default function Wishlist() {
       {dummy.map((d) => {
         return (
           <Link href={`/book/${d}`} key={d}>
-            <BookBox bookId={d} />
+            {/* <BookBox bookId={d} /> */}
           </Link>
         );
       })}

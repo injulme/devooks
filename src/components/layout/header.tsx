@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import { useGetCategories } from '@/services/category/hooks/useGetCategories';
 import { Heart } from 'lucide-react';
@@ -18,6 +18,7 @@ import { ThemeToggle } from '@/components/theme-toggle';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import { useAuthStore } from '@/stores/auth-store';
 import { useSignupStore } from '@/stores/auth-store';
@@ -25,6 +26,11 @@ import { useCategoryStore } from '@/stores/global-store';
 
 export default function Header() {
   const router = useRouter();
+  const params = useSearchParams();
+
+  console.log(params);
+  const tab = params?.get('tab');
+
   const registerOpen = useSignupStore((state) => state.open);
   const userId = useAuthStore((state) => state.id);
   const updateCategory = useCategoryStore((state) => state.updateCategory);
@@ -68,9 +74,24 @@ export default function Header() {
           </div>
         </div>
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            {getCategoriesData?.map((category) => <div key={category.value}>{category.label}</div>)}
-          </div>
+          <Tabs defaultValue={tab || ''}>
+            <TabsList>
+              {getCategoriesData?.map((category) => {
+                return (
+                  <TabsTrigger
+                    value={category.value}
+                    key={category.value}
+                    onClick={() => {
+                      router.push(`main?tab=${category.value}`);
+                    }}
+                  >
+                    {category.label}
+                  </TabsTrigger>
+                );
+              })}
+            </TabsList>
+          </Tabs>
+
           <Input placeholder="검색어를 입력해주세요." className="w-[240px] bg-gray-200" />
         </div>
       </div>

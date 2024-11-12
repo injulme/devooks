@@ -367,7 +367,7 @@ export default function BookAdd() {
               <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
                 {form.watch('name')}
               </h2>
-              <div className="text-md flex items-center gap-1 text-zinc-800">
+              <div className="flex items-center gap-1 text-base text-zinc-800">
                 <Star /> 0.0 (0)
               </div>
               <div className="mt-12 flex flex-col gap-2">

@@ -1,20 +1,16 @@
-/** @get ebook related category name list summary */
-export type RelatedCategoryNameListGetSummary = {
-  id: string;
-  name: string;
-};
-
 /** @get ebook list summary */
 export type EbookListGetSummary = {
   id: string;
   mainImagePath: string;
+  price: number;
   title: string;
   wishlistId: string;
+  writerName: string;
   review: {
     rating: number;
     count: number;
   };
-  relatedCategoryNameList: RelatedCategoryNameListGetSummary[];
+  relatedCategoryIdList: string[];
 };
 
 /** @get ebook list response */
@@ -40,7 +36,7 @@ export type EbookGetSummary = {
     rating: number;
     count: number;
   };
-  relatedCategoryNameList: RelatedCategoryNameListGetSummary[];
+  relatedCategoryIdList: string[];
   sellingMemberId: string;
   createdDate: string;
   modifiedDate: string;
@@ -60,7 +56,7 @@ export type EbookGetResponse = {
 export type EbookPostRequest = {
   pdfId: string;
   title: string;
-  relatedCategoryNameList: RelatedCategoryNameListGetSummary[];
+  relatedCategoryIdList: string[];
   mainImageId: string;
   descriptionImageIdList: string[];
   price: number;
@@ -74,7 +70,7 @@ export type EbookPostResponse = {
     id: string;
     pdfId: string;
     mainImageId: string;
-    relatedCategoryNameList: RelatedCategoryNameListGetSummary[];
+    relatedCategoryIdList: string[];
     title: string;
     price: number;
     tableOfContents: string;
@@ -91,7 +87,7 @@ export type EbookPostResponse = {
 export type EbookPatchRequest = {
   ebook: {
     title: string;
-    relatedCategoryNameList: RelatedCategoryNameListGetSummary[];
+    relatedCategoryIdList: string[];
     mainImageId: string;
     descriptionImageIdList: string[];
     introduction: string;
@@ -111,7 +107,7 @@ export type EbookPatchResponse = {
     id: string;
     pdfId: string;
     mainImageId: string;
-    relatedCategoryNameList: RelatedCategoryNameListGetSummary[];
+    relatedCategoryIdList: string[];
     title: string;
     price: number;
     tableOfContents: string;

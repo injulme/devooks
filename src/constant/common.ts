@@ -1,5 +1,6 @@
 export type CodeType<T extends string> = Record<T, { label: string; value: T }>;
 
+// TODO: 여기 정리하기
 export type TabType = 'BEST' | 'NEW' | 'MONTH' | 'WEEK';
 export const TabTypeCode: CodeType<TabType> = {
   BEST: {
