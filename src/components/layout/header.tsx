@@ -20,12 +20,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 import { useAuthStore } from '@/stores/auth-store';
-import { useRegisterStore } from '@/stores/auth-store';
+import { useSignupStore } from '@/stores/auth-store';
 import { useCategoryStore } from '@/stores/global-store';
 
 export default function Header() {
   const router = useRouter();
-  const registerOpen = useRegisterStore((state) => state.open);
+  const registerOpen = useSignupStore((state) => state.open);
   const userId = useAuthStore((state) => state.id);
   const updateCategory = useCategoryStore((state) => state.updateCategory);
   const { data: getCategoriesData } = useGetCategories();

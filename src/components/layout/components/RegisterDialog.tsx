@@ -29,11 +29,11 @@ import { Label } from '@/components/ui/label';
 import { MultiSelect } from '@/components/ui/multi-select';
 import { Separator } from '@/components/ui/separator';
 
-import { useRegisterStore } from '@/stores/auth-store';
+import { useSignupStore } from '@/stores/auth-store';
 import { useCategoryStore } from '@/stores/global-store';
 
 export default function RegisterDialog() {
-  const register = useRegisterStore((state) => state);
+  const signup = useSignupStore((state) => state);
   const categories = useCategoryStore((state) => state.categories);
   const form = useForm<SignupRequest>();
   const [agreeChecks, setAgreeChecks] = useState([false, false, false]);
@@ -68,20 +68,20 @@ export default function RegisterDialog() {
   const onJoinSubmit = (data: SignupRequest) => {
     console.log('on join submit', data);
 
-    register.updateRegister(data);
+    signup.updateSignup(data);
 
-    postSignup({ ...data, oauthId: register.oauthId, oauthType: register.oauthType });
+    postSignup({ ...data, oauthId: signup.oauthId, oauthType: signup.oauthType });
   };
   useEffect(() => {
     if (!isSuccess) return;
-    register.onOpenChange(false);
+    signup.onOpenChange(false);
   }, [isSuccess]);
 
   // TODO: 카카오 회원가입 탈퇴시키고 다시 회원가입 테스트하기 register success dialog 잘 뜨는지 봐야됨
   return (
     <Fragment>
       {<RegisterSuccessDialog />}
-      <Dialog open={register.open} onOpenChange={() => register.onOpenChange(!register.open)}>
+      <Dialog open={signup.open} onOpenChange={() => signup.onOpenChange(!signup.open)}>
         <DialogContent className="max-w-[400px]">
           <DialogHeader className="gap-4">
             <DialogTitle className="flex justify-center">

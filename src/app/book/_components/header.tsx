@@ -16,13 +16,13 @@ import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-import { useRegisterStore } from '@/stores/auth-store';
+import { useSignupStore } from '@/stores/auth-store';
 import { useCategoryStore } from '@/stores/global-store';
 
 type LoginLinkParams = Record<OauthType, string>;
 
 export default function Header() {
-  const registerOpen = useRegisterStore((state) => state.open);
+  const registerOpen = useSignupStore((state) => state.open);
   const updateCategory = useCategoryStore((state) => state.updateCategory);
   const { data: getCategoriesData } = useGetCategories();
 
