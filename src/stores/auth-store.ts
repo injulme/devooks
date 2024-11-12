@@ -55,21 +55,21 @@ export const useAuthStore = create(
   ),
 );
 
-/** register store */
-type RegisterState = {
+/** signup store */
+type SignupState = {
   open: boolean;
 } & SignupRequest;
-type RegisterActions = {
+type SignupActions = {
   onOpenChange: React.Dispatch<React.SetStateAction<any>>;
-  updateRegister: (data: SignupRequest) => void;
+  updateSignup: (data: SignupRequest) => void;
 };
 
-export const useRegisterStore = create<RegisterState & RegisterActions>((set) => ({
+export const useSignupStore = create<SignupState & SignupActions>((set) => ({
   open: false,
   oauthId: '',
   oauthType: null,
   nickname: '',
   favoriteCategoryIdList: [],
   onOpenChange: (open) => set({ open }),
-  updateRegister: (data) => set(data),
+  updateSignup: (data) => set(data),
 }));

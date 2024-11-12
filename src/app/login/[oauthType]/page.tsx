@@ -9,7 +9,7 @@ import { OauthType } from '@/services/login/type';
 
 import { ApiError, MEMBER4041 } from '@/lib/api-error';
 
-import { useAuthStore, useRegisterStore, useTokenStore } from '@/stores/auth-store';
+import { useAuthStore, useSignupStore, useTokenStore } from '@/stores/auth-store';
 
 type OauthTypeParams = {
   oauthType: OauthType;
@@ -25,7 +25,7 @@ interface Props {
 
 export default function LoginByOauthType({ params, searchParams }: Props) {
   const router = useRouter();
-  const reigster = useRegisterStore((state) => state);
+  const signup = useSignupStore((state) => state);
   const updateToken = useTokenStore((state) => state.updateToken);
   const updateAuth = useAuthStore((state) => state.updateAuth);
   const oauthType = params.oauthType.toUpperCase() as OauthType;
@@ -51,8 +51,8 @@ export default function LoginByOauthType({ params, searchParams }: Props) {
             // 회원가입 하기
             console.log('login error!! ', errorResponse);
             router.push('/');
-            reigster.onOpenChange(true);
-            reigster.updateRegister({
+            signup.onOpenChange(true);
+            signup.updateSignup({
               oauthId: errorResponse.message.oauthId,
               oauthType: oauthType,
             });
