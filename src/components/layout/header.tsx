@@ -28,7 +28,6 @@ export default function Header() {
   const router = useRouter();
   const params = useSearchParams();
 
-  console.log(params);
   const tab = params?.get('tab');
 
   const registerOpen = useSignupStore((state) => state.open);
