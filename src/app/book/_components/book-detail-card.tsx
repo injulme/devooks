@@ -1,5 +1,6 @@
 'use client';
 
+import { EbookGetSummary } from '@/services/ebook/type';
 import { Crown, Heart, Star } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
@@ -15,7 +16,21 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 
-export default function BookDetailCard({ pageCount = 0 }) {
+import { useCategoryStore } from '@/stores/global-store';
+
+export default function BookDetailCard({
+  pageCount = 0,
+  price = 0,
+  review = { rating: 0, count: 0 },
+  relatedCategoryIdList = [],
+}: EbookGetSummary) {
+  const categories = useCategoryStore((state) => state.categories);
+
+  const relatedCategories = categories.filter((category) =>
+    relatedCategoryIdList.includes(category.value),
+  );
+  const categoryLabels = relatedCategories.map((category) => `#${category.label}`).join(' ');
+  console.log(relatedCategoryIdList);
   return (
     <Card className="p-6 shadow-lg">
       <div className="mb-4 flex justify-between text-sm text-zinc-700">
@@ -23,23 +38,23 @@ export default function BookDetailCard({ pageCount = 0 }) {
           <Crown size={16} /> 주간 베스트
         </Badge>
         <span className="flex items-center gap-1">
-          <Heart size={16} /> 123
+          <Heart size={16} /> 0
         </span>
       </div>
 
+      <p className="text-sm tracking-wide text-zinc-500">{categoryLabels}</p>
       <div className="flex items-center gap-1 text-sm text-zinc-800">
         <Star size={16} />
         <Star size={16} />
         <Star size={16} />
         <Star size={16} />
-        <Star size={16} /> 4.9 (37)
+        <Star size={16} /> {review.rating.toFixed(1)} ({Intl.NumberFormat().format(review.count)})
       </div>
-      <p className="text-sm text-zinc-500">#category #category #category</p>
 
       <div className="mt-10 flex items-center justify-between">
         <div className="flex flex-col gap-1">
           <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-            3,980,000원{' '}
+            {Intl.NumberFormat().format(price)}원{' '}
             <span className="text-sm font-medium text-muted-foreground">(VAT 포함)</span>
           </h4>
           <p className="text-gray-800">{pageCount} 페이지</p>

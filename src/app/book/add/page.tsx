@@ -1,18 +1,18 @@
 'use client';
 
-import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, MouseEvent, SetStateAction, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AiFillPicture } from 'react-icons/ai';
 
+import { usePostDescriptionImages } from '@/services/ebook/hooks/usePostDescriptionImages';
+import { usePostMainImage } from '@/services/ebook/hooks/usePostMainImage';
 import { EbookPostRequest } from '@/services/ebook/type';
 import { usePostPdfs } from '@/services/pdf/hooks/usePostPdfs';
-import dayjs from 'dayjs';
-import { Heart, Loader2, Star } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 
 import BookDetailCard from '@/app/book/_components/book-detail-card';
 
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import {
   Carousel,
   CarouselContent,
@@ -33,22 +33,28 @@ import { MultiSelect } from '@/components/ui/multi-select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
 
-import { BookDetailTabType, BookDetailTabTypeCode, CategoryTypeCode } from '@/constant/common';
+import { BookDetailTabType, BookDetailTabTypeCode } from '@/constant/common';
 
 import { codeToArray } from '@/lib/utils';
 
-const categoryList = codeToArray(CategoryTypeCode);
+import { useCategoryStore } from '@/stores/global-store';
 
 const bookTabs = codeToArray(BookDetailTabTypeCode).slice(0, -2);
 
 export default function BookAdd() {
   const form = useForm<EbookPostRequest>();
+  const [selectTab, setSelectTab] = useState<BookDetailTabType>('INTRODUCTION');
+  const categories = useCategoryStore((state) => state.categories);
+
   const pdfRef = useRef<HTMLInputElement>(null);
   const mainImageRef = useRef<HTMLInputElement>(null);
-  const introductionImageRef = useRef<HTMLInputElement>(null);
-  const [selectTab, setSelectTab] = useState<BookDetailTabType>('INTRODUCTION');
+  const descriptionImagesRef = useRef<HTMLInputElement>(null);
+
   const [pdfPageCount, setPdfPageCount] = useState<number>(0);
   const [pdfFileName, setPdfFileName] = useState<string>('');
+
+  const [mainImagePreview, setMainImagePreview] = useState<string[]>([]);
+  const [introductionImagePreviews, setIntroductionImagePreviews] = useState<string[]>([]);
 
   // TODO: progress bar 추가
   const {
@@ -59,8 +65,21 @@ export default function BookAdd() {
     isPending: isPdfLoading,
   } = usePostPdfs();
 
+  const {
+    mutate: postMainImage,
+    isSuccess: isMainImageSuccess,
+    data: responseMainImage,
+    isPending: isMainImageLoading,
+  } = usePostMainImage();
+  const {
+    mutate: postDescriptionImages,
+    isSuccess: isDescriptionImagesSuccess,
+    data: responseDescriptionImages,
+    isPending: isDescriptionImagesLoading,
+  } = usePostDescriptionImages();
+
   const onSubmit = (data: EbookPostRequest) => {
-    // console.log('submit data by /book/add ', data);
+    console.log('submit data by /book/add ', data);
   };
 
   // 전자책 업로드 (PDF 파일 업로드)
@@ -68,7 +87,7 @@ export default function BookAdd() {
     e.stopPropagation();
     pdfRef?.current?.click();
   };
-  // PDF 업로드
+  // PDF 서버로 업로드
   const savePdfFile = (event: ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
     if (files && files?.length <= 0) return;
@@ -89,44 +108,92 @@ export default function BookAdd() {
     e.stopPropagation();
     mainImageRef?.current?.click();
   };
+  const saveMainImgFile = async (event: ChangeEvent<HTMLInputElement>) => {
+    const { files } = event.target;
+    if (files && files?.length <= 0) return;
+    const mainImageFile = files?.[0];
+    if (!mainImageFile) return;
+    const imageData = await getFileData(mainImageFile, setMainImagePreview);
+
+    postMainImage({ image: imageData });
+  };
+
   // 책 소개 이미지 업로드
   const onHandleIntroductionImage = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    introductionImageRef?.current?.click();
+    descriptionImagesRef?.current?.click();
   };
 
-  const [mainImagePreview, setMainImagePreview] = useState<string>();
-  const [introductionImagePreviews, setIntroductionImagePreviews] = useState<string[]>([]);
-  const saveImgFile = () => {
-    if (!mainImageRef.current?.files) return;
+  const getFileData = (file: File, callbackPreview: SetStateAction<any>): Promise<any> => {
+    return new Promise((resolve, reject) => {
+      const fileType = file.type;
+      if (fileType !== 'image/jpeg' && fileType !== 'image/png') {
+        alert('파일 형식이 맞지 않습니다. JPG, PNG 파일을 업로드해주세요.');
+        reject('Invalid file type');
+      } else {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+          if (!reader.result) {
+            reject('Failed to read file');
+            return;
+          }
 
-    const file = mainImageRef?.current?.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setMainImagePreview(reader.result as string);
-    };
-  };
+          callbackPreview((prev: any) => [...prev, reader.result as string]);
 
-  const onHandleIntroductionImagePreview = () => {
-    if (!introductionImageRef.current?.files) return;
+          const base64Raw = (reader.result as string).split(',')[1]; // Base64 데이터 추출
+          const extension = file.name.split('.').pop(); // 파일 확장자 추출
+          const byteSize = file.size; // 파일 크기 (바이트 단위)
 
-    const files = introductionImageRef?.current?.files;
-    Object.values(files).map((file: File) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        setIntroductionImagePreviews((prev) => [...prev, reader.result as string]);
-      };
+          const imageData = {
+            base64Raw,
+            extension,
+            byteSize,
+          };
+          resolve(imageData);
+        };
+        reader.onerror = () => {
+          reject('Error reading file');
+        };
+      }
     });
+  };
+
+  const saveDescriptionImgFile = async (event: ChangeEvent<HTMLInputElement>) => {
+    const { files } = event.target;
+    if (files && files?.length <= 0) return;
+    const descriptionImages = files;
+    if (!descriptionImages) return;
+
+    const imagesData = await Promise.all(
+      Object.values(descriptionImages).map(async (file) => {
+        const fileData = await getFileData(file, setIntroductionImagePreviews);
+        return fileData;
+      }),
+    );
+
+    postDescriptionImages({ imageList: imagesData });
   };
 
   useEffect(() => {
     if (!isPdfSuccess) return;
-
+    // PDF 업로드 성공 시, form에 pdfId 값 세팅
     form.setValue('pdfId', responsePdfs?.pdf.id);
     setPdfPageCount(responsePdfs?.pdf.pdfInfo.pageCount);
   }, [isPdfSuccess]);
+
+  useEffect(() => {
+    if (!isMainImageSuccess) return;
+    // 메인 이미지 업로드 성공 시, form에 mainImageId 값 세팅
+    form.setValue('mainImageId', responseMainImage?.mainImage.id);
+  }, [isMainImageSuccess]);
+
+  useEffect(() => {
+    if (!isDescriptionImagesSuccess) return;
+    // 설명 이미지 업로드 성공 시, form에 mainImageId 값 세팅
+    const descriptionIds = responseDescriptionImages?.descriptionImageList.map((image) => image.id);
+    form.setValue('descriptionImageIdList', descriptionIds);
+  }, [isDescriptionImagesSuccess]);
 
   return (
     <Form {...form}>
@@ -136,9 +203,9 @@ export default function BookAdd() {
         </h1>
         <section className="grid grid-cols-5 gap-4">
           <div className="col-span-3">
-            {mainImagePreview ? (
+            {mainImagePreview && mainImagePreview.length > 0 ? (
               <img
-                src={mainImagePreview}
+                src={mainImagePreview[mainImagePreview.length - 1]}
                 className="mb-4 h-[430px] w-full rounded bg-no-repeat object-cover"
               />
             ) : (
@@ -179,7 +246,11 @@ export default function BookAdd() {
               <CarouselNext className="right-[32px]" />
             </Carousel>
 
-            <BookDetailCard pageCount={pdfPageCount} />
+            <BookDetailCard
+              pageCount={pdfPageCount}
+              price={form.watch('price')}
+              relatedCategoryIdList={form.watch('relatedCategoryIdList')}
+            />
             <Tabs
               className="mt-12"
               defaultValue={bookTabs[0].value}
@@ -267,10 +338,22 @@ export default function BookAdd() {
                     </FormLabel>
                     <FormControl>
                       <div>
-                        <Button variant="outline" className="w-full" onClick={onHandleMainImage}>
+                        <Button
+                          variant="outline"
+                          className="w-full"
+                          onClick={onHandleMainImage}
+                          disabled={isMainImageLoading}
+                        >
+                          {isMainImageLoading && <Loader2 className="w-4 animate-spin" />}
                           메인 이미지 업로드
                         </Button>
-                        <Input type="file" className="hidden" ref={mainImageRef} accept="image/*" />
+                        <Input
+                          type="file"
+                          className="hidden"
+                          ref={mainImageRef}
+                          accept="image/*"
+                          onChange={saveMainImgFile}
+                        />
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -291,16 +374,18 @@ export default function BookAdd() {
                           variant="outline"
                           className="w-full"
                           onClick={onHandleIntroductionImage}
+                          disabled={isDescriptionImagesLoading}
                         >
-                          책 소개 이미지 업로드
+                          {isDescriptionImagesLoading && <Loader2 className="w-4 animate-spin" />}책
+                          소개 이미지 업로드
                         </Button>
                         <Input
                           type="file"
                           multiple
                           className="hidden"
-                          ref={introductionImageRef}
+                          ref={descriptionImagesRef}
                           accept="image/*"
-                          onChange={onHandleIntroductionImagePreview}
+                          onChange={saveDescriptionImgFile}
                         />
                       </div>
                     </FormControl>
@@ -334,7 +419,7 @@ export default function BookAdd() {
                     </FormLabel>
                     <FormControl>
                       <MultiSelect
-                        options={categoryList}
+                        options={categories}
                         onValueChange={field.onChange}
                         defaultValue={field.value ?? []}
                         placeholder="카테고리를 선택해주세요"
