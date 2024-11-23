@@ -15,7 +15,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 
-export default function BookDetailCard() {
+export default function BookDetailCard({ pageCount = 0 }) {
   return (
     <Card className="p-6 shadow-lg">
       <div className="mb-4 flex justify-between text-sm text-zinc-700">
@@ -42,7 +42,7 @@ export default function BookDetailCard() {
             3,980,000원{' '}
             <span className="text-sm font-medium text-muted-foreground">(VAT 포함)</span>
           </h4>
-          <p className="text-gray-800">300 페이지</p>
+          <p className="text-gray-800">{pageCount} 페이지</p>
         </div>
       </div>
 

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { useTokenStore } from '@/stores/auth-store';
+import { useAuthStore, useTokenStore } from '@/stores/auth-store';
 
 const tokenStore = useTokenStore.getState();
 
@@ -47,7 +47,9 @@ api.interceptors.response.use(
 
         return api(originalRequest);
       } catch (refreshError) {
+        const reset = useAuthStore((state) => state.reset);
         tokenStore.logout();
+        reset();
 
         return Promise.reject(refreshError);
       }

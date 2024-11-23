@@ -1,10 +1,24 @@
 import { POST_pdfs } from '../api';
 
+import { useState } from 'react';
+
 import { useMutation } from '@tanstack/react-query';
+import { AxiosProgressEvent } from 'axios';
 
 export const usePostPdfs = () => {
-  return useMutation({
+  const [progress, setProgress] = useState<number>(0);
+  const mutation = useMutation({
     mutationKey: [POST_pdfs.name],
-    mutationFn: POST_pdfs,
+    mutationFn: (args: File) =>
+      POST_pdfs(args, {
+        onUploadProgress: (progressEvent: AxiosProgressEvent) => {
+          const percentCompleted = Math.round(
+            (progressEvent.loaded * 100) / (progressEvent?.total ?? 1),
+          );
+          setProgress(percentCompleted);
+        },
+      }),
   });
+
+  return { ...mutation, progress };
 };

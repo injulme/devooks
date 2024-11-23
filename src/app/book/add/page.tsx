@@ -1,13 +1,13 @@
 'use client';
 
-import { MouseEvent, useRef, useState } from 'react';
+import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AiFillPicture } from 'react-icons/ai';
 
 import { EbookPostRequest } from '@/services/ebook/type';
 import { usePostPdfs } from '@/services/pdf/hooks/usePostPdfs';
 import dayjs from 'dayjs';
-import { Heart, Star } from 'lucide-react';
+import { Heart, Loader2, Star } from 'lucide-react';
 
 import BookDetailCard from '@/app/book/_components/book-detail-card';
 
@@ -47,11 +47,20 @@ export default function BookAdd() {
   const mainImageRef = useRef<HTMLInputElement>(null);
   const introductionImageRef = useRef<HTMLInputElement>(null);
   const [selectTab, setSelectTab] = useState<BookDetailTabType>('INTRODUCTION');
+  const [pdfPageCount, setPdfPageCount] = useState<number>(0);
+  const [pdfFileName, setPdfFileName] = useState<string>('');
 
-  const { mutate: postPdfs } = usePostPdfs();
+  // TODO: progress bar 추가
+  const {
+    mutate: postPdfs,
+    isSuccess: isPdfSuccess,
+    data: responsePdfs,
+    progress,
+    isPending: isPdfLoading,
+  } = usePostPdfs();
 
   const onSubmit = (data: EbookPostRequest) => {
-    console.log('submit data by /book/add ', data);
+    // console.log('submit data by /book/add ', data);
   };
 
   // 전자책 업로드 (PDF 파일 업로드)
@@ -59,6 +68,22 @@ export default function BookAdd() {
     e.stopPropagation();
     pdfRef?.current?.click();
   };
+  // PDF 업로드
+  const savePdfFile = (event: ChangeEvent<HTMLInputElement>) => {
+    const { files } = event.target;
+    if (files && files?.length <= 0) return;
+
+    const pdfFile = files?.[0];
+    if (!pdfFile) return;
+    setPdfFileName(pdfFile.name);
+    const fileType = pdfFile.type;
+    if (fileType !== 'application/pdf') {
+      return alert('파일 형식이 맞지 않습니다. PDF 파일을 업로드해주세요.');
+    } else {
+      postPdfs(pdfFile);
+    }
+  };
+
   // 메인 이미지 업로드
   const onHandleMainImage = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -95,6 +120,13 @@ export default function BookAdd() {
       };
     });
   };
+
+  useEffect(() => {
+    if (!isPdfSuccess) return;
+
+    form.setValue('pdfId', responsePdfs?.pdf.id);
+    setPdfPageCount(responsePdfs?.pdf.pdfInfo.pageCount);
+  }, [isPdfSuccess]);
 
   return (
     <Form {...form}>
@@ -147,7 +179,7 @@ export default function BookAdd() {
               <CarouselNext className="right-[32px]" />
             </Carousel>
 
-            <BookDetailCard />
+            <BookDetailCard pageCount={pdfPageCount} />
             <Tabs
               className="mt-12"
               defaultValue={bookTabs[0].value}
@@ -192,10 +224,33 @@ export default function BookAdd() {
                     </FormLabel>
                     <FormControl>
                       <div>
-                        <Button variant="outline" className="w-full" onClick={onHandlePdfFile}>
+                        <Button
+                          variant="outline"
+                          className="w-full gap-2"
+                          onClick={onHandlePdfFile}
+                          disabled={isPdfLoading}
+                        >
+                          {isPdfLoading && <Loader2 className="w-4 animate-spin" />}
                           PDF 파일 업로드
                         </Button>
-                        <Input type="file" className="hidden" ref={pdfRef} accept=".pdf" />
+                        <Input
+                          type="file"
+                          className="hidden"
+                          ref={pdfRef}
+                          accept=".pdf"
+                          onChange={savePdfFile}
+                        />
+                        <div className="mt-2 flex flex-col">
+                          <span className="text-xs text-gray-600">
+                            업로드 완료 시, 페이지 수가 자동으로 입력됩니다.
+                          </span>
+                          {!isPdfLoading && isPdfSuccess && (
+                            <span className="text-xs text-muted-foreground text-sky-500">
+                              업로드가 완료되었습니다. <br />
+                              등록된 파일명 : <b>{pdfFileName}</b>
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -215,13 +270,7 @@ export default function BookAdd() {
                         <Button variant="outline" className="w-full" onClick={onHandleMainImage}>
                           메인 이미지 업로드
                         </Button>
-                        <Input
-                          type="file"
-                          className="hidden"
-                          ref={mainImageRef}
-                          accept="image/*"
-                          onChange={saveImgFile}
-                        />
+                        <Input type="file" className="hidden" ref={mainImageRef} accept="image/*" />
                       </div>
                     </FormControl>
                     <FormMessage />

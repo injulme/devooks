@@ -37,16 +37,23 @@ export const useTokenStore = create(
 type AuthState = LoginResponse['member'];
 type AuthActions = {
   updateAuth: (data: AuthState) => void;
+  reset: () => void;
 };
 
+const authInitialState: AuthState = {
+  id: '',
+  nickname: '',
+  profileImagePath: '',
+  authority: '',
+};
 export const useAuthStore = create(
   persist<AuthState & AuthActions>(
     (set) => ({
-      id: '',
-      nickname: '',
-      profileImagePath: '',
-      authority: '',
+      ...authInitialState,
       updateAuth: (data) => set(data),
+      reset: () => {
+        set(authInitialState);
+      },
     }),
     {
       name: 'devooks-metadata',
