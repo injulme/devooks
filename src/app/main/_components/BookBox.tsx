@@ -10,7 +10,7 @@ import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { useCategoryStore } from '@/stores/global-store';
 
 export default function BookBox({ bookData }: { bookData: EbookListGetSummary }) {
-  const { title, price, review, writerName, relatedCategoryIdList, mainImagePath, wishlistId } =
+  const { title, price, review, writerName, relatedCategoryIdList, mainImage, wishlistId } =
     bookData;
 
   const categories = useCategoryStore((state) => state.categories);
@@ -19,13 +19,13 @@ export default function BookBox({ bookData }: { bookData: EbookListGetSummary })
     relatedCategoryIdList.includes(category.value),
   );
   const categoryLabels = relatedCategories.map((category) => `#${category.label}`).join(' ');
-
+  console.log(categoryLabels);
   return (
     <div className="flex flex-col">
       <div className="group relative mb-4 box-border h-full w-full overflow-hidden rounded-lg border border-gray-100 shadow-md">
         <AspectRatio ratio={1.33 / 1}>
           <Image
-            src={process.env.NEXT_PUBLIC_BASE_URL + mainImagePath}
+            src={process.env.NEXT_PUBLIC_BASE_URL + mainImage.imagePath}
             alt={`image_${title}`}
             className="bg-no-repeat object-cover transition-all duration-200 group-hover:scale-110"
             fill
