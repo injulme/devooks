@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useAuthStore, useTokenStore } from '@/stores/auth-store';
 
 const tokenStore = useTokenStore.getState();
+const reset = useAuthStore.getState().reset;
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
@@ -16,6 +17,8 @@ api.interceptors.request.use(
     const accessToken = tokenStore.accessToken;
     if (accessToken) {
       request.headers['Authorization'] = `Bearer ${accessToken}`;
+    } else {
+      reset();
     }
     return request;
   },
@@ -33,9 +36,12 @@ api.interceptors.response.use(
       try {
         const refreshToken = tokenStore.refreshToken;
 
-        const response = await axios.post('/api/v1/auth/reissue', {
-          refreshToken,
-        });
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/auth/reissue`,
+          {
+            refreshToken,
+          },
+        );
         const { accessToken, refreshToken: newRefreshToken } = response.data;
 
         tokenStore.updateToken({
@@ -47,7 +53,6 @@ api.interceptors.response.use(
 
         return api(originalRequest);
       } catch (refreshError) {
-        const reset = useAuthStore((state) => state.reset);
         tokenStore.logout();
         reset();
 
