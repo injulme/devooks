@@ -18,7 +18,7 @@ export default function Main() {
   return (
     <Fragment>
       <div className="grid gap-x-8 gap-y-12 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {data?.ebookList.map((ebook) => {
+        {data?.data.map((ebook) => {
           return (
             <Link href={`/book/${ebook.id}`} key={ebook.id}>
               <BookBox bookData={ebook} />
