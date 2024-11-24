@@ -15,9 +15,11 @@ export default function WishlistButton({
   // TODO: handler 추가
   return (
     <Button
-      disabled={disabled}
+      type="button"
       variant="ghost"
       className="absolute right-3 top-2 rounded-full bg-white/30 p-3 shadow-sm transition-all group-hover:bg-white/50"
+      disabled={disabled}
+      onClick={() => {}}
     >
       {wishlistId ? (
         <Heart size={20} className="fill-red-500 stroke-red-500" />

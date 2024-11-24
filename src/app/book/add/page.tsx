@@ -4,6 +4,7 @@ import { ChangeEvent, MouseEvent, SetStateAction, useEffect, useRef, useState } 
 import { useForm } from 'react-hook-form';
 
 import { usePostDescriptionImages } from '@/services/ebook/hooks/usePostDescriptionImages';
+import { usePostEbooks } from '@/services/ebook/hooks/usePostEbooks';
 import { usePostMainImage } from '@/services/ebook/hooks/usePostMainImage';
 import { EbookPostRequest } from '@/services/ebook/type';
 import { usePostPdfs } from '@/services/pdf/hooks/usePostPdfs';
@@ -33,6 +34,7 @@ import { useCategoryStore } from '@/stores/global-store';
 
 const bookTabs = codeToArray(BookDetailTabTypeCode).slice(0, -2);
 
+// TODO: editor 연동
 export default function BookAdd() {
   const form = useForm<EbookPostRequest>();
   const [selectTab, setSelectTab] = useState<BookDetailTabType>('INTRODUCTION');
@@ -47,6 +49,8 @@ export default function BookAdd() {
 
   const [mainImagePreview, setMainImagePreview] = useState<string[]>([]);
   const [descriptionImagePreviews, setDescriptionImagePreviews] = useState<string[]>([]);
+
+  const { mutate: postEbooks } = usePostEbooks();
 
   // TODO: progress bar 추가
   const {
@@ -72,6 +76,7 @@ export default function BookAdd() {
 
   const onSubmit = (data: EbookPostRequest) => {
     console.log('submit data by /book/add ', data);
+    postEbooks(data);
   };
 
   // 전자책 업로드 (PDF 파일 업로드)
