@@ -2,14 +2,14 @@
 
 import { Fragment, useRef, useState } from 'react';
 
-import BookDetailCard from '@/app/book/_components/book-detail-card';
-import BookImageCarousel from '@/app/book/_components/book-image-carousel';
-import SellerProfileCard from '@/app/book/_components/seller-profile-card';
 import Claim from '@/app/book/_components/tabs/claim';
 import Introduction from '@/app/book/_components/tabs/introduction';
 import Review from '@/app/book/_components/tabs/review';
 import TableOfContents from '@/app/book/_components/tabs/table-of-contents';
 
+import BookDetailCard from '@/components/ebook/book-detail-card';
+import BookImageCarousel from '@/components/ebook/book-image-carousel';
+import SellerProfileCard from '@/components/seller/seller-profile-card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import { BookDetailTabType, BookDetailTabTypeCode } from '@/constant/common';

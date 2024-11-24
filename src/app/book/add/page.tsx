@@ -2,7 +2,6 @@
 
 import { ChangeEvent, MouseEvent, SetStateAction, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { AiFillPicture } from 'react-icons/ai';
 
 import { usePostDescriptionImages } from '@/services/ebook/hooks/usePostDescriptionImages';
 import { usePostMainImage } from '@/services/ebook/hooks/usePostMainImage';
@@ -10,16 +9,9 @@ import { EbookPostRequest } from '@/services/ebook/type';
 import { usePostPdfs } from '@/services/pdf/hooks/usePostPdfs';
 import { Loader2 } from 'lucide-react';
 
-import BookDetailCard from '@/app/book/_components/book-detail-card';
-
+import BookDetailCard from '@/components/ebook/book-detail-card';
+import BookImageCarousel from '@/components/ebook/book-image-carousel';
 import { Button } from '@/components/ui/button';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel';
 import {
   Form,
   FormControl,
@@ -54,7 +46,7 @@ export default function BookAdd() {
   const [pdfFileName, setPdfFileName] = useState<string>('');
 
   const [mainImagePreview, setMainImagePreview] = useState<string[]>([]);
-  const [introductionImagePreviews, setIntroductionImagePreviews] = useState<string[]>([]);
+  const [descriptionImagePreviews, setDescriptionImagePreviews] = useState<string[]>([]);
 
   // TODO: progress bar 추가
   const {
@@ -167,7 +159,7 @@ export default function BookAdd() {
 
     const imagesData = await Promise.all(
       Object.values(descriptionImages).map(async (file) => {
-        const fileData = await getFileData(file, setIntroductionImagePreviews);
+        const fileData = await getFileData(file, setDescriptionImagePreviews);
         return fileData;
       }),
     );
@@ -203,48 +195,11 @@ export default function BookAdd() {
         </h1>
         <section className="grid grid-cols-5 gap-4">
           <div className="col-span-3">
-            {mainImagePreview && mainImagePreview.length > 0 ? (
-              <img
-                src={mainImagePreview[mainImagePreview.length - 1]}
-                className="mb-4 h-[430px] w-full rounded bg-no-repeat object-cover"
-              />
-            ) : (
-              <div className="mb-4 flex h-[430px] w-full items-center justify-center rounded border">
-                <AiFillPicture size={140} className="bg-no-repeat object-cover text-gray-300" />
-              </div>
-            )}
-            <Carousel opts={{ loop: true }} className="mb-4">
-              <CarouselContent>
-                {introductionImagePreviews.length > 0
-                  ? introductionImagePreviews.map((image, index) => {
-                      return (
-                        <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                          <div className="h-[230px] rounded border">
-                            <img
-                              src={image}
-                              alt={`cover_${index}`}
-                              className="h-full w-full rounded bg-no-repeat object-cover"
-                            />
-                          </div>
-                        </CarouselItem>
-                      );
-                    })
-                  : [0, 1, 2].map((i) => {
-                      return (
-                        <CarouselItem key={i} className="md:basis-1/2 lg:basis-1/3">
-                          <div className="flex h-[230px] items-center justify-center rounded border">
-                            <AiFillPicture
-                              size={80}
-                              className="bg-no-repeat object-cover text-gray-300"
-                            />
-                          </div>
-                        </CarouselItem>
-                      );
-                    })}
-              </CarouselContent>
-              <CarouselPrevious className="left-[32px]" />
-              <CarouselNext className="right-[32px]" />
-            </Carousel>
+            <BookImageCarousel
+              mainImagePreview={mainImagePreview}
+              descriptionImagePreviews={descriptionImagePreviews}
+              className="mb-4"
+            />
 
             <BookDetailCard
               pageCount={pdfPageCount}

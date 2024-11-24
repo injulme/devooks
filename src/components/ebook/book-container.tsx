@@ -1,5 +1,7 @@
 'use client';
 
+import WishlistButton from './wishlist-button';
+
 import Image from 'next/image';
 
 import { EbookListGetSummary } from '@/services/ebook/type';
@@ -9,7 +11,7 @@ import { AspectRatio } from '@/components/ui/aspect-ratio';
 
 import { useCategoryStore } from '@/stores/global-store';
 
-export default function BookBox({ bookData }: { bookData: EbookListGetSummary }) {
+export default function BookContainer({ bookData }: { bookData: EbookListGetSummary }) {
   const { title, price, review, writerName, relatedCategoryIdList, mainImage, wishlistId } =
     bookData;
 
@@ -31,13 +33,7 @@ export default function BookBox({ bookData }: { bookData: EbookListGetSummary })
             fill
           />
         </AspectRatio>
-        <div className="absolute right-3 top-2 rounded-full bg-white/30 p-3 shadow-sm transition-all group-hover:bg-white/50">
-          {wishlistId ? (
-            <Heart size={24} className="fill-red-500 stroke-red-500" />
-          ) : (
-            <Heart size={24} />
-          )}
-        </div>
+        <WishlistButton wishlistId={wishlistId} />
       </div>
       <div className="flex flex-col justify-between">
         <h4 className="mb-2 line-clamp-2 scroll-m-20 text-lg font-semibold leading-6">{title}</h4>

@@ -5,8 +5,6 @@ import { FaChevronRight } from 'react-icons/fa6';
 
 import Link from 'next/link';
 
-import BookBox from '@/app/main/_components/BookBox';
-
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {

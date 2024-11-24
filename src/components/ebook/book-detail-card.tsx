@@ -1,9 +1,9 @@
 'use client';
 
 import { EbookGetSummary } from '@/services/ebook/type';
-import { Crown, Heart, Star } from 'lucide-react';
+import { Star } from 'lucide-react';
 
-import { Badge } from '@/components/ui/badge';
+import WishlistButton from '@/components/ebook/wishlist-button';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import {
@@ -23,6 +23,7 @@ export default function BookDetailCard({
   price = 0,
   review = { rating: 0, count: 0 },
   relatedCategoryIdList = [],
+  wishlistId,
 }: EbookGetSummary) {
   const categories = useCategoryStore((state) => state.categories);
 
@@ -32,15 +33,8 @@ export default function BookDetailCard({
   const categoryLabels = relatedCategories.map((category) => `#${category.label}`).join(' ');
   console.log(relatedCategoryIdList);
   return (
-    <Card className="p-6 shadow-lg">
-      <div className="mb-4 flex justify-between text-sm text-zinc-700">
-        <Badge variant="sky" className="flex items-center gap-1">
-          <Crown size={16} /> 주간 베스트
-        </Badge>
-        <span className="flex items-center gap-1">
-          <Heart size={16} /> 0
-        </span>
-      </div>
+    <Card className="relative p-6 shadow-lg">
+      <WishlistButton wishlistId={wishlistId} />
 
       <p className="text-sm tracking-wide text-zinc-500">{categoryLabels}</p>
       <div className="flex items-center gap-1 text-sm text-zinc-800">
@@ -62,29 +56,24 @@ export default function BookDetailCard({
       </div>
 
       <div className="mt-6 flex flex-col gap-2">
-        <div className="flex gap-2">
-          <Button variant="outline" size="icon">
-            <Heart size={16} />
-          </Button>
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button variant="outline" className="w-full">
-                미리보기
-              </Button>
-            </DialogTrigger>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="outline" className="w-full">
+              미리보기
+            </Button>
+          </DialogTrigger>
 
-            <DialogContent className="sm:max-w-[425px]">
-              <DialogHeader>
-                <DialogTitle>미리보기</DialogTitle>
-                <DialogDescription>The People of the Kingdom</DialogDescription>
-              </DialogHeader>
-              <div className="p-4">미리보기 이미지</div>
-              <DialogFooter className="justify-center sm:justify-center">
-                <Button type="submit">구매하기</Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
-        </div>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>미리보기</DialogTitle>
+              <DialogDescription>The People of the Kingdom</DialogDescription>
+            </DialogHeader>
+            <div className="p-4">미리보기 이미지</div>
+            <DialogFooter className="justify-center sm:justify-center">
+              <Button type="submit">구매하기</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
 
         <Button>구매하기</Button>
       </div>
