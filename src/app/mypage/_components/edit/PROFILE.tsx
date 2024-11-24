@@ -56,10 +56,10 @@ export default function Profile() {
 
   useEffect(() => {
     if (!memberData) return;
-    form.setValue('nickname', memberData.nickname);
-    // form.setValue('email', memberData.email);
+    form.setValue('nickname', memberData.profile.nickname);
+    form.setValue('email', memberData.profile.email);
 
-    form.setValue('favoriteCategoryIdList', memberData.favoriteCategoryIdList);
+    form.setValue('favoriteCategoryIdList', memberData.profile.favoriteCategoryIdList);
     form.setValue('introduction', memberData.profile.introduction);
     form.setValue('blogLink', memberData.profile.blogLink);
     form.setValue('instagramLink', memberData.profile.instagramLink);

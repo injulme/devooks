@@ -31,7 +31,7 @@ export default function Header() {
   const tab = params?.get('tab');
 
   const registerOpen = useSignupStore((state) => state.open);
-  const userId = useAuthStore((state) => state.id);
+  const userInfo = useAuthStore((state) => state);
   const updateCategory = useCategoryStore((state) => state.updateCategory);
   const { data: getCategoriesData } = useGetCategories();
 
@@ -56,10 +56,13 @@ export default function Header() {
               <Link href="/book/add">책 등록</Link>
             </Button>
 
-            {userId ? (
-              <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                <AvatarFallback>CN</AvatarFallback>
+            {userInfo.id ? (
+              <Avatar onClick={() => router.push('/mypage')} className="cursor-pointer">
+                <AvatarImage
+                  src={userInfo.profileImagePath}
+                  alt={`${userInfo.nickname} 작가의 프로필 사진`}
+                />
+                <AvatarFallback>{userInfo.nickname.substring(0, 2)}</AvatarFallback>
               </Avatar>
             ) : (
               <LoginDialog />
