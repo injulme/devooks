@@ -1,14 +1,10 @@
-import { Pagination } from '@/lib/common';
+import { EbookListGetSummary } from '../ebook/type';
 
-export interface WishlistSummary {
-  id: string;
-  memberId: string;
-  ebookId: string;
-}
+import { Pagination } from '@/lib/common';
 
 /** 찜 목록 조회 */
 export interface WishlistGetResponse extends Pagination {
-  data: WishlistSummary[];
+  data: EbookListGetSummary[];
 }
 
 /** 찜 등록 */
