@@ -62,7 +62,7 @@ export default function SalesManagement() {
               return (
                 <Card className="p-2" key={d}>
                   <div className="flex flex-col justify-between">
-                    <h4 className="text-md font-semibold">The People of the Kingdom</h4>
+                    <h4 className="text-base font-semibold">The People of the Kingdom</h4>
                     <div className="mt-12">
                       <div className="flex items-center">
                         <Label className="w-[80px]">수익금</Label>

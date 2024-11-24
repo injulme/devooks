@@ -1,14 +1,11 @@
-import { getEbooks } from '../api';
-import { EbookListGetResponse } from '../type';
+import { GET_ebooks } from '../api';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { ApiError } from '@/lib/api-error';
-
 export const useGetEbooks = () => {
   return useQuery({
-    queryKey: [getEbooks.name],
-    queryFn: getEbooks,
+    queryKey: [GET_ebooks.name],
+    queryFn: GET_ebooks,
     select: (data) => data,
   });
 };

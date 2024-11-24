@@ -6,7 +6,7 @@ export default function BookLayout({ children }: Readonly<{ children: React.Reac
   return (
     <Fragment>
       <Header />
-      <section className="px-12 py-10">{children}</section>
+      <section className="mx-auto max-w-screen-xl px-12 py-10">{children}</section>
     </Fragment>
   );
 }

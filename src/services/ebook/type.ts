@@ -1,66 +1,53 @@
-/** @get ebook related category name list summary */
-export type RelatedCategoryNameListGetSummary = {
+/** @get 전자책 목록 조회 */
+export interface EbookListGetSummary {
   id: string;
-  name: string;
-};
-
-/** @get ebook list summary */
-export type EbookListGetSummary = {
-  id: string;
-  mainImagePath: string;
-  title: string;
-  wishlistId: string;
-  review: {
-    rating: number;
-    count: number;
+  mainImage: {
+    id: string;
+    imagePath: string;
   };
-  relatedCategoryNameList: RelatedCategoryNameListGetSummary[];
-};
-
-/** @get ebook list response */
-export type EbookListGetResponse = {
-  ebookList: EbookListGetSummary[];
-};
-
-/** @get ebook image path list summary */
-export type ImagePathListGetSummary = {
-  id: string;
-  imagePath: string;
-  order: number;
-};
-
-/** @get ebook summary */
-export type EbookGetSummary = {
-  id: string;
-  mainImagePath: string;
-  descriptionImagePathList: ImagePathListGetSummary[];
-  wishlistId: string;
-  title: string;
-  review: {
-    rating: number;
-    count: number;
-  };
-  relatedCategoryNameList: RelatedCategoryNameListGetSummary[];
-  sellingMemberId: string;
-  createdDate: string;
-  modifiedDate: string;
-  pageCount: number;
   price: number;
-  pdfId: string;
+  title: string;
+  wishlistId: string;
+  writerName: string;
+  review: {
+    rating: number;
+    count: number;
+  };
+  relatedCategoryIdList: string[];
+}
+export type EbookListGetResponse = {
+  data: EbookListGetSummary[];
+};
+
+/** @get 전자책 상세 조회 */
+export interface EbookGetSummary extends EbookListGetSummary {
+  descriptionImageList: {
+    id: string;
+    imagePath: string;
+    order: number;
+  }[];
   introduction: string;
   tableOfContents: string;
-};
-
-/** @get ebook response */
+  seller: {
+    id: string;
+    nickname: string;
+    profileImagePath: string;
+  };
+  pageCount: number;
+  pdfId: string;
+  createdDate: string;
+  modifiedDate: string;
+  relatedCategoryIdList: string[];
+}
 export type EbookGetResponse = {
   ebook: EbookGetSummary;
 };
 
-/** @post ebook request */
+/** @post 전자책 등록 */
 export type EbookPostRequest = {
   pdfId: string;
   title: string;
-  relatedCategoryNameList: RelatedCategoryNameListGetSummary[];
+  relatedCategoryIdList: string[];
   mainImageId: string;
   descriptionImageIdList: string[];
   price: number;
@@ -68,58 +55,45 @@ export type EbookPostRequest = {
   tableOfContents: string;
 };
 
-/** @post ebook response */
-export type EbookPostResponse = {
-  ebook: {
-    id: string;
-    pdfId: string;
-    mainImageId: string;
-    relatedCategoryNameList: RelatedCategoryNameListGetSummary[];
-    title: string;
-    price: number;
-    tableOfContents: string;
-    introduction: string;
-    createdDate: string;
-    modifiedDate: string;
-    descriptionImageList: ImagePathListGetSummary[];
-    sellingMemberId: string;
-    deletedDate: string;
-  };
-};
-
-/** @patch ebook request */
+/** @patch 전자책 수정 */
 export type EbookPatchRequest = {
   ebook: {
     title: string;
-    relatedCategoryNameList: RelatedCategoryNameListGetSummary[];
+    relatedCategoryIdList: string[];
     mainImageId: string;
     descriptionImageIdList: string[];
+    price: number;
     introduction: string;
     tableOfContents: string;
-    price: number;
-  };
-  isChanged: {
-    title: boolean;
-    content: boolean;
-    imageIdList: boolean;
   };
 };
 
-/** @patch ebook response */
-export type EbookPatchResponse = {
-  ebook: {
-    id: string;
-    pdfId: string;
-    mainImageId: string;
-    relatedCategoryNameList: RelatedCategoryNameListGetSummary[];
-    title: string;
-    price: number;
-    tableOfContents: string;
-    introduction: string;
-    createdDate: string;
-    modifiedDate: string;
-    descriptionImageList: ImagePathListGetSummary[];
-    sellingMemberId: string;
-    deletedDate: string;
+/** @post 전자책 메인 사진 저장 */
+export type EbookMainImageRequest = {
+  image: {
+    base64Raw: string | ArrayBuffer;
+    extension: string | undefined;
+    byteSize: number | undefined;
   };
+};
+export type EbookMainImageResponse = {
+  mainImage: {
+    id: string;
+    imagePath: string;
+  };
+};
+
+/** @post 전자책 설명 사진 저장 */
+export type EbookDescriptionImagesRequest = {
+  imageList: {
+    base64Raw: string | ArrayBuffer;
+    extension: string | undefined;
+    byteSize: number | undefined;
+  }[];
+};
+export type EbookDescriptionImagesResponse = {
+  descriptionImageList: {
+    id: string;
+    imagePath: string;
+  }[];
 };

@@ -2,14 +2,14 @@
 
 import { Fragment, useRef, useState } from 'react';
 
-import BookDetailCard from '@/app/book/_components/book-detail-card';
-import BookImageCarousel from '@/app/book/_components/book-image-carousel';
-import SellerProfileCard from '@/app/book/_components/seller-profile-card';
 import Claim from '@/app/book/_components/tabs/claim';
 import Introduction from '@/app/book/_components/tabs/introduction';
 import Review from '@/app/book/_components/tabs/review';
 import TableOfContents from '@/app/book/_components/tabs/table-of-contents';
 
+import BookDetailCard from '@/components/ebook/book-detail-card';
+import BookImageCarousel from '@/components/ebook/book-image-carousel';
+import SellerProfileCard from '@/components/seller/seller-profile-card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import { BookDetailTabType, BookDetailTabTypeCode } from '@/constant/common';
@@ -39,7 +39,7 @@ export default function BookById({ params }: { params: PageParams }) {
 
           <div>
             <Tabs defaultValue={bookTabs[0].value} value={selectedTabId}>
-              <TabsList className="sticky top-0 w-full bg-white">
+              <TabsList className="sticky top-0 z-10 w-full bg-white">
                 {bookTabs.map((menu) => {
                   // TODO: scrollIntoView & Observer 로 처리할지, scrollTo 로 처리할지 결정
                   // 근데 해당 페이지 오면 탭 active 상태 변경 해줘야 하는데 이거 고려하기

@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import { useGetCategories } from '@/services/category/hooks/useGetCategories';
 import { Heart } from 'lucide-react';
@@ -18,20 +18,26 @@ import { ThemeToggle } from '@/components/theme-toggle';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-import { useUserStore } from '@/stores/useAuthStore';
-import { useCategoriesStore, useRegisterStore } from '@/stores/useRegisterStore';
+import { useAuthStore } from '@/stores/auth-store';
+import { useSignupStore } from '@/stores/auth-store';
+import { useCategoryStore } from '@/stores/global-store';
 
 export default function Header() {
   const router = useRouter();
-  const store = useRegisterStore((state) => state);
-  const userStore = useUserStore((state) => state);
-  const categorySetData = useCategoriesStore((state) => state.setData);
+  const params = useSearchParams();
+
+  const tab = params?.get('tab');
+
+  const registerOpen = useSignupStore((state) => state.open);
+  const userId = useAuthStore((state) => state.id);
+  const updateCategory = useCategoryStore((state) => state.updateCategory);
   const { data: getCategoriesData } = useGetCategories();
 
   useEffect(() => {
     if (!getCategoriesData || getCategoriesData.length === 0) return;
-    categorySetData(getCategoriesData);
+    updateCategory({ categories: getCategoriesData });
   }, [getCategoriesData]);
 
   return (
@@ -50,7 +56,7 @@ export default function Header() {
               <Link href="/book/add">책 등록</Link>
             </Button>
 
-            {userStore.id ? (
+            {userId ? (
               <Avatar>
                 <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
                 <AvatarFallback>CN</AvatarFallback>
@@ -58,7 +64,7 @@ export default function Header() {
             ) : (
               <LoginDialog />
             )}
-            {store.open && <RegisterDialog />}
+            {registerOpen && <RegisterDialog />}
             <ThemeToggle />
             <Button variant="outline" size="icon" onClick={() => router.push('/mypage')}>
               <Heart className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
@@ -67,9 +73,24 @@ export default function Header() {
           </div>
         </div>
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            {getCategoriesData?.map((category) => <div key={category.value}>{category.label}</div>)}
-          </div>
+          <Tabs defaultValue={tab || ''}>
+            <TabsList>
+              {getCategoriesData?.map((category) => {
+                return (
+                  <TabsTrigger
+                    value={category.value}
+                    key={category.value}
+                    onClick={() => {
+                      router.push(`main?tab=${category.value}`);
+                    }}
+                  >
+                    {category.label}
+                  </TabsTrigger>
+                );
+              })}
+            </TabsList>
+          </Tabs>
+
           <Input placeholder="검색어를 입력해주세요." className="w-[240px] bg-gray-200" />
         </div>
       </div>

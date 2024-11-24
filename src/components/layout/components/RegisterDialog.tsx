@@ -29,11 +29,12 @@ import { Label } from '@/components/ui/label';
 import { MultiSelect } from '@/components/ui/multi-select';
 import { Separator } from '@/components/ui/separator';
 
-import { useCategoriesStore, useRegisterStore } from '@/stores/useRegisterStore';
+import { useSignupStore } from '@/stores/auth-store';
+import { useCategoryStore } from '@/stores/global-store';
 
 export default function RegisterDialog() {
-  const store = useRegisterStore((state) => state);
-  const cateogories = useCategoriesStore((state) => state.data);
+  const signup = useSignupStore((state) => state);
+  const categories = useCategoryStore((state) => state.categories);
   const form = useForm<SignupRequest>();
   const [agreeChecks, setAgreeChecks] = useState([false, false, false]);
 
@@ -66,21 +67,21 @@ export default function RegisterDialog() {
 
   const onJoinSubmit = (data: SignupRequest) => {
     console.log('on join submit', data);
-    console.log('on join store', store);
-    store.setState(data);
 
-    postSignup({ ...data, oauthId: store.oauthId, oauthType: store.oauthType });
+    signup.updateSignup(data);
+
+    postSignup({ ...data, oauthId: signup.oauthId, oauthType: signup.oauthType });
   };
   useEffect(() => {
     if (!isSuccess) return;
-    store.onOpenChange(false);
+    signup.onOpenChange(false);
   }, [isSuccess]);
 
   // TODO: 카카오 회원가입 탈퇴시키고 다시 회원가입 테스트하기 register success dialog 잘 뜨는지 봐야됨
   return (
     <Fragment>
       {<RegisterSuccessDialog />}
-      <Dialog open={store.open} onOpenChange={() => store.onOpenChange(!store.open)}>
+      <Dialog open={signup.open} onOpenChange={() => signup.onOpenChange(!signup.open)}>
         <DialogContent className="max-w-[400px]">
           <DialogHeader className="gap-4">
             <DialogTitle className="flex justify-center">
@@ -114,7 +115,7 @@ export default function RegisterDialog() {
                       <FormLabel>관심 카테고리</FormLabel>
                       <FormControl>
                         <MultiSelect
-                          options={cateogories || []}
+                          options={categories || []}
                           onValueChange={field.onChange}
                           defaultValue={field.value ?? []}
                           placeholder="카테고리를 선택해주세요"

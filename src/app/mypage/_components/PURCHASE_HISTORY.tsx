@@ -48,11 +48,11 @@ export default function PurchaseHistory() {
                           <AvatarImage src="https://github.com/shadcn.png" />
                           <AvatarFallback>CN</AvatarFallback>
                         </Avatar>
-                        <h3 className="text-md font-semibold tracking-tight">upn2n</h3>
+                        <h3 className="text-base font-semibold tracking-tight">upn2n</h3>
                       </div>
                     </div>
                     <div className="flex items-end justify-between sm:flex-col sm:gap-1 md:flex-row">
-                      <h4 className="text-md scroll-m-20 font-semibold tracking-tight">
+                      <h4 className="scroll-m-20 text-base font-semibold tracking-tight">
                         3,980,000원{' '}
                         <span className="text-xs font-medium text-muted-foreground">
                           (VAT 포함)
