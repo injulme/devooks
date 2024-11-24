@@ -1,5 +1,9 @@
 'use client';
 
+import { MouseEvent, useEffect, useState } from 'react';
+
+import { useDeleteWishlistById } from '@/services/wishlist/hooks/useDeleteWishlistById';
+import { usePostWishlist } from '@/services/wishlist/hooks/usePostWishlist';
 import { Heart } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -8,20 +12,50 @@ import { Button } from '@/components/ui/button';
 export default function WishlistButton({
   wishlistId,
   disabled,
+  ebookId,
 }: {
-  wishlistId?: string | null;
+  wishlistId: string | null;
   disabled?: boolean;
+  ebookId: string;
 }) {
-  // TODO: handler 추가
+  const [_wishlistId, setWishlistId] = useState<string | null>(wishlistId);
+  const {
+    mutate: postWishlist,
+    data: responsePostWishlist,
+    isSuccess: isWishlistSuccess,
+  } = usePostWishlist();
+
+  const { mutate: deleteWishlist, isSuccess: isWishlistDeleteSuccess } = useDeleteWishlistById();
+  const onHandleWishlist = (event: MouseEvent<HTMLButtonElement>, flag: boolean) => {
+    event.stopPropagation();
+    event.preventDefault();
+    // TODO: 400 error면 로그인 모달 띄우기
+    if (flag) {
+      deleteWishlist(_wishlistId);
+    } else {
+      postWishlist({ ebookId });
+    }
+  };
+
+  useEffect(() => {
+    if (!isWishlistSuccess) return;
+    setWishlistId(responsePostWishlist?.wishlistId);
+  }, [responsePostWishlist, isWishlistSuccess]);
+
+  useEffect(() => {
+    if (!isWishlistDeleteSuccess) return;
+    setWishlistId(null);
+  }, [isWishlistDeleteSuccess]);
+
   return (
     <Button
       type="button"
       variant="ghost"
-      className="absolute right-3 top-2 rounded-full bg-white/30 p-3 shadow-sm transition-all group-hover:bg-white/50"
+      className="absolute right-3 top-2 z-10 rounded-full bg-white/30 p-3 shadow-sm transition-all group-hover:bg-white/50"
       disabled={disabled}
-      onClick={() => {}}
+      onClick={(e) => onHandleWishlist(e, !!_wishlistId)}
     >
-      {wishlistId ? (
+      {!!_wishlistId ? (
         <Heart size={20} className="fill-red-500 stroke-red-500" />
       ) : (
         <Heart size={20} />

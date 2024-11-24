@@ -24,6 +24,7 @@ export default function BookDetailCard({
   review = { rating: 0, count: 0 },
   relatedCategoryIdList = [],
   wishlistId,
+  id,
 }: EbookGetSummary) {
   const categories = useCategoryStore((state) => state.categories);
 
@@ -34,7 +35,7 @@ export default function BookDetailCard({
   console.log(relatedCategoryIdList);
   return (
     <Card className="relative p-6 shadow-lg">
-      <WishlistButton wishlistId={wishlistId} />
+      <WishlistButton wishlistId={wishlistId} ebookId={id} />
 
       <p className="text-sm tracking-wide text-zinc-500">{categoryLabels}</p>
       <div className="flex items-center gap-1 text-sm text-zinc-800">
