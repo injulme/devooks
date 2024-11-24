@@ -7,6 +7,7 @@ import dynamic from 'next/dynamic';
 import UserInfo from '@/app/mypage/_components/UserInfo';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useAuthStore } from '@/stores/auth-store';
 
 const mypageMenus = [
   { label: '판매중인 책', value: 'MY_BOOK' },
@@ -20,10 +21,10 @@ export default function MyPage() {
   const DynamicComponent = dynamic(() => import(`@/app/mypage/_components/${selectTab}`), {
     loading: () => <div>loading...</div>,
   });
-
+  const userId = useAuthStore((state) => state.id);
   return (
     <section>
-      <UserInfo />
+      <UserInfo userId={userId}/>
 
       <Tabs
         defaultValue={mypageMenus[0].value}

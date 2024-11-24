@@ -84,7 +84,7 @@ export default function BookById({ params }: { params: PageParams }) {
         <div className="col-span-2">
           <div className="sticky top-24 flex flex-col gap-8">
             <BookDetailCard />
-            <SellerProfileCard />
+            <SellerProfileCard userId={'34db9b02-8683-4b48-9047-545bea5fd536'} />
           </div>
         </div>
       </section>

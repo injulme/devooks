@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { useGetMemberProfileById } from '@/services/member/hooks/useGetMemberProfileById';
 import { House } from 'lucide-react';
 
 import Instagram from '@/assets/icons/instagram.webp';
@@ -11,36 +12,56 @@ import Youtube from '@/assets/icons/youtube.webp';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 
-export default function UserInfo() {
+import { useCategoryStore } from '@/stores/global-store';
+
+export default function UserInfo({ userId }: { userId: string }) {
+  const categories = useCategoryStore((state) => state.categories);
+  const { data: memberData } = useGetMemberProfileById(userId);
+
+  const relatedCategories = categories.filter((category) =>
+    memberData?.profile.favoriteCategoryIdList?.includes(category.value),
+  );
+  const categoryLabels = relatedCategories.map((category) => `#${category.label}`).join(' ');
+
   return (
     <div className="flex justify-between bg-slate-300 px-10 py-12">
       <div className="flex gap-8">
         <Avatar className="h-[120px] w-[120px] shadow-xl">
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
+          <AvatarImage src={memberData?.profile.profileImagePath} />
+          <AvatarFallback>{memberData?.profile.nickname.substring(0, 2)}</AvatarFallback>
         </Avatar>
 
         <div className="flex flex-col justify-between">
           <div>
-            <h3 className="text-2xl font-semibold tracking-tight">upn2n</h3>
-            <p className="text-xs text-zinc-500">#java #spring #kotlin</p>
+            <h3 className="text-2xl font-semibold tracking-tight">
+              {memberData?.profile.nickname}
+            </h3>
+            <p className="text-xs text-zinc-500">{categoryLabels}</p>
           </div>
 
-          <p className="text-sm text-gray-700">여기, 내가 그대로 있어요.</p>
+          <p className="text-sm text-gray-700">
+            {memberData?.profile.introduction || '자기소개를 입력해주세요.'}
+          </p>
         </div>
       </div>
 
       <div className="flex flex-col items-end justify-between">
         <div className="flex items-center gap-2">
-          <div className="cursor-pointer rounded-full bg-white p-2 shadow-lg">
-            <House className="stroke-slate-500" />
-          </div>
-          <div className="cursor-pointer rounded-full bg-white p-2 shadow-lg">
-            <Image src={Instagram} alt="instagram logo" className="h-6 w-6" />
-          </div>
-          <div className="cursor-pointer rounded-full bg-white p-2 shadow-lg">
-            <Image src={Youtube} alt="youtube logo" className="h-6 w-6" />
-          </div>
+          {memberData?.profile.blogLink && (
+            <Button className="rounded-full bg-white shadow-lg" size="icon" variant="ghost">
+              <House className="stroke-slate-500" />
+            </Button>
+          )}
+          {memberData?.profile.instagramLink && (
+            <Button className="rounded-full bg-white shadow-lg" size="icon" variant="ghost">
+              <Image src={Instagram} alt="instagram logo" className="h-6 w-6" />
+            </Button>
+          )}
+          {memberData?.profile.youtubeLink && (
+            <Button className="rounded-full bg-white shadow-lg" size="icon" variant="ghost">
+              <Image src={Youtube} alt="youtube logo" className="h-6 w-6" />
+            </Button>
+          )}
         </div>
         <Link href={'/mypage/edit'}>
           <Button size="sm" variant="secondary">

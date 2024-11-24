@@ -9,18 +9,33 @@ export type SignupRequest = {
 
 export type SignupResponse = LoginResponse;
 
-export type MemberProfile = {
-  memberId: string;
-  nickname: string;
-  profileImagePath: string;
+export interface MemberProfile {
+  // memberId: string;
+  // nickname: string;
+  // profileImagePath: string;
+  // profile: {
+  //   blogLink: string;
+  //   instagramLink: string;
+  //   youtubeLink: string;
+  //   introduction: string;
+  // };
+  // favoriteCategoryIdList: string[];
   profile: {
+    id: string;
+    nickname: string;
+    profileImagePath: string;
+    favoriteCategoryIdList: string[];
     blogLink: string;
     instagramLink: string;
     youtubeLink: string;
     introduction: string;
+    realName: string;
+    bank: string;
+    accountNumber: string;
+    phoneNumber: string;
+    email: string;
   };
-  favoriteCategoryIdList: string[];
-};
+}
 
 export type MemberProfileUpdateRequest = {
   nickname: string;
