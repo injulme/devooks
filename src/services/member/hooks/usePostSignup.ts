@@ -1,10 +1,10 @@
-import { postSignup } from '../api';
+import { POST_signup } from '../api';
 
 import { useMutation } from '@tanstack/react-query';
 
 export const usePostSignup = () => {
   return useMutation({
-    mutationKey: [postSignup.name],
-    mutationFn: postSignup,
+    mutationKey: [POST_signup.name],
+    mutationFn: POST_signup,
   });
 };

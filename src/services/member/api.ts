@@ -3,7 +3,7 @@ import { MemberProfile, MemberProfileUpdateRequest, SignupRequest, SignupRespons
 
 import api from '@/lib/api';
 
-export async function postSignup({
+export async function POST_signup({
   oauthId,
   oauthType,
   nickname,
