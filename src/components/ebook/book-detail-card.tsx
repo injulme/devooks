@@ -18,6 +18,10 @@ import {
 
 import { useCategoryStore } from '@/stores/global-store';
 
+type BookDetailCardProps = Pick<
+  EbookGetSummary,
+  'pageCount' | 'price' | 'review' | 'relatedCategoryIdList' | 'wishlistId' | 'id'
+>;
 export default function BookDetailCard({
   pageCount = 0,
   price = 0,
@@ -25,14 +29,14 @@ export default function BookDetailCard({
   relatedCategoryIdList = [],
   wishlistId,
   id,
-}: EbookGetSummary) {
+}: BookDetailCardProps) {
   const categories = useCategoryStore((state) => state.categories);
 
   const relatedCategories = categories.filter((category) =>
     relatedCategoryIdList.includes(category.value),
   );
   const categoryLabels = relatedCategories.map((category) => `#${category.label}`).join(' ');
-  console.log(relatedCategoryIdList);
+
   return (
     <Card className="relative p-6 shadow-lg">
       <WishlistButton wishlistId={wishlistId} ebookId={id} />

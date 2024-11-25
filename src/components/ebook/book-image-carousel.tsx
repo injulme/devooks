@@ -20,25 +20,28 @@ export interface BookImageCarouselProps {
 }
 
 export default function BookImageCarousel({
-  mainImagePreview,
+  mainImagePreview = [],
   descriptionImagePreviews,
   className,
 }: BookImageCarouselProps) {
   return (
     <div className={className}>
-      <AspectRatio ratio={1.33 / 1} className="mb-4">
-        {mainImagePreview && mainImagePreview.length > 0 ? (
+      {mainImagePreview && mainImagePreview.length > 0 ? (
+        <AspectRatio ratio={1.33 / 1} className="mb-4">
           <Image
             src={mainImagePreview[mainImagePreview.length - 1]}
-            className="mb-4 h-full w-full rounded bg-no-repeat object-cover"
+            className="rounded border bg-no-repeat object-cover"
             alt="대표 이미지"
+            fill
           />
-        ) : (
-          <div className="mb-4 flex h-full w-full items-center justify-center rounded border">
+        </AspectRatio>
+      ) : (
+        <AspectRatio ratio={1.33 / 1} className="mb-4">
+          <div className="flex h-full w-full items-center justify-center rounded border">
             <AiFillPicture size={140} className="bg-no-repeat object-cover text-gray-300" />
           </div>
-        )}
-      </AspectRatio>
+        </AspectRatio>
+      )}
       <Carousel opts={{ loop: true }}>
         <CarouselContent>
           {descriptionImagePreviews && descriptionImagePreviews.length > 0
@@ -54,6 +57,7 @@ export default function BookImageCarousel({
                           src={image}
                           alt={`cover_${index}`}
                           className="h-full w-full rounded bg-no-repeat object-cover"
+                          fill
                         />
                       </AspectRatio>
                     </div>
