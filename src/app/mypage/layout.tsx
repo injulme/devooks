@@ -4,7 +4,7 @@ export default function MyPageLayout({ children }: Readonly<{ children: React.Re
   return (
     <>
       <Header />
-      {children}
+      <section className="mx-auto max-w-screen-xl px-12 py-10">{children}</section>
     </>
   );
 }
