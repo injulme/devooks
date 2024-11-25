@@ -2,6 +2,8 @@
 
 import { Fragment, useRef, useState } from 'react';
 
+import { useGetEbooksById } from '@/services/ebook/hooks/useGetEbooksById';
+
 import Claim from '@/app/book/_components/tabs/claim';
 import Introduction from '@/app/book/_components/tabs/introduction';
 import Review from '@/app/book/_components/tabs/review';
@@ -28,14 +30,25 @@ export default function BookById({ params }: { params: PageParams }) {
   const claimRef = useRef<HTMLDivElement>(null);
   const reviewRef = useRef<HTMLDivElement>(null);
 
+  const { data: ebookData, isLoading } = useGetEbooksById(params.id);
+  console.log('ebookData ,', ebookData);
+
+  if (isLoading || !ebookData) return <div>loading...</div>;
   return (
     <Fragment>
       <h2 className="scroll-m-20 pb-8 text-center text-3xl font-semibold tracking-tight first:mt-0">
-        『소년이 온다』 [book ID: {params.id}]
+        {ebookData?.ebook.title}
       </h2>
       <section className="grid grid-cols-6 gap-20">
         <div className="col-span-4 flex flex-col gap-8">
-          <BookImageCarousel />
+          <BookImageCarousel
+            mainImagePreview={[
+              process.env.NEXT_PUBLIC_BASE_URL + ebookData.ebook.mainImage.imagePath,
+            ]}
+            descriptionImagePreviews={ebookData?.ebook.descriptionImageList.map(
+              (descriptionImage) => process.env.NEXT_PUBLIC_BASE_URL + descriptionImage.imagePath,
+            )}
+          />
 
           <div>
             <Tabs defaultValue={bookTabs[0].value} value={selectedTabId}>
@@ -67,10 +80,10 @@ export default function BookById({ params }: { params: PageParams }) {
               </TabsList>
 
               <section ref={introductionRef} className="mt-12">
-                <Introduction />
+                <Introduction introduction={ebookData.ebook.introduction} />
               </section>
               <section ref={tableOfContentsRef} className="mt-12">
-                <TableOfContents />
+                <TableOfContents tableOfContents={ebookData.ebook.tableOfContents} />
               </section>
               <section ref={reviewRef} className="mt-12">
                 <Review />
@@ -83,8 +96,15 @@ export default function BookById({ params }: { params: PageParams }) {
         </div>
         <div className="col-span-2">
           <div className="sticky top-24 flex flex-col gap-8">
-            <BookDetailCard />
-            <SellerProfileCard userId={'34db9b02-8683-4b48-9047-545bea5fd536'} />
+            <BookDetailCard
+              price={ebookData?.ebook.price}
+              pageCount={ebookData.ebook.pageCount}
+              review={ebookData.ebook.review}
+              relatedCategoryIdList={ebookData.ebook.relatedCategoryIdList}
+              wishlistId={ebookData.ebook.wishlistId}
+              id={ebookData.ebook.id}
+            />
+            <SellerProfileCard userId={ebookData.ebook.seller.id} />
           </div>
         </div>
       </section>

@@ -14,7 +14,7 @@ import { Card } from '@/components/ui/card';
 
 export default function SellerProfileCard({ userId }: { userId: string }) {
   const { data: memberData } = useGetMemberProfileById(userId);
-  console.log('v   ', memberData);
+
   return (
     <Card className="p-4 shadow-lg">
       <div className="flex items-center gap-8">
