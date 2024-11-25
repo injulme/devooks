@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 import { useGetCategories } from '@/services/category/hooks/useGetCategories';
 import { Heart } from 'lucide-react';
@@ -26,9 +26,9 @@ import { useCategoryStore } from '@/stores/global-store';
 
 export default function Header() {
   const router = useRouter();
-  const params = useSearchParams();
 
-  const tab = params?.get('tab');
+  // const tab = params?.get('tab');
+  const tab = 'BEST';
 
   const registerOpen = useSignupStore((state) => state.open);
   const userInfo = useAuthStore((state) => state);

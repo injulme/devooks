@@ -2,15 +2,11 @@
 
 import { Fragment } from 'react';
 
-import { useSearchParams } from 'next/navigation';
-
 import { useGetEbooks } from '@/services/ebook/hooks/useGetEbooks';
 
 import BookContainer from '@/components/ebook/book-container';
 
 export default function Main() {
-  const params = useSearchParams();
-
   const { data } = useGetEbooks();
   console.log('책 전체 리스트 호출:: ', data);
 
