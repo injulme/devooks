@@ -47,3 +47,19 @@ export type MemberProfileUpdateRequest = {
   favoriteCategoryIdList: string[];
   email: string;
 };
+
+export interface MemberImageReqeust {
+  image: {
+    base64Raw: string | ArrayBuffer;
+    extension: string | undefined;
+    byteSize: number | undefined;
+  };
+}
+export interface MemberImageResponse {
+  member: {
+    id: string;
+    nickname: string;
+    profileImagePath: string;
+    authority: string;
+  };
+}
