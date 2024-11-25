@@ -18,10 +18,7 @@ import {
 
 import { useCategoryStore } from '@/stores/global-store';
 
-type BookDetailCardProps = Pick<
-  EbookGetSummary,
-  'pageCount' | 'price' | 'review' | 'relatedCategoryIdList' | 'wishlistId' | 'id'
->;
+type BookDetailCardProps = Partial<EbookGetSummary>;
 export default function BookDetailCard({
   pageCount = 0,
   price = 0,
