@@ -76,6 +76,7 @@ export default function BookAdd() {
 
   const onSubmit = (data: EbookPostRequest) => {
     console.log('submit data by /book/add ', data);
+
     postEbooks(data);
   };
 
@@ -144,7 +145,7 @@ export default function BookAdd() {
 
           const imageData = {
             base64Raw,
-            extension,
+            extension: extension?.toUpperCase(),
             byteSize,
           };
           resolve(imageData);

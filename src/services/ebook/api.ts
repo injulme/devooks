@@ -13,12 +13,13 @@ import api from '@/lib/api';
 
 /** 전자책 목록 조회 */
 export async function GET_ebooks(): Promise<EbookListGetResponse> {
-  const { data } = await api.get(`/api/v1/ebooks?page=1&count=1`);
+  // TODO: page, count 파라미터 추가
+  const { data } = await api.get(`/api/v1/ebooks?page=1&count=10`);
   return data;
 }
 
 /** 전자책 등록 */
-export async function POST_ebooks(params: EbookPostRequest): Promise<void> {
+export async function POST_ebooks(params: EbookPostRequest): Promise<EbookGetResponse> {
   const { data } = await api.post(`/api/v1/ebooks`, params);
   return data;
 }
