@@ -61,6 +61,7 @@ export default function Header() {
                 <AvatarImage
                   src={userInfo.profileImagePath}
                   alt={`${userInfo.nickname} 작가의 프로필 사진`}
+                  className="object-cover"
                 />
                 <AvatarFallback>{userInfo.nickname.substring(0, 2)}</AvatarFallback>
               </Avatar>

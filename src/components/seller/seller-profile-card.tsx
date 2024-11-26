@@ -19,7 +19,7 @@ export default function SellerProfileCard({ userId }: { userId: string }) {
     <Card className="p-4 shadow-lg">
       <div className="flex items-center gap-8">
         <Avatar className="h-[65px] w-[65px] shadow-xl">
-          <AvatarImage src={memberData?.profile.profileImagePath} />
+          <AvatarImage src={memberData?.profile.profileImagePath} className="object-cover" />
           <AvatarFallback>{memberData?.profile.nickname.substring(0, 2)}</AvatarFallback>
         </Avatar>
 

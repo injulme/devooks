@@ -13,14 +13,17 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
+import { useAuthStore } from '@/stores/auth-store';
+
 const editMenus = [
   { label: '프로필', value: 'PROFILE' },
   { label: '출금계좌', value: 'ACCOUNT' },
 ];
 export default function MyPageEdit() {
+  const authInfo = useAuthStore((state) => state);
   const [selectTab, setSelectTab] = useState(editMenus[0].value);
   const [memberProfileImagePath, setMemberProfileImagePath] = useState<string | undefined>(
-    undefined,
+    authInfo.profileImagePath,
   );
   const [memberNickname, setMemberNickname] = useState<string | null>(null);
   const {
@@ -82,18 +85,21 @@ export default function MyPageEdit() {
     if (!isImageSuccess) return;
     setMemberNickname(responseImage?.member.nickname);
     setMemberProfileImagePath(responseImage?.member.profileImagePath);
+    authInfo.updateProfileImage(responseImage?.member.profileImagePath);
   }, [isImageSuccess]);
 
-  // TODO: image /static prefix는 어떻게 처리할지 고민해보기
-  // TODO: get profile 어디서 관리해야되지? profileImagePath를 가져와야 함
-  // 이미지 보일 때 안늘어나게 처리하기
+  useEffect(() => {
+    if (!authInfo.profileImagePath) return;
+    setMemberProfileImagePath(authInfo.profileImagePath);
+  }, [authInfo.profileImagePath]);
+
   return (
     <section className="mx-[100px] my-10">
       <div className="flex gap-16">
         <div>
           <div className="relative">
             <Avatar className="h-[180px] w-[180px] shadow-xl">
-              <AvatarImage src={memberProfileImagePath} />
+              <AvatarImage src={memberProfileImagePath} className="object-cover" />
               <AvatarFallback>{memberNickname}</AvatarFallback>
             </Avatar>
             <Button

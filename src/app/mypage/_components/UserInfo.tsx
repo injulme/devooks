@@ -27,7 +27,7 @@ export default function UserInfo({ userId }: { userId: string }) {
     <div className="flex justify-between bg-slate-300 px-10 py-12">
       <div className="flex gap-8">
         <Avatar className="h-[120px] w-[120px] shadow-xl">
-          <AvatarImage src={memberData?.profile.profileImagePath} />
+          <AvatarImage src={memberData?.profile.profileImagePath} className="object-cover" />
           <AvatarFallback>{memberData?.profile.nickname.substring(0, 2)}</AvatarFallback>
         </Avatar>
 

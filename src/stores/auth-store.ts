@@ -37,6 +37,8 @@ export const useTokenStore = create(
 type AuthState = LoginResponse['member'];
 type AuthActions = {
   updateAuth: (data: AuthState) => void;
+  updateProfileImage: (imagePath: AuthState['profileImagePath']) => void;
+
   reset: () => void;
 };
 
@@ -51,6 +53,7 @@ export const useAuthStore = create(
     (set) => ({
       ...authInitialState,
       updateAuth: (data) => set(data),
+      updateProfileImage: (imagePath) => set({ profileImagePath: imagePath }),
       reset: () => {
         set(authInitialState);
       },
