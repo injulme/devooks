@@ -20,6 +20,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { MultiSelect } from '@/components/ui/multi-select';
 import { Textarea } from '@/components/ui/textarea';
 
 import { useAuthStore } from '@/stores/auth-store';
@@ -118,39 +119,25 @@ export default function Profile() {
             <FormField
               control={form.control}
               name="favoriteCategoryIdList"
-              render={({ field }) => {
-                // console.log('field', field.value);
-                return (
-                  <FormItem>
-                    {/* <FormLabel>관심 카테고리</FormLabel> */}
-                    <FormControl>
-                      <FacetedFilter
-                        title="관심 카테고리"
-                        options={categories || []}
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                        // {...field}
-                      />
-                      {/* <MultiSelect
-                        options={categories || []}
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                        // defaultValue={[
-                        //   '335e249c-ae39-4074-90d7-b3aaa7683d9b',
-                        //   'e327d7df-01fa-4963-b65f-567b1379713f',
-                        // ]}
-                        placeholder="카테고리를 선택해주세요"
-                        variant="inverted"
-                        animation={2}
-                        maxCount={5}
-                        modalPopover
-                        {...field}
-                      /> */}
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                );
-              }}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>관심 카테고리</FormLabel>
+                  <FormControl>
+                    <MultiSelect
+                      options={categories}
+                      onValueChange={field.onChange}
+                      defaultValue={field.value ?? []}
+                      placeholder="카테고리를 선택해주세요"
+                      variant="inverted"
+                      animation={2}
+                      maxCount={5}
+                      modalPopover
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
             <FormField
               control={form.control}
