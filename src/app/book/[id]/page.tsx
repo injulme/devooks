@@ -42,11 +42,9 @@ export default function BookById({ params }: { params: PageParams }) {
       <section className="grid grid-cols-6 gap-20">
         <div className="col-span-4 flex flex-col gap-8">
           <BookImageCarousel
-            mainImagePreview={[
-              process.env.NEXT_PUBLIC_BASE_URL + ebookData.ebook.mainImage.imagePath,
-            ]}
+            mainImagePreview={[ebookData.ebook.mainImage.imagePath]}
             descriptionImagePreviews={ebookData?.ebook.descriptionImageList.map(
-              (descriptionImage) => process.env.NEXT_PUBLIC_BASE_URL + descriptionImage.imagePath,
+              (descriptionImage) => descriptionImage.imagePath,
             )}
           />
 

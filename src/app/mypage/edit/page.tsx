@@ -84,6 +84,9 @@ export default function MyPageEdit() {
     setMemberProfileImagePath(responseImage?.member.profileImagePath);
   }, [isImageSuccess]);
 
+  // TODO: image /static prefix는 어떻게 처리할지 고민해보기
+  // TODO: get profile 어디서 관리해야되지? profileImagePath를 가져와야 함
+  // 이미지 보일 때 안늘어나게 처리하기
   return (
     <section className="mx-[100px] my-10">
       <div className="flex gap-16">
@@ -100,8 +103,11 @@ export default function MyPageEdit() {
               onClick={onHandleMainImage}
               disabled={isImageLoading}
             >
-              <PencilLine className="h-4 w-4" />
-              {isImageLoading && <Loader2 className="h-4 w-4 animate-spin" />}
+              {isImageLoading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <PencilLine className="h-4 w-4" />
+              )}
             </Button>
             <Input
               type="file"

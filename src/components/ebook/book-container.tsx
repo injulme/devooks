@@ -28,7 +28,7 @@ export default function BookContainer({ bookData }: { bookData: EbookListGetSumm
         <div className="relative mb-4 box-border h-full w-full overflow-hidden rounded-lg border border-gray-100 shadow-md">
           <AspectRatio ratio={1.33 / 1}>
             <Image
-              src={process.env.NEXT_PUBLIC_BASE_URL + mainImage.imagePath}
+              src={mainImage.imagePath}
               alt={`image_${title}`}
               className="bg-no-repeat object-cover transition-all duration-200 hover:scale-110"
               fill
