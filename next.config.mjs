@@ -19,6 +19,18 @@ const nextConfig = {
     });
     return config;
   },
+  rewrites: async () => {
+    return [
+      {
+        source: '/static/:path*',
+        destination: process.env.NEXT_PUBLIC_BASE_URL + '/static/:path*',
+      },
+      {
+        source: '/api/:path*',
+        destination: process.env.NEXT_PUBLIC_BASE_URL + '/api/:path*',
+      },
+    ];
+  },
 };
 
 export default nextConfig;

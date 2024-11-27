@@ -36,12 +36,9 @@ api.interceptors.response.use(
       try {
         const refreshToken = tokenStore.refreshToken;
 
-        const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/auth/reissue`,
-          {
-            refreshToken,
-          },
-        );
+        const response = await axios.post(`/api/v1/auth/reissue`, {
+          refreshToken,
+        });
         const { accessToken, refreshToken: newRefreshToken } = response.data;
 
         tokenStore.updateToken({

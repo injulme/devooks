@@ -13,14 +13,17 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
+import { useAuthStore } from '@/stores/auth-store';
+
 const editMenus = [
   { label: '프로필', value: 'PROFILE' },
   { label: '출금계좌', value: 'ACCOUNT' },
 ];
 export default function MyPageEdit() {
+  const authInfo = useAuthStore((state) => state);
   const [selectTab, setSelectTab] = useState(editMenus[0].value);
   const [memberProfileImagePath, setMemberProfileImagePath] = useState<string | undefined>(
-    undefined,
+    authInfo.profileImagePath,
   );
   const [memberNickname, setMemberNickname] = useState<string | null>(null);
   const {
@@ -82,7 +85,13 @@ export default function MyPageEdit() {
     if (!isImageSuccess) return;
     setMemberNickname(responseImage?.member.nickname);
     setMemberProfileImagePath(responseImage?.member.profileImagePath);
+    authInfo.updateProfileImage(responseImage?.member.profileImagePath);
   }, [isImageSuccess]);
+
+  useEffect(() => {
+    if (!authInfo.profileImagePath) return;
+    setMemberProfileImagePath(authInfo.profileImagePath);
+  }, [authInfo.profileImagePath]);
 
   return (
     <section className="mx-[100px] my-10">
@@ -90,7 +99,7 @@ export default function MyPageEdit() {
         <div>
           <div className="relative">
             <Avatar className="h-[180px] w-[180px] shadow-xl">
-              <AvatarImage src={memberProfileImagePath} />
+              <AvatarImage src={memberProfileImagePath} className="object-cover" />
               <AvatarFallback>{memberNickname}</AvatarFallback>
             </Avatar>
             <Button
@@ -100,8 +109,11 @@ export default function MyPageEdit() {
               onClick={onHandleMainImage}
               disabled={isImageLoading}
             >
-              <PencilLine className="h-4 w-4" />
-              {isImageLoading && <Loader2 className="h-4 w-4 animate-spin" />}
+              {isImageLoading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <PencilLine className="h-4 w-4" />
+              )}
             </Button>
             <Input
               type="file"

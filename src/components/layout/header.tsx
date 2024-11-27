@@ -1,6 +1,7 @@
 'use client';
 
 import LoginDialog from './components/LoginDialog';
+import NotificationPopover from './components/NotificationPopover';
 import RegisterDialog from './components/RegisterDialog';
 
 import { useEffect } from 'react';
@@ -52,6 +53,8 @@ export default function Header() {
           <div className="hidden lg:block">lg</div>
           <div className="hidden xl:block">xl</div>
           <div className="flex items-center gap-2">
+            <NotificationPopover />
+
             <Button variant="outline">
               <Link href="/book/add">책 등록</Link>
             </Button>
@@ -61,6 +64,7 @@ export default function Header() {
                 <AvatarImage
                   src={userInfo.profileImagePath}
                   alt={`${userInfo.nickname} 작가의 프로필 사진`}
+                  className="object-cover"
                 />
                 <AvatarFallback>{userInfo.nickname.substring(0, 2)}</AvatarFallback>
               </Avatar>
@@ -70,8 +74,8 @@ export default function Header() {
             {registerOpen && <RegisterDialog />}
             <ThemeToggle />
             <Button variant="outline" size="icon" onClick={() => router.push('/mypage')}>
-              <Heart className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <span className="sr-only">Bookmark</span>
+              <Heart className="h-[1.2rem] w-[1.2rem] transition-all" />
+              <span className="sr-only">북마크</span>
             </Button>
           </div>
         </div>
