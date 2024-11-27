@@ -41,7 +41,7 @@ export default function NotificationPopover() {
   };
   // TODO: pagination 적용 필요
   return (
-    <Popover open>
+    <Popover>
       <PopoverTrigger asChild>
         <Button variant="outline" size="icon">
           <Bell className="h-[1.2rem] w-[1.2rem] transition-all" />
