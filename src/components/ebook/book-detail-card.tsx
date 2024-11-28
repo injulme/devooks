@@ -1,5 +1,7 @@
 'use client';
 
+import Ratings from '../ui/ratings';
+
 import Image from 'next/image';
 
 import { EbookGetSummary } from '@/services/ebook/type';
@@ -45,11 +47,8 @@ export default function BookDetailCard({
 
       <p className="text-sm tracking-wide text-zinc-500">{categoryLabels}</p>
       <div className="flex items-center gap-1 text-sm text-zinc-800">
-        <Star size={16} />
-        <Star size={16} />
-        <Star size={16} />
-        <Star size={16} />
-        <Star size={16} /> {review.rating.toFixed(1)} ({Intl.NumberFormat().format(review.count)})
+        <Ratings value={review.rating} size={16} variant="yellow" /> {review.rating.toFixed(1)} (
+        {Intl.NumberFormat().format(review.count)})
       </div>
 
       <div className="mt-10 flex items-center justify-between">

@@ -1,5 +1,6 @@
 'use client';
 
+import Ratings from '../ui/ratings';
 import WishlistButton from './wishlist-button';
 
 import Image from 'next/image';
@@ -42,12 +43,8 @@ export default function BookContainer({ bookData }: { bookData: EbookListGetSumm
           <div>
             <p className="text-sm tracking-wide text-zinc-500">{categoryLabels}</p>
             <div className="flex items-center gap-1 text-sm text-zinc-800">
-              <Star size={16} />
-              <Star size={16} />
-              <Star size={16} />
-              <Star size={16} />
-              <Star size={16} /> {review.rating.toFixed(1)} (
-              {Intl.NumberFormat().format(review.count)})
+              <Ratings value={review.rating} size={16} variant="yellow" />{' '}
+              {review.rating.toFixed(1)} ({Intl.NumberFormat().format(review.count)})
             </div>
             <p className="text-lg font-semibold tracking-wide text-zinc-900">
               {Intl.NumberFormat().format(price)}원
