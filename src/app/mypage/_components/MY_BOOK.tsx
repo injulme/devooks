@@ -92,7 +92,7 @@ export default function MyBook() {
             {dummy.map((i) => {
               return (
                 <div className="my-4" key={i}>
-                  <Comment />
+                  {/* <Comment /> */}
                 </div>
               );
             })}

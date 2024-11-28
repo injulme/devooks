@@ -31,7 +31,7 @@ export default function BookById({ params }: { params: PageParams }) {
   const reviewRef = useRef<HTMLDivElement>(null);
 
   const { data: ebookData, isLoading } = useGetEbooksById(params.id);
-  console.log('ebookData ,', ebookData);
+  // console.log('ebookData ,', ebookData);
 
   if (isLoading || !ebookData) return <div>loading...</div>;
   return (
@@ -84,7 +84,7 @@ export default function BookById({ params }: { params: PageParams }) {
                 <TableOfContents tableOfContents={ebookData.ebook.tableOfContents} />
               </section>
               <section ref={reviewRef} className="mt-12">
-                <Review />
+                <Review ebookId={ebookData.ebook.id} />
               </section>
               <section ref={claimRef} className="mt-12">
                 <Claim />
