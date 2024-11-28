@@ -1,6 +1,9 @@
 'use client';
 
+import Image from 'next/image';
+
 import { EbookGetSummary } from '@/services/ebook/type';
+import { useGetPdfsPreviewById } from '@/services/pdf/hooks/useGetPdfsPreviewById';
 import { Star } from 'lucide-react';
 
 import WishlistButton from '@/components/ebook/wishlist-button';
@@ -9,12 +12,12 @@ import { Card } from '@/components/ui/card';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 import { useCategoryStore } from '@/stores/global-store';
 
@@ -26,6 +29,7 @@ export default function BookDetailCard({
   relatedCategoryIdList = [],
   wishlistId,
   id,
+  pdfId,
 }: BookDetailCardProps) {
   const categories = useCategoryStore((state) => state.categories);
 
@@ -33,6 +37,7 @@ export default function BookDetailCard({
     relatedCategoryIdList.includes(category.value),
   );
   const categoryLabels = relatedCategories.map((category) => `#${category.label}`).join(' ');
+  const { data: pdfsPreviewById } = useGetPdfsPreviewById(pdfId);
 
   return (
     <Card className="relative p-6 shadow-lg">
@@ -65,13 +70,23 @@ export default function BookDetailCard({
             </Button>
           </DialogTrigger>
 
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="w-fit">
             <DialogHeader>
               <DialogTitle>미리보기</DialogTitle>
-              <DialogDescription>The People of the Kingdom</DialogDescription>
             </DialogHeader>
-            <div className="p-4">미리보기 이미지</div>
-            <DialogFooter className="justify-center sm:justify-center">
+            <ScrollArea className="h-[820px] w-[600px] rounded-md border p-4">
+              {pdfsPreviewById?.previewImageList.map((pdf, index) => (
+                <Image
+                  key={pdf.id}
+                  src={pdf.imagePath}
+                  alt={`미리보기 이미지 ${index + 1} 장`}
+                  className="bg-no-repeat object-cover"
+                  width={560}
+                  height={800}
+                />
+              ))}
+            </ScrollArea>
+            <DialogFooter className="justify-center">
               <Button type="submit">구매하기</Button>
             </DialogFooter>
           </DialogContent>

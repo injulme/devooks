@@ -4,7 +4,7 @@ import { AxiosProgressEvent } from 'axios';
 
 import api from '@/lib/api';
 
-export async function GET_pdfs_preview_by_id(pdfId: string): Promise<PreviewImageListResponse> {
+export async function GET_pdfs_preview_by_id(pdfId?: string): Promise<PreviewImageListResponse> {
   const { data } = await api.get(`/api/v1/pdfs/${pdfId}/preview`);
   return data;
 }
