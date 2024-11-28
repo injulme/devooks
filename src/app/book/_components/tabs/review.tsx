@@ -31,13 +31,23 @@ export default function Review({ ebookId }: { ebookId: string }) {
   });
 
   const { data: reviews } = useGetReviews(ebookId);
-  const { mutate: postReviews, error: errorReviews, isError: isReviewPostError } = usePostReviews();
+  const {
+    mutate: postReviews,
+    error: errorReviews,
+    isSuccess: isReviewPostSuccess,
+    isError: isReviewPostError,
+  } = usePostReviews();
 
   const onSubmit = (data: ReviewPostRequest) => {
     console.log('on submit review :: ', data);
     postReviews(data);
   };
 
+  useEffect(() => {
+    if (!isReviewPostSuccess) return;
+
+    form.reset();
+  }, [isReviewPostSuccess]);
   useEffect(() => {
     if (!isReviewPostError) return;
     // TODO: 403 error :  전차잭 구매 후 작성해주세요
