@@ -101,6 +101,7 @@ export default function BookById({ params }: { params: PageParams }) {
               relatedCategoryIdList={ebookData.ebook.relatedCategoryIdList}
               wishlistId={ebookData.ebook.wishlistId}
               id={ebookData.ebook.id}
+              pdfId={ebookData.ebook.pdfId}
             />
             <SellerProfileCard userId={ebookData.ebook.seller.id} />
           </div>
