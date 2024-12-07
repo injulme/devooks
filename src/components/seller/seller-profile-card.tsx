@@ -1,5 +1,7 @@
 'use client';
 
+import AvatarProfile from '../avatar-profile/avatar-profile';
+
 import Image from 'next/image';
 
 import { useGetMemberProfileById } from '@/services/member/hooks/useGetMemberProfileById';
@@ -18,10 +20,12 @@ export default function SellerProfileCard({ userId }: { userId: string }) {
   return (
     <Card className="p-4 shadow-lg">
       <div className="flex items-center gap-8">
-        <Avatar className="h-[65px] w-[65px] shadow-xl">
-          <AvatarImage src={memberData?.profile.profileImagePath} className="object-cover" />
-          <AvatarFallback>{memberData?.profile.nickname.substring(0, 2)}</AvatarFallback>
-        </Avatar>
+        <AvatarProfile
+          size={65}
+          className="shadow-xl"
+          src={memberData?.profile.profileImagePath}
+          fallback={memberData?.profile.nickname}
+        />
 
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-2">

@@ -9,7 +9,7 @@ import { House } from 'lucide-react';
 import Instagram from '@/assets/icons/instagram.webp';
 import Youtube from '@/assets/icons/youtube.webp';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import AvatarProfile from '@/components/avatar-profile/avatar-profile';
 import { Button } from '@/components/ui/button';
 
 import { useCategoryStore } from '@/stores/global-store';
@@ -26,10 +26,12 @@ export default function UserInfo({ userId }: { userId: string }) {
   return (
     <div className="flex justify-between bg-slate-300 px-10 py-12">
       <div className="flex gap-8">
-        <Avatar className="h-[120px] w-[120px] shadow-xl">
-          <AvatarImage src={memberData?.profile.profileImagePath} className="object-cover" />
-          <AvatarFallback>{memberData?.profile.nickname.substring(0, 2)}</AvatarFallback>
-        </Avatar>
+        <AvatarProfile
+          size={120}
+          className="shadow-xl"
+          src={memberData?.profile.profileImagePath}
+          fallback={memberData?.profile.nickname}
+        />
 
         <div className="flex flex-col justify-between">
           <div>

@@ -12,6 +12,7 @@ export interface ReviewSummary {
   };
   writtenDate: string;
   modifiedDate: string;
+  commentCount: number;
 }
 
 /** 리뷰 목록 조회 */

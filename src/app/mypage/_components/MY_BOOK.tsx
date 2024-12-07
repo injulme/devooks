@@ -6,7 +6,7 @@ import Comment from '@/app/book/_components/tabs/comment';
 
 import cover1 from '@/assets/images/cover1.png';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import AvatarProfile from '@/components/avatar-profile/avatar-profile';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -51,10 +51,12 @@ export default function MyBook() {
                         The People of the Kingdom
                       </h2>
                       <div className="flex items-center gap-2">
-                        <Avatar className="h-[28px] w-[28px] shadow-xl">
-                          <AvatarImage src="https://github.com/shadcn.png" />
-                          <AvatarFallback>CN</AvatarFallback>
-                        </Avatar>
+                        <AvatarProfile
+                          size={28}
+                          className="shadow-xl"
+                          src={'https://github.com/shadcn.png'}
+                          fallback={'CN'}
+                        />
                         <h3 className="text-base font-semibold tracking-tight">upn2n</h3>
                       </div>
                     </div>

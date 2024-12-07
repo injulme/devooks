@@ -8,7 +8,7 @@ import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from 'react';
 import { usePatchMemberImage } from '@/services/member/hooks/usePatchMemberImage';
 import { Loader2, PencilLine } from 'lucide-react';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import AvatarProfile from '@/components/avatar-profile/avatar-profile';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -98,10 +98,12 @@ export default function MyPageEdit() {
       <div className="flex gap-16">
         <div>
           <div className="relative">
-            <Avatar className="h-[180px] w-[180px] shadow-xl">
-              <AvatarImage src={memberProfileImagePath} className="object-cover" />
-              <AvatarFallback>{memberNickname}</AvatarFallback>
-            </Avatar>
+            <AvatarProfile
+              size={180}
+              className="shadow-xl"
+              src={memberProfileImagePath}
+              fallback={memberNickname}
+            />
             <Button
               variant="outline"
               size="icon"

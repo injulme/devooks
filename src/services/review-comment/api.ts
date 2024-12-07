@@ -3,14 +3,14 @@ import { ReviewCommentPatchRequest, ReviewCommentPostRequest, ReviewCommentRespo
 import api from '@/lib/api';
 
 /** 리뷰 댓글 목록 조회 */
-export async function GET_review_comments(): Promise<ReviewCommentResponse> {
-  const { data } = await api.get(`/api/v1/reviews-comments?page=1&count=1`);
+export async function GET_review_comments(reviewId: string | null): Promise<ReviewCommentResponse> {
+  const { data } = await api.get(`/api/v1/review-comments?reviewId=${reviewId}&page=1&count=10`);
   return data;
 }
 
 /** 리뷰 댓글 작성 */
 export async function POST_review_comments(params: ReviewCommentPostRequest): Promise<void> {
-  const { data } = await api.post(`/api/v1/reviews-comments`, params);
+  const { data } = await api.post(`/api/v1/review-comments`, params);
   return data;
 }
 
@@ -25,6 +25,6 @@ export async function PATCH_review_comments_by_id(
   commentId: string | null,
   params: ReviewCommentPatchRequest,
 ): Promise<void> {
-  const { data } = await api.patch(`/api/v1/reviews-comments/${commentId}`, params);
+  const { data } = await api.patch(`/api/v1/review-comments/${commentId}`, params);
   return data;
 }
