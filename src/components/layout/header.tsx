@@ -42,16 +42,12 @@ export default function Header() {
   }, [getCategoriesData]);
 
   return (
-    <header className="sticky top-0 z-[99] bg-white shadow dark:bg-background sm:bg-red-300 md:bg-yellow-300 lg:bg-green-300 xl:bg-blue-300">
+    <header className="sticky top-0 z-[99] bg-white shadow dark:bg-background">
       <div className="mx-auto flex max-w-screen-xl flex-col justify-center gap-4 px-12 py-3">
         <div className="flex items-center justify-between gap-2">
           <Link href="/">
             <Image src={Logo} alt="devooks 로고" height={32} />
           </Link>
-          <div className="hidden sm:block">sm</div>
-          <div className="hidden md:block">md</div>
-          <div className="hidden lg:block">lg</div>
-          <div className="hidden xl:block">xl</div>
           <div className="flex items-center gap-2">
             <NotificationPopover />
 
