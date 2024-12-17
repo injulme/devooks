@@ -43,7 +43,7 @@ export default function NotificationPopover() {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button variant="ghost" size="icon">
           <Bell className="h-[1.2rem] w-[1.2rem] transition-all" />
           <span className="sr-only">알림</span>
         </Button>
