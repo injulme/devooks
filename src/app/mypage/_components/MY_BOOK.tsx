@@ -52,7 +52,7 @@ export default function MyBook() {
                       </h2>
                       <div className="flex items-center gap-2">
                         <AvatarProfile
-                          size={28}
+                          size="sm"
                           className="shadow-xl"
                           src={'https://github.com/shadcn.png'}
                           fallback={'CN'}

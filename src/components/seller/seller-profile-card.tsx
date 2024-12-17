@@ -10,7 +10,6 @@ import { House } from 'lucide-react';
 import Instagram from '@/assets/icons/instagram.webp';
 import Youtube from '@/assets/icons/youtube.webp';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
@@ -21,7 +20,7 @@ export default function SellerProfileCard({ userId }: { userId: string }) {
     <Card className="p-4 shadow-lg">
       <div className="flex items-center gap-8">
         <AvatarProfile
-          size={65}
+          size="lg"
           className="shadow-xl"
           src={memberData?.profile.profileImagePath}
           fallback={memberData?.profile.nickname}

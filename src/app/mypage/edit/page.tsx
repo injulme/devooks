@@ -99,7 +99,7 @@ export default function MyPageEdit() {
         <div>
           <div className="relative">
             <AvatarProfile
-              size={180}
+              size="2xl"
               className="shadow-xl"
               src={memberProfileImagePath}
               fallback={memberNickname}

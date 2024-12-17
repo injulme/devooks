@@ -46,7 +46,7 @@ export default function Comment({ review }: { review: ReviewSummary }) {
       <div className="flex flex-col py-4 first-of-type:border-t-2">
         <div className="flex items-center gap-3">
           <AvatarProfile
-            size={32}
+            size="md"
             src={review.writer.profileImagePath}
             fallback={review.writer.nickname}
           />
@@ -100,7 +100,7 @@ export default function Comment({ review }: { review: ReviewSummary }) {
               <div className="mb-4 rounded-sm bg-slate-100 p-4" key={comment.id}>
                 <div className="flex items-center gap-3">
                   <AvatarProfile
-                    size={24}
+                    size="sm"
                     src={comment.writer.profileImagePath}
                     fallback={comment.writer.nickname}
                   />
