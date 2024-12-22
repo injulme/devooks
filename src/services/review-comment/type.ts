@@ -26,6 +26,5 @@ export interface ReviewCommentPostRequest {
 
 /** 리뷰 댓글 수정 */
 export interface ReviewCommentPatchRequest {
-  rating: number;
   content: string;
 }

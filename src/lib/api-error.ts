@@ -1,7 +1,8 @@
-export interface ApiError {
+import { AxiosError } from 'axios';
+
+export interface ApiError extends AxiosError {
   code?: string;
   error?: string;
-  message?: string | any;
   path?: string;
   requestId?: string;
   status?: number;
