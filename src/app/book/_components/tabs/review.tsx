@@ -107,7 +107,7 @@ export default function Review({ ebookId }: { ebookId: string }) {
                     <FormControl>
                       <Textarea
                         {...field}
-                        placeholder="로그인 후 리뷰를 작성해주세요. 😊"
+                        placeholder="구매 후 리뷰를 작성해주세요. 😊"
                         // className="resize-none"
                       />
                     </FormControl>
