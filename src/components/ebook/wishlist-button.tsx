@@ -29,10 +29,11 @@ export default function WishlistButton({
   const onHandleWishlist = (event: MouseEvent<HTMLButtonElement>, flag: boolean) => {
     event.stopPropagation();
     event.preventDefault();
-    if (!_wishlistId || !ebookId) return;
+    if (!ebookId) return;
 
     // TODO: 400 error면 로그인 모달 띄우기
     if (flag) {
+      if (!_wishlistId) return;
       deleteWishlist(_wishlistId);
     } else {
       postWishlist({ ebookId });
@@ -53,8 +54,8 @@ export default function WishlistButton({
     <Button
       type="button"
       variant="ghost"
-      className="absolute right-3 top-2 z-10 rounded-full bg-white/30 p-3 shadow-sm transition-all group-hover:bg-white/50"
-      disabled={disabled || !ebookId || !_wishlistId}
+      className="absolute right-3 top-2 z-10 rounded-full bg-white/30 p-3 transition-all group-hover:bg-white/50"
+      disabled={disabled || !ebookId}
       onClick={(e) => onHandleWishlist(e, !!_wishlistId)}
     >
       {!!_wishlistId ? (
