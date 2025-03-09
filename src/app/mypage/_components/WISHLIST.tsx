@@ -29,6 +29,8 @@ export const columns = [columnHelper.accessor('id', { id: 'id' })];
 
 export default function Wishlist() {
   const params = useSearchParams();
+
+  // TODO: useTable 구현해야 됨
   const page = params.get('page');
 
   const { data: wishlist } = useGetWishlist(page ? parseInt(page) : 1, 3);

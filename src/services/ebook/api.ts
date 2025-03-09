@@ -9,13 +9,20 @@ import {
   EbookPostRequest,
 } from './type';
 
+import { Configuration, EbookApi } from '@leesm0518/devooks-api';
+
 import api from '@/lib/api';
 
+export const ebookApi = new EbookApi(new Configuration(), process.env.NEXT_PUBLIC_BASE_URL, api);
+
 /** 전자책 목록 조회 */
-export async function GET_ebooks(): Promise<EbookListGetResponse> {
-  // TODO: page, count 파라미터 추가
-  const { data } = await api.get(`/api/v1/ebooks?page=1&count=10`);
+export async function GET_ebooks() {
+  const { data } = await ebookApi.getEbooks({ page: 1, count: 10 });
   return data;
+
+  // TODO: page, count 파라미터 추가
+  // const { data } = await api.get(`/api/v1/ebooks?page=1&count=10`);
+  // return data;
 }
 
 /** 전자책 등록 */

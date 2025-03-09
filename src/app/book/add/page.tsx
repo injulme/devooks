@@ -36,7 +36,12 @@ const bookTabs = codeToArray(BookDetailTabTypeCode).slice(0, -2);
 
 // TODO: editor 연동
 export default function BookAdd() {
-  const form = useForm<EbookPostRequest>();
+  // TODO: defaultValues 추가
+  const form = useForm<EbookPostRequest>({
+    defaultValues: {
+      descriptionImageIdList: [],
+    },
+  });
   const [selectTab, setSelectTab] = useState<BookDetailTabType>('INTRODUCTION');
   const categories = useCategoryStore((state) => state.categories);
 
@@ -190,7 +195,7 @@ export default function BookAdd() {
     if (!isDescriptionImagesSuccess) return;
     // 설명 이미지 업로드 성공 시, form에 mainImageId 값 세팅
     const descriptionIds = responseDescriptionImages?.descriptionImageList.map((image) => image.id);
-    form.setValue('descriptionImageIdList', descriptionIds);
+    form.setValue('descriptionImageIdList', descriptionIds || []);
   }, [isDescriptionImagesSuccess]);
 
   return (
@@ -274,7 +279,8 @@ export default function BookAdd() {
                         />
                         <div className="mt-2 flex flex-col">
                           <span className="text-xs text-gray-600">
-                            업로드 완료 시, 페이지 수가 자동으로 입력됩니다.
+                            업로드 완료 시, 페이지 수가 자동으로 입력됩니다. (최소 3장 이상 등록
+                            가능)
                           </span>
                           {!isPdfLoading && isPdfSuccess && (
                             <span className="text-xs text-muted-foreground text-sky-500">

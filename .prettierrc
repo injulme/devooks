@@ -18,6 +18,7 @@
     "@/assets/.*$",
     "@/components/.*$",
     "@/constant/.*$",
+    "@/hooks/.*$",
     "@/lib/.*$",
     "@/modules/.*$",
     "@/providers/.*$",

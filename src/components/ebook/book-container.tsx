@@ -7,14 +7,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { EbookListGetSummary } from '@/services/ebook/type';
+import { EbookView } from '@leesm0518/devooks-api';
 import { Star } from 'lucide-react';
 
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 
 import { useCategoryStore } from '@/stores/global-store';
 
-export default function BookContainer({ bookData }: { bookData: EbookListGetSummary }) {
-  const { title, price, review, writerName, relatedCategoryIdList, mainImage, wishlistId, id } =
+export default function BookContainer({ bookData }: { bookData: EbookView }) {
+  const { title, price, review, seller, relatedCategoryIdList, mainImage, wishlistId, id } =
     bookData;
 
   const categories = useCategoryStore((state) => state.categories);
@@ -49,7 +50,7 @@ export default function BookContainer({ bookData }: { bookData: EbookListGetSumm
             <p className="text-lg font-semibold tracking-wide text-zinc-900">
               {Intl.NumberFormat().format(price)}원
             </p>
-            <p className="mt-2 text-sm text-zinc-500">{writerName}</p>
+            <p className="mt-2 text-sm text-zinc-500">{seller.nickname}</p>
           </div>
         </div>
       </div>
