@@ -1,11 +1,10 @@
-import './type';
 import { WishlistGetResponse, WishlistPostRequest, WishlistPostResponse } from './type';
 
 import api from '@/lib/api';
 
 /** 찜 목록 조회 */
-export async function GET_wishlist(): Promise<WishlistGetResponse> {
-  const { data } = await api.get(`/api/v1/wishlist?page=1&count=1`);
+export async function GET_wishlist(page: number, count: number): Promise<WishlistGetResponse> {
+  const { data } = await api.get(`/api/v1/wishlist?page=${page}&count=${count}`);
   return data;
 }
 
