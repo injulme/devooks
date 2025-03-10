@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { useGetCategories } from '@/services/category/hooks/useGetCategories';
+import { useGetCategories } from '@/services/category.hooks';
 import { OauthType } from '@/services/login/type';
 
 import Logo from '@/assets/images/devooks_logo.png';

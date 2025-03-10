@@ -1,12 +1,13 @@
-import { GET_categories } from '../api';
+import { categoryAPI } from './api-instance';
 
 import { useQuery } from '@tanstack/react-query';
 
+/** 카테고리 목록 조회 */
 export const useGetCategories = () => {
   return useQuery({
-    queryKey: [GET_categories.name],
-    queryFn: GET_categories,
-    select: (data) => {
+    queryKey: [categoryAPI.getCategories.name],
+    queryFn: () => categoryAPI.getCategories(),
+    select: ({ data }) => {
       return data.categories.map((category) => ({ label: category.name, value: category.id }));
     },
   });

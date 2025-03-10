@@ -10,7 +10,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import { useGetCategories } from '@/services/category/hooks/useGetCategories';
+import { useGetCategories } from '@/services/category.hooks';
 import { Heart, Search } from 'lucide-react';
 
 import Logo from '@/assets/images/devooks_logo.png';
