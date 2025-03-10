@@ -52,8 +52,10 @@ export default function LoginByOauthType({ params, searchParams }: Props) {
             console.log('login error!! ', errorResponse);
             router.push('/');
             signup.onOpenChange(true);
+            // TODO: 나중에 수정 필요
+            let obj = JSON.parse(errorResponse.message) as { oauthId: string };
             signup.updateSignup({
-              oauthId: errorResponse.message.oauthId,
+              oauthId: obj.oauthId,
               oauthType: oauthType,
             });
           }
