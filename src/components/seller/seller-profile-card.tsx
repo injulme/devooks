@@ -4,7 +4,7 @@ import AvatarProfile from '../avatar-profile/avatar-profile';
 
 import Image from 'next/image';
 
-import { useGetMemberProfileById } from '@/services/member/hooks/useGetMemberProfileById';
+import { useGetProfile } from '@/services/member.hooks';
 import { House } from 'lucide-react';
 
 import Instagram from '@/assets/icons/instagram.webp';
@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
 export default function SellerProfileCard({ userId }: { userId: string }) {
-  const { data: memberData } = useGetMemberProfileById(userId);
+  const { data: memberData } = useGetProfile(userId);
 
   return (
     <Card className="p-4 shadow-lg">

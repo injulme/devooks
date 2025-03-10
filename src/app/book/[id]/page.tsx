@@ -2,7 +2,7 @@
 
 import { Fragment, useRef, useState } from 'react';
 
-import { useGetEbooksById } from '@/services/ebook/hooks/useGetEbooksById';
+import { useGetDetailOfEbook } from '@/services/ebook.hooks';
 
 import Claim from '@/app/book/_components/tabs/claim';
 import Introduction from '@/app/book/_components/tabs/introduction';
@@ -12,7 +12,7 @@ import TableOfContents from '@/app/book/_components/tabs/table-of-contents';
 import BookDetailCard from '@/components/ebook/book-detail-card';
 import BookImageCarousel from '@/components/ebook/book-image-carousel';
 import SellerProfileCard from '@/components/seller/seller-profile-card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import { BookDetailTabType, BookDetailTabTypeCode } from '@/constant/common';
 
@@ -30,7 +30,7 @@ export default function BookById({ params }: { params: PageParams }) {
   const claimRef = useRef<HTMLDivElement>(null);
   const reviewRef = useRef<HTMLDivElement>(null);
 
-  const { data: ebookData, isLoading } = useGetEbooksById(params.id);
+  const { data: ebookData, isLoading } = useGetDetailOfEbook(params.id);
   // console.log('ebookData ,', ebookData);
 
   if (isLoading || !ebookData) return <div>loading...</div>;

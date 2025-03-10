@@ -2,8 +2,7 @@
 
 import { MouseEvent, useEffect, useState } from 'react';
 
-import { useDeleteWishlistById } from '@/services/wishlist/hooks/useDeleteWishlistById';
-import { usePostWishlist } from '@/services/wishlist/hooks/usePostWishlist';
+import { useCreateWishlist, useDeleteWishlist } from '@/services/wishlist.hooks';
 import { Heart } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -23,9 +22,9 @@ export default function WishlistButton({
     mutate: postWishlist,
     data: responsePostWishlist,
     isSuccess: isWishlistSuccess,
-  } = usePostWishlist();
+  } = useCreateWishlist();
 
-  const { mutate: deleteWishlist, isSuccess: isWishlistDeleteSuccess } = useDeleteWishlistById();
+  const { mutate: deleteWishlist, isSuccess: isWishlistDeleteSuccess } = useDeleteWishlist();
   const onHandleWishlist = (event: MouseEvent<HTMLButtonElement>, flag: boolean) => {
     event.stopPropagation();
     event.preventDefault();

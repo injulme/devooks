@@ -3,10 +3,12 @@
 import { Fragment, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { useDeleteReviewCommentsById } from '@/services/review-comment/hooks/useDeleteReviewCommentsById';
-import { useGetReviewComments } from '@/services/review-comment/hooks/useGetReviewComments';
-import { usePatchReviewCommentsById } from '@/services/review-comment/hooks/usePatchReviewCommentsById';
-import { usePostReviewComments } from '@/services/review-comment/hooks/usePostReviewComments';
+import {
+  useCreateReviewComment,
+  useDeleteReviewComment,
+  useGetReviewComments,
+  useModifyReviewComment,
+} from '@/services/review-comment.hooks';
 import {
   ReviewCommentPatchRequest,
   ReviewCommentPostRequest,
@@ -37,7 +39,7 @@ export default function Comment({ review }: { review: ReviewSummary }) {
   const [open, setOpen] = useState<boolean>(false);
 
   const { data: reviewComments, queryKey } = useGetReviewComments(review.id, open);
-  const { mutate: create, isSuccess: isCreateSuccess } = usePostReviewComments();
+  const { mutate: create, isSuccess: isCreateSuccess } = useCreateReviewComment();
 
   const form = useForm<ReviewCommentPostRequest>({
     defaultValues: {
@@ -59,14 +61,14 @@ export default function Comment({ review }: { review: ReviewSummary }) {
     isSuccess: isUpdateSuccess,
     isError: isUpdateError,
     error: updateError,
-  } = usePatchReviewCommentsById(commentId, queryKey);
+  } = useModifyReviewComment(commentId);
 
   const {
     mutate: deleteById,
     isSuccess: isDeleteSuccess,
     isError: isDeleteError,
     error: deleteError,
-  } = useDeleteReviewCommentsById();
+  } = useDeleteReviewComment();
 
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
 

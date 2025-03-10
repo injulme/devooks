@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import { usePostLogin } from '@/services/login/hooks/usePostLogin';
+import { useLogin } from '@/services/auth.hooks';
 import { OauthType } from '@/services/login/type';
 
 import { ApiError, MEMBER4041 } from '@/lib/api-error';
@@ -31,7 +31,7 @@ export default function LoginByOauthType({ params, searchParams }: Props) {
   const oauthType = params.oauthType.toUpperCase() as OauthType;
 
   const { code: authorizationCode } = searchParams;
-  const { mutateAsync: login } = usePostLogin();
+  const { mutateAsync: login } = useLogin();
 
   useEffect(() => {
     if (!oauthType || !authorizationCode) return;

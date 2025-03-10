@@ -2,8 +2,8 @@
 
 import { Fragment } from 'react';
 
-import { useGetEbooks } from '@/services/ebook/hooks/useGetEbooks';
-import { EbookView, PageResponseEbookView } from '@leesm0518/devooks-api';
+import { useGetEbooks } from '@/services/ebook.hooks';
+import { EbookView } from '@leesm0518/devooks-api';
 
 import BookContainer from '@/components/ebook/book-container';
 

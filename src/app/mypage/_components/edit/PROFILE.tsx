@@ -4,16 +4,13 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { EmailRequest } from '@/services/auth/type';
-import { useGetMemberProfileById } from '@/services/member/hooks/useGetMemberProfileById';
-import { usePatchMemberProfile } from '@/services/member/hooks/usePatchMemberProfile';
+import { useGetProfile, useModifyProfile } from '@/services/member.hooks';
 import { MemberProfileUpdateRequest } from '@/services/member/type';
 
 import { Button } from '@/components/ui/button';
-import { FacetedFilter } from '@/components/ui/faceted-filter';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -29,7 +26,6 @@ import { useCategoryStore } from '@/stores/global-store';
 type FormField = MemberProfileUpdateRequest & EmailRequest;
 
 export default function Profile() {
-  // TODO: @src/services/member/type.ts 파일에서 MemberProfile 타입과 MemberProfileUpdateRequest 타입을 확인하세요.
   const form = useForm<FormField>({
     defaultValues: {
       nickname: '',
@@ -45,8 +41,8 @@ export default function Profile() {
   const categories = useCategoryStore((state) => state.categories);
   const userId = useAuthStore((state) => state.id);
 
-  const { data: memberData } = useGetMemberProfileById(userId);
-  const { mutate: patchMemberProfile } = usePatchMemberProfile();
+  const { data: memberData } = useGetProfile(userId);
+  const { mutate: patchMemberProfile } = useModifyProfile();
 
   const onSubmit = (data: FormField) => {
     console.log('submit', data);

@@ -5,7 +5,7 @@ import * as React from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import { EbookListGetSummary } from '@/services/ebook/type';
-import { useGetWishlist } from '@/services/wishlist/hooks/useGetWishlist';
+import { useGetWishlist } from '@/services/wishlist.hooks';
 import {
   createColumnHelper,
   getCoreRowModel,

@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { useGetMemberProfileById } from '@/services/member/hooks/useGetMemberProfileById';
+import { useGetProfile } from '@/services/member.hooks';
 import { House } from 'lucide-react';
 
 import Instagram from '@/assets/icons/instagram.webp';
@@ -16,7 +16,7 @@ import { useCategoryStore } from '@/stores/global-store';
 
 export default function UserInfo({ userId }: { userId: string }) {
   const categories = useCategoryStore((state) => state.categories);
-  const { data: memberData } = useGetMemberProfileById(userId);
+  const { data: memberData } = useGetProfile(userId);
 
   const relatedCategories = categories.filter((category) =>
     memberData?.profile.favoriteCategoryIdList?.includes(category.value),

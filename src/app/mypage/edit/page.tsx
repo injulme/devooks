@@ -5,7 +5,7 @@ import Profile from '../_components/edit/PROFILE';
 
 import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from 'react';
 
-import { usePatchMemberImage } from '@/services/member/hooks/usePatchMemberImage';
+import { useModifyProfileImage } from '@/services/member.hooks';
 import { Loader2, PencilLine } from 'lucide-react';
 
 import AvatarProfile from '@/components/avatar-profile/avatar-profile';
@@ -31,7 +31,7 @@ export default function MyPageEdit() {
     isSuccess: isImageSuccess,
     data: responseImage,
     isPending: isImageLoading,
-  } = usePatchMemberImage();
+  } = useModifyProfileImage();
 
   const imageRef = useRef<HTMLInputElement>(null);
   const getFileData = (file: File): Promise<any> => {

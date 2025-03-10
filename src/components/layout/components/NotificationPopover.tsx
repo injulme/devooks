@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import { useGetNotifications } from '@/services/notification/hooks/useGetNotifications';
-import { usePatchNotificationsChecked } from '@/services/notification/hooks/usePatchNotificationsChecked';
-import { usePatchNotificationsCheckedById } from '@/services/notification/hooks/usePatchNotificationsCheckedById';
+import {
+  useCheckNotifications,
+  useCheckNotifications1,
+  useGetNotifications,
+} from '@/services/notification.hooks';
 import dayjs from 'dayjs';
 import { Bell } from 'lucide-react';
 
@@ -12,8 +14,8 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 export default function NotificationPopover() {
   const { data: notificationsData } = useGetNotifications();
   const [notifications, setNotifications] = useState(notificationsData?.data || []);
-  const { mutate: patchNotificationsChecked } = usePatchNotificationsChecked();
-  const { mutate: patchNotificationsCheckedById } = usePatchNotificationsCheckedById();
+  const { mutate: patchNotificationsChecked } = useCheckNotifications();
+  const { mutate: patchNotificationsCheckedById } = useCheckNotifications1();
 
   useEffect(() => {
     if (notificationsData?.data) {

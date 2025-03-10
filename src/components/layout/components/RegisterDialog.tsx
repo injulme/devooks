@@ -2,12 +2,12 @@
 
 import RegisterSuccessDialog from './RegisterSuccessDialog';
 
-import { Fragment, use, useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Image from 'next/image';
 
-import { usePostSignup } from '@/services/member/hooks/usePostSignup';
+import { useSignUp } from '@/services/member.hooks';
 import { SignupRequest } from '@/services/member/type';
 
 import Logo from '@/assets/images/devooks_logo.png';
@@ -40,7 +40,7 @@ export default function RegisterDialog() {
 
   const [allAgreeCheck, setAllAgreeCheck] = useState(false);
 
-  const { mutate: postSignup, isSuccess } = usePostSignup();
+  const { mutate: postSignup, isSuccess } = useSignUp();
   const onAllAgreeCheck = () => {
     setAllAgreeCheck(!allAgreeCheck);
     setAgreeChecks((prev) => prev.map(() => !allAgreeCheck));

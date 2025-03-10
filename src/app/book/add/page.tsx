@@ -3,11 +3,10 @@
 import { ChangeEvent, MouseEvent, SetStateAction, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { usePostDescriptionImages } from '@/services/ebook/hooks/usePostDescriptionImages';
-import { usePostEbooks } from '@/services/ebook/hooks/usePostEbooks';
-import { usePostMainImage } from '@/services/ebook/hooks/usePostMainImage';
-import { EbookPostRequest } from '@/services/ebook/type';
-import { usePostPdfs } from '@/services/pdf/hooks/usePostPdfs';
+import { useSaveDescriptionImages, useSaveMainImage } from '@/services/ebook-image.hooks';
+import { useCreateEbook } from '@/services/ebook.hooks';
+import { useUploadPdf } from '@/services/pdf.hooks';
+import { EbookApiCreateEbookRequest } from '@leesm0518/devooks-api';
 import { Loader2 } from 'lucide-react';
 
 import BookDetailCard from '@/components/ebook/book-detail-card';
@@ -37,9 +36,15 @@ const bookTabs = codeToArray(BookDetailTabTypeCode).slice(0, -2);
 // TODO: editor 연동
 export default function BookAdd() {
   // TODO: defaultValues 추가
-  const form = useForm<EbookPostRequest>({
+  const form = useForm<EbookApiCreateEbookRequest>({
     defaultValues: {
+      pdfId: '',
+      title: '',
+      relatedCategoryIdList: [],
       descriptionImageIdList: [],
+      price: 0,
+      introduction: '',
+      tableOfContents: '',
     },
   });
   const [selectTab, setSelectTab] = useState<BookDetailTabType>('INTRODUCTION');
@@ -55,31 +60,30 @@ export default function BookAdd() {
   const [mainImagePreview, setMainImagePreview] = useState<string[]>([]);
   const [descriptionImagePreviews, setDescriptionImagePreviews] = useState<string[]>([]);
 
-  const { mutate: postEbooks } = usePostEbooks();
+  const { mutate: postEbooks } = useCreateEbook();
 
   // TODO: progress bar 추가
   const {
-    mutate: postPdfs,
+    mutate: uploadPdf,
     isSuccess: isPdfSuccess,
     data: responsePdfs,
-    progress,
     isPending: isPdfLoading,
-  } = usePostPdfs();
+  } = useUploadPdf();
 
   const {
     mutate: postMainImage,
     isSuccess: isMainImageSuccess,
     data: responseMainImage,
     isPending: isMainImageLoading,
-  } = usePostMainImage();
+  } = useSaveMainImage();
   const {
     mutate: postDescriptionImages,
     isSuccess: isDescriptionImagesSuccess,
     data: responseDescriptionImages,
     isPending: isDescriptionImagesLoading,
-  } = usePostDescriptionImages();
+  } = useSaveDescriptionImages();
 
-  const onSubmit = (data: EbookPostRequest) => {
+  const onSubmit = (data: EbookApiCreateEbookRequest) => {
     console.log('submit data by /book/add ', data);
 
     postEbooks(data);
@@ -102,7 +106,7 @@ export default function BookAdd() {
     if (fileType !== 'application/pdf') {
       return alert('파일 형식이 맞지 않습니다. PDF 파일을 업로드해주세요.');
     } else {
-      postPdfs(pdfFile);
+      uploadPdf(pdfFile);
     }
   };
 

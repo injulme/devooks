@@ -5,8 +5,7 @@ import Ratings from '../ui/ratings';
 import Image from 'next/image';
 
 import { EbookGetSummary } from '@/services/ebook/type';
-import { useGetPdfsPreviewById } from '@/services/pdf/hooks/useGetPdfsPreviewById';
-import { Star } from 'lucide-react';
+import { useGetPreviewImages } from '@/services/pdf.hooks';
 
 import WishlistButton from '@/components/ebook/wishlist-button';
 import { Button } from '@/components/ui/button';
@@ -39,7 +38,7 @@ export default function BookDetailCard({
     relatedCategoryIdList.includes(category.value),
   );
   const categoryLabels = relatedCategories.map((category) => `#${category.label}`).join(' ');
-  const { data: pdfsPreviewById } = useGetPdfsPreviewById(pdfId);
+  const { data: pdfsPreviewById } = useGetPreviewImages(pdfId);
 
   return (
     <Card className="relative p-6 shadow-lg">
