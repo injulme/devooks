@@ -4,8 +4,8 @@ import Ratings from '../ui/ratings';
 
 import Image from 'next/image';
 
-import { EbookGetSummary } from '@/services/ebook/type';
 import { useGetPreviewImages } from '@/services/pdf.hooks';
+import { EbookDetailView } from '@leesm0518/devooks-api';
 
 import WishlistButton from '@/components/ebook/wishlist-button';
 import { Button } from '@/components/ui/button';
@@ -22,7 +22,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 
 import { useCategoryStore } from '@/stores/global-store';
 
-type BookDetailCardProps = Partial<EbookGetSummary>;
+type BookDetailCardProps = Partial<EbookDetailView>;
 export default function BookDetailCard({
   pageCount = 0,
   price = 0,
@@ -38,7 +38,7 @@ export default function BookDetailCard({
     relatedCategoryIdList.includes(category.value),
   );
   const categoryLabels = relatedCategories.map((category) => `#${category.label}`).join(' ');
-  const { data: pdfsPreviewById } = useGetPreviewImages(pdfId);
+  const { data: pdfsPreviewById } = useGetPreviewImages(pdfId || '');
 
   return (
     <Card className="relative p-6 shadow-lg">

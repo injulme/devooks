@@ -34,7 +34,7 @@ export default function NotificationPopover() {
   };
 
   const onNotificationCheckedById = (notificationId: string) => {
-    patchNotificationsCheckedById(notificationId);
+    patchNotificationsCheckedById({ notificationId });
     setNotifications((prevNotifications) =>
       prevNotifications.map((notification) =>
         notification.id === notificationId ? { ...notification, checked: true } : notification,

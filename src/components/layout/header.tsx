@@ -84,7 +84,7 @@ export default function Header() {
                   alt={`${userInfo.nickname} 작가의 프로필 사진`}
                   className="object-cover"
                 />
-                <AvatarFallback>{userInfo.nickname.substring(0, 2)}</AvatarFallback>
+                <AvatarFallback>{userInfo.nickname?.substring(0, 2)}</AvatarFallback>
               </Avatar>
             ) : (
               <LoginDialog />

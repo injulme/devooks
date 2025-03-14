@@ -6,7 +6,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { useGetCategories } from '@/services/category.hooks';
-import { OauthType } from '@/services/login/type';
 
 import Logo from '@/assets/images/devooks_logo.png';
 
@@ -18,8 +17,6 @@ import { Input } from '@/components/ui/input';
 
 import { useSignupStore } from '@/stores/auth-store';
 import { useCategoryStore } from '@/stores/global-store';
-
-type LoginLinkParams = Record<OauthType, string>;
 
 export default function Header() {
   const registerOpen = useSignupStore((state) => state.open);

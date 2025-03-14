@@ -1,19 +1,18 @@
-import { LoginResponse, TokenGroupType } from '@/services/login/type';
-import { SignupRequest } from '@/services/member/type';
+import { LoginResponse, MemberApiSignUpRequest } from '@leesm0518/devooks-api';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
 import cookieStorage from '@/lib/cookie-storage';
 
 /** token store */
-type TokenState = TokenGroupType;
+type TokenState = LoginResponse['tokenGroup'];
 type TokenActions = {
   updateToken: (data: TokenState) => void;
   logout: () => void;
 };
 const tokenInitialState: TokenState = {
-  accessToken: null,
-  refreshToken: null,
+  accessToken: '',
+  refreshToken: '',
 };
 
 export const useTokenStore = create(
@@ -34,7 +33,7 @@ export const useTokenStore = create(
 );
 
 /** auth store */
-type AuthState = LoginResponse['member'];
+type AuthState = Partial<LoginResponse['member']>;
 type AuthActions = {
   updateAuth: (data: AuthState) => void;
   updateProfileImage: (imagePath: AuthState['profileImagePath']) => void;
@@ -46,7 +45,7 @@ const authInitialState: AuthState = {
   id: '',
   nickname: '',
   profileImagePath: '',
-  authority: '',
+  authority: undefined,
 };
 export const useAuthStore = create(
   persist<AuthState & AuthActions>(
@@ -68,16 +67,17 @@ export const useAuthStore = create(
 /** signup store */
 type SignupState = {
   open: boolean;
-} & SignupRequest;
+} & Partial<MemberApiSignUpRequest['signUpRequest']>;
+
 type SignupActions = {
   onOpenChange: React.Dispatch<React.SetStateAction<any>>;
-  updateSignup: (data: SignupRequest) => void;
+  updateSignup: (data: Partial<MemberApiSignUpRequest['signUpRequest']>) => void;
 };
 
 export const useSignupStore = create<SignupState & SignupActions>((set) => ({
   open: false,
   oauthId: '',
-  oauthType: null,
+  oauthType: undefined,
   nickname: '',
   favoriteCategoryIdList: [],
   onOpenChange: (open) => set({ open }),

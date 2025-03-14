@@ -55,5 +55,6 @@ export const useGetProfile = (memberId: string) => {
     queryKey: [memberAPI.getProfile.name, memberId],
     queryFn: () => memberAPI.getProfile({ memberId }),
     select: ({ data }) => data,
+    enabled: !!memberId,
   });
 };

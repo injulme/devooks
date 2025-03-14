@@ -5,14 +5,14 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { useLogin } from '@/services/auth.hooks';
-import { OauthType } from '@/services/login/type';
+import { LoginRequestOauthTypeEnum } from '@leesm0518/devooks-api';
 
 import { ApiError, MEMBER4041 } from '@/lib/api-error';
 
 import { useAuthStore, useSignupStore, useTokenStore } from '@/stores/auth-store';
 
 type OauthTypeParams = {
-  oauthType: OauthType;
+  oauthType: LoginRequestOauthTypeEnum;
 };
 
 type OauthTypeSearchParams = {
@@ -28,18 +28,18 @@ export default function LoginByOauthType({ params, searchParams }: Props) {
   const signup = useSignupStore((state) => state);
   const updateToken = useTokenStore((state) => state.updateToken);
   const updateAuth = useAuthStore((state) => state.updateAuth);
-  const oauthType = params.oauthType.toUpperCase() as OauthType;
+  const oauthType = params.oauthType.toUpperCase() as LoginRequestOauthTypeEnum;
 
   const { code: authorizationCode } = searchParams;
   const { mutateAsync: login } = useLogin();
 
   useEffect(() => {
     if (!oauthType || !authorizationCode) return;
-    login({ authorizationCode: authorizationCode, oauthType: oauthType })
+    login({ loginRequest: { authorizationCode: authorizationCode, oauthType: oauthType } })
       .then((response) => {
         console.log('login response:: ', response);
-        updateAuth(response.member);
-        updateToken(response.tokenGroup);
+        updateAuth(response.data.member);
+        updateToken(response.data.tokenGroup);
         router.push('/');
       })
 

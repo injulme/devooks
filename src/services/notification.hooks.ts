@@ -3,12 +3,16 @@ import { notificationAPI } from './api-instance';
 import { NotificationApiCheckNotifications1Request } from '@leesm0518/devooks-api';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
+import { useAuthStore } from '@/stores/auth-store';
+
 /** 알림 목록 조회 */
 export const useGetNotifications = () => {
+  const userInfo = useAuthStore((state) => state);
   return useQuery({
     queryKey: [notificationAPI.getNotifications.name],
     queryFn: () => notificationAPI.getNotifications({ page: 1, count: 10 }),
     select: ({ data }) => data,
+    enabled: !!userInfo.id,
   });
 };
 

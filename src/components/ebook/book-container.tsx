@@ -6,9 +6,7 @@ import WishlistButton from './wishlist-button';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { EbookListGetSummary } from '@/services/ebook/type';
 import { EbookView } from '@leesm0518/devooks-api';
-import { Star } from 'lucide-react';
 
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 

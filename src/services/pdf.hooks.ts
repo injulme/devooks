@@ -17,5 +17,6 @@ export const useGetPreviewImages = (pdfId: string) => {
     queryKey: [pdfAPI.getPreviewImageList.name, pdfId],
     queryFn: () => pdfAPI.getPreviewImageList({ pdfId }),
     select: ({ data }) => data,
+    enabled: !!pdfId,
   });
 };

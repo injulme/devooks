@@ -3,9 +3,8 @@ import Withdrawal from './WITHDRAWAL';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { EmailRequest } from '@/services/auth/type';
 import { useGetProfile, useModifyProfile } from '@/services/member.hooks';
-import { MemberProfileUpdateRequest } from '@/services/member/type';
+import { CheckEmailRequest, ModifyProfileRequest } from '@leesm0518/devooks-api';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -23,7 +22,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useAuthStore } from '@/stores/auth-store';
 import { useCategoryStore } from '@/stores/global-store';
 
-type FormField = MemberProfileUpdateRequest & EmailRequest;
+type FormField = Partial<ModifyProfileRequest & CheckEmailRequest>;
 
 export default function Profile() {
   const form = useForm<FormField>({
@@ -41,7 +40,7 @@ export default function Profile() {
   const categories = useCategoryStore((state) => state.categories);
   const userId = useAuthStore((state) => state.id);
 
-  const { data: memberData } = useGetProfile(userId);
+  const { data: memberData } = useGetProfile(userId ?? '');
   const { mutate: patchMemberProfile } = useModifyProfile();
 
   const onSubmit = (data: FormField) => {

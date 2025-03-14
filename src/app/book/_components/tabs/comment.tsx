@@ -10,10 +10,14 @@ import {
   useModifyReviewComment,
 } from '@/services/review-comment.hooks';
 import {
-  ReviewCommentPatchRequest,
-  ReviewCommentPostRequest,
-} from '@/services/review-comment/type';
-import { ReviewSummary } from '@/services/review/type';
+  CreateReviewCommentRequest,
+  ModifyReviewCommentRequest,
+  ReviewCommentApiCreateReviewCommentRequest,
+  ReviewCommentApiModifyReviewCommentRequest,
+  ReviewCommentView,
+  ReviewView,
+} from '@leesm0518/devooks-api';
+import { AxiosError } from 'axios';
 import dayjs from 'dayjs';
 import { MessageSquareMore } from 'lucide-react';
 
@@ -35,23 +39,22 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import Ratings from '@/components/ui/ratings';
 import { Textarea } from '@/components/ui/textarea';
 
-export default function Comment({ review }: { review: ReviewSummary }) {
+export default function Comment({ review }: { review: ReviewView }) {
   const [open, setOpen] = useState<boolean>(false);
 
-  const { data: reviewComments, queryKey } = useGetReviewComments(review.id, open);
+  const { data: reviewComments } = useGetReviewComments(review.id);
   const { mutate: create, isSuccess: isCreateSuccess } = useCreateReviewComment();
 
-  const form = useForm<ReviewCommentPostRequest>({
+  const form = useForm<CreateReviewCommentRequest>({
     defaultValues: {
       content: '',
       reviewId: review.id,
     },
   });
 
-  const editForm = useForm<ReviewCommentPostRequest>({
+  const editForm = useForm<ModifyReviewCommentRequest>({
     defaultValues: {
       content: '',
-      reviewId: review.id,
     },
   });
 
@@ -77,12 +80,12 @@ export default function Comment({ review }: { review: ReviewSummary }) {
     setIsEditMode(true);
   };
 
-  const onSubmit = (data: ReviewCommentPostRequest) => {
-    create(data);
+  const onSubmit = (data: CreateReviewCommentRequest) => {
+    create({ createReviewCommentRequest: data });
   };
 
-  const onUpdateSubmit = (data: ReviewCommentPatchRequest) => {
-    updateById(data);
+  const onUpdateSubmit = (data: ModifyReviewCommentRequest) => {
+    updateById({ commentId: commentId, modifyReviewCommentRequest: data });
   };
 
   useEffect(() => {
@@ -92,7 +95,7 @@ export default function Comment({ review }: { review: ReviewSummary }) {
 
   useEffect(() => {
     if (!isUpdateError) return;
-    if (updateError.response?.status === 400) {
+    if ((updateError as AxiosError)?.response?.status === 400) {
       return alert('작성자만 수정 가능합니다.');
     }
   }, [isUpdateError]);
@@ -105,7 +108,7 @@ export default function Comment({ review }: { review: ReviewSummary }) {
 
   useEffect(() => {
     if (!isDeleteError) return;
-    if (deleteError.response?.status === 400) {
+    if ((deleteError as AxiosError)?.response?.status === 400) {
       return alert('작성자만 삭제 가능합니다.');
     }
   }, [isDeleteError]);

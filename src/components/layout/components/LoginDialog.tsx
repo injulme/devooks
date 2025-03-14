@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-import { OauthType } from '@/services/login/type';
+import { LoginRequestOauthTypeEnum } from '@leesm0518/devooks-api';
 
 import Google from '@/assets/icons/google.svg';
 import Kakao from '@/assets/icons/kakao.svg';
@@ -20,7 +20,7 @@ import {
 } from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
 
-type LoginLinkParams = Record<OauthType, string>;
+type LoginLinkParams = Record<LoginRequestOauthTypeEnum, string>;
 
 export default function LoginDialog() {
   const router = useRouter();
@@ -31,7 +31,7 @@ export default function LoginDialog() {
     GOOGLE: `${process.env.NEXT_PUBLIC_GOOGLE_LOGIN_API_URL}?response_type=code&client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&scope=profile`,
   };
 
-  const onSignin = (oauthType: OauthType) => {
+  const onSignin = (oauthType: LoginRequestOauthTypeEnum) => {
     router.push(loginLinkParams[oauthType]);
   };
 

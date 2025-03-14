@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 
 import { useSignUp } from '@/services/member.hooks';
-import { SignupRequest } from '@/services/member/type';
+import { SignUpRequest } from '@leesm0518/devooks-api';
 
 import Logo from '@/assets/images/devooks_logo.png';
 
@@ -35,7 +35,7 @@ import { useCategoryStore } from '@/stores/global-store';
 export default function RegisterDialog() {
   const signup = useSignupStore((state) => state);
   const categories = useCategoryStore((state) => state.categories);
-  const form = useForm<SignupRequest>();
+  const form = useForm<SignUpRequest>();
   const [agreeChecks, setAgreeChecks] = useState([false, false, false]);
 
   const [allAgreeCheck, setAllAgreeCheck] = useState(false);
@@ -65,12 +65,18 @@ export default function RegisterDialog() {
     }
   }, [agreeChecks, form]);
 
-  const onJoinSubmit = (data: SignupRequest) => {
+  const onJoinSubmit = (data: SignUpRequest) => {
     console.log('on join submit', data);
 
     signup.updateSignup(data);
 
-    postSignup({ ...data, oauthId: signup.oauthId, oauthType: signup.oauthType });
+    postSignup({
+      signUpRequest: {
+        ...data,
+        oauthId: signup.oauthId || '',
+        oauthType: signup.oauthType || 'KAKAO',
+      },
+    });
   };
   useEffect(() => {
     if (!isSuccess) return;

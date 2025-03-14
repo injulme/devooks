@@ -1,8 +1,4 @@
-import { EbookGetSummary } from '@/services/ebook/type';
-
-export default function TableOfContents({
-  tableOfContents,
-}: Pick<EbookGetSummary, 'tableOfContents'>) {
+export default function TableOfContents({ tableOfContents }: { tableOfContents: string }) {
   return (
     <div>
       <h6 className="mb-6 text-lg font-bold">목차</h6>

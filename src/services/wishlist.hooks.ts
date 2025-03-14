@@ -4,10 +4,10 @@ import { WishlistApiCreateWishlistRequest } from '@leesm0518/devooks-api';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 /** 찜 목록 조회 */
-export const useGetWishlist = () => {
+export const useGetWishlist = ({ page, count }: { page: number; count: number }) => {
   return useQuery({
-    queryKey: [wishlistAPI.getWishlist.name],
-    queryFn: () => wishlistAPI.getWishlist({ page: 1, count: 10 }),
+    queryKey: [wishlistAPI.getWishlist.name, page, count],
+    queryFn: () => wishlistAPI.getWishlist({ page, count }),
     select: ({ data }) => data,
   });
 };
