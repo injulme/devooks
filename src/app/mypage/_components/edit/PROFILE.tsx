@@ -22,45 +22,54 @@ import { Textarea } from '@/components/ui/textarea';
 import { useAuthStore } from '@/stores/auth-store';
 import { useCategoryStore } from '@/stores/global-store';
 
-type FormField = Partial<ModifyProfileRequest & CheckEmailRequest>;
+class ModifyProfileRequestFormField implements ModifyProfileRequest {
+  constructor(
+    public nickname?: string,
+    public email?: string,
+    public phoneNumber?: string,
+    public favoriteCategoryIdList?: string[],
+    public introduction?: string,
+    public blogLink?: string,
+    public instagramLink?: string,
+    public youtubeLink?: string,
+  ) {}
+}
 
 export default function Profile() {
-  const form = useForm<FormField>({
-    defaultValues: {
-      nickname: '',
-      phoneNumber: '',
-      blogLink: '',
-      instagramLink: '',
-      youtubeLink: '',
-      introduction: '',
-      favoriteCategoryIdList: [],
-      email: '',
-    },
-  });
   const categories = useCategoryStore((state) => state.categories);
   const userId = useAuthStore((state) => state.id);
 
   const { data: memberData } = useGetProfile(userId ?? '');
   const { mutate: patchMemberProfile } = useModifyProfile();
 
-  const onSubmit = (data: FormField) => {
+  const form = useForm<ModifyProfileRequestFormField>({
+    values: {
+      nickname: memberData?.profile.nickname,
+      email: memberData?.profile.email,
+      phoneNumber: memberData?.profile.phoneNumber,
+      favoriteCategoryIdList: memberData?.profile.favoriteCategoryIdList,
+      introduction: memberData?.profile.introduction,
+      blogLink: memberData?.profile.blogLink,
+      instagramLink: memberData?.profile.instagramLink,
+      youtubeLink: memberData?.profile.youtubeLink,
+    } as ModifyProfileRequestFormField,
+  });
+
+  const onSubmit = (data: ModifyProfileRequestFormField) => {
     console.log('submit', data);
-    // patchMemberProfile(data);
+
+    // delete data.blogLink;
+    // delete data.instagramLink;
+    // delete data.youtubeLink;
+
+    patchMemberProfile({
+      modifyProfileRequest: {
+        ...data,
+      },
+    });
   };
 
   const [isWithdrawal, setIsWithdrawal] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (!memberData) return;
-    form.setValue('nickname', memberData.profile.nickname);
-    form.setValue('email', memberData.profile.email);
-
-    form.setValue('favoriteCategoryIdList', memberData.profile.favoriteCategoryIdList);
-    form.setValue('introduction', memberData.profile.introduction);
-    form.setValue('blogLink', memberData.profile.blogLink);
-    form.setValue('instagramLink', memberData.profile.instagramLink);
-    form.setValue('youtubeLink', memberData.profile.youtubeLink);
-  }, [memberData]);
 
   return (
     <section className="relative max-w-screen-sm">
@@ -72,17 +81,15 @@ export default function Profile() {
             <FormField
               control={form.control}
               name="nickname"
-              render={({ field }) => {
-                return (
-                  <FormItem>
-                    <FormLabel>닉네임</FormLabel>
-                    <FormControl>
-                      <Input placeholder="입력하세요" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                );
-              }}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>닉네임</FormLabel>
+                  <FormControl>
+                    <Input placeholder="입력하세요" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
             <FormField
               control={form.control}

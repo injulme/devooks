@@ -35,13 +35,13 @@ export default function WishlistButton({
       if (!_wishlistId) return;
       deleteWishlist(_wishlistId);
     } else {
-      postWishlist({ ebookId });
+      postWishlist({ createWishlistRequest: { ebookId } });
     }
   };
 
   useEffect(() => {
     if (!isWishlistSuccess) return;
-    setWishlistId(responsePostWishlist?.wishlistId);
+    setWishlistId(responsePostWishlist?.data.wishlistId);
   }, [responsePostWishlist, isWishlistSuccess]);
 
   useEffect(() => {

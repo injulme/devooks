@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { useSaveDescriptionImages, useSaveMainImage } from '@/services/ebook-image.hooks';
 import { useCreateEbook } from '@/services/ebook.hooks';
 import { useUploadPdf } from '@/services/pdf.hooks';
-import { EbookApiCreateEbookRequest } from '@leesm0518/devooks-api';
+import { CreateEbookRequest } from '@leesm0518/devooks-api';
 import { Loader2 } from 'lucide-react';
 
 import BookDetailCard from '@/components/ebook/book-detail-card';
@@ -36,7 +36,7 @@ const bookTabs = codeToArray(BookDetailTabTypeCode).slice(0, -2);
 // TODO: editor 연동
 export default function BookAdd() {
   // TODO: defaultValues 추가
-  const form = useForm<EbookApiCreateEbookRequest>({
+  const form = useForm<CreateEbookRequest>({
     defaultValues: {
       pdfId: '',
       title: '',
@@ -83,10 +83,10 @@ export default function BookAdd() {
     isPending: isDescriptionImagesLoading,
   } = useSaveDescriptionImages();
 
-  const onSubmit = (data: EbookApiCreateEbookRequest) => {
+  const onSubmit = (data: CreateEbookRequest) => {
     console.log('submit data by /book/add ', data);
 
-    postEbooks(data);
+    postEbooks({ createEbookRequest: data });
   };
 
   // 전자책 업로드 (PDF 파일 업로드)
@@ -106,7 +106,7 @@ export default function BookAdd() {
     if (fileType !== 'application/pdf') {
       return alert('파일 형식이 맞지 않습니다. PDF 파일을 업로드해주세요.');
     } else {
-      uploadPdf(pdfFile);
+      uploadPdf({ pdf: pdfFile as unknown as string });
     }
   };
 
@@ -122,7 +122,7 @@ export default function BookAdd() {
     if (!mainImageFile) return;
     const imageData = await getFileData(mainImageFile, setMainImagePreview);
 
-    postMainImage({ image: imageData });
+    postMainImage({ saveMainImageRequest: { image: imageData } });
   };
 
   // 책 소개 이미지 업로드
@@ -179,26 +179,28 @@ export default function BookAdd() {
       }),
     );
 
-    postDescriptionImages({ imageList: imagesData });
+    postDescriptionImages({ saveDescriptionImagesRequest: { imageList: imagesData } });
   };
 
   useEffect(() => {
     if (!isPdfSuccess) return;
     // PDF 업로드 성공 시, form에 pdfId 값 세팅
-    form.setValue('pdfId', responsePdfs?.pdf.id);
-    setPdfPageCount(responsePdfs?.pdf.pdfInfo.pageCount);
+    form.setValue('pdfId', responsePdfs?.data.pdf.id);
+    setPdfPageCount(responsePdfs?.data.pdf.pdfInfo.pageCount);
   }, [isPdfSuccess]);
 
   useEffect(() => {
     if (!isMainImageSuccess) return;
     // 메인 이미지 업로드 성공 시, form에 mainImageId 값 세팅
-    form.setValue('mainImageId', responseMainImage?.mainImage.id);
+    form.setValue('mainImageId', responseMainImage?.data.mainImage.id);
   }, [isMainImageSuccess]);
 
   useEffect(() => {
     if (!isDescriptionImagesSuccess) return;
     // 설명 이미지 업로드 성공 시, form에 mainImageId 값 세팅
-    const descriptionIds = responseDescriptionImages?.descriptionImageList.map((image) => image.id);
+    const descriptionIds = responseDescriptionImages?.data.descriptionImageList.map(
+      (image) => image.id,
+    );
     form.setValue('descriptionImageIdList', descriptionIds || []);
   }, [isDescriptionImagesSuccess]);
 

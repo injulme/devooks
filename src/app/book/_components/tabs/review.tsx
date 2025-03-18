@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useCreateReview, useGetReviews } from '@/services/review.hooks';
-import { ReviewApiCreateReviewRequest } from '@leesm0518/devooks-api';
+import { CreateReviewRequest } from '@leesm0518/devooks-api';
 import { ArrowDownWideNarrow } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -21,7 +21,7 @@ import Ratings from '@/components/ui/ratings';
 import { Textarea } from '@/components/ui/textarea';
 
 export default function Review({ ebookId }: { ebookId: string }) {
-  const form = useForm<ReviewApiCreateReviewRequest>({
+  const form = useForm<CreateReviewRequest>({
     defaultValues: {
       rating: 0,
       content: '',
@@ -37,9 +37,9 @@ export default function Review({ ebookId }: { ebookId: string }) {
     isError: isReviewPostError,
   } = useCreateReview();
 
-  const onSubmit = (data: ReviewApiCreateReviewRequest) => {
+  const onSubmit = (data: CreateReviewRequest) => {
     console.log('on submit review :: ', data);
-    postReviews(data);
+    postReviews({ createReviewRequest: data });
   };
 
   useEffect(() => {
