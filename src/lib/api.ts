@@ -33,8 +33,12 @@ api.interceptors.response.use(
     const originalRequest = error.config;
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
+
       try {
         const refreshToken = tokenStore.refreshToken;
+        if (!refreshToken) {
+          throw new Error('Refresh token not found');
+        }
 
         const response = await axios.post(`/api/v1/auth/reissue`, {
           refreshToken,
@@ -52,10 +56,10 @@ api.interceptors.response.use(
       } catch (refreshError) {
         tokenStore.logout();
         reset();
-
         return Promise.reject(refreshError);
       }
     }
+
     return Promise.reject(error);
   },
 );

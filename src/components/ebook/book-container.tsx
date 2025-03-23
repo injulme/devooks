@@ -40,15 +40,15 @@ export default function BookContainer({ bookData }: { bookData: EbookView }) {
           <h4 className="mb-2 line-clamp-2 scroll-m-20 text-lg font-semibold leading-6">{title}</h4>
 
           <div>
-            <p className="text-sm tracking-wide text-zinc-500">{categoryLabels}</p>
+            <p className="text-xs tracking-wide text-zinc-500">{categoryLabels}</p>
             <div className="flex items-center gap-1 text-sm text-zinc-800">
               <Ratings value={review.rating} size={16} variant="yellow" />{' '}
               {review.rating.toFixed(1)} ({Intl.NumberFormat().format(review.count)})
             </div>
-            <p className="text-lg font-semibold tracking-wide text-zinc-900">
+            <p className="text-md font-semibold tracking-wide text-zinc-900">
               {Intl.NumberFormat().format(price)}원
             </p>
-            <p className="mt-2 text-sm text-zinc-500">{seller.nickname}</p>
+            <p className="mt-2 text-xs text-zinc-500">{seller.nickname}</p>
           </div>
         </div>
       </div>

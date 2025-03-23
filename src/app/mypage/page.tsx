@@ -20,9 +20,6 @@ const MENU_ENUM = {
   WISHLIST: 'wishlist',
 } as const;
 
-// TODO: mypage tab dynamic -> router로 변경까지 했음
-// TODO: 찜목록에 페이지네이션 적용해야됨
-
 const mypageMenus = [
   { label: '판매중인 책', value: MENU_ENUM.MY_BOOK },
   { label: '구매한 책', value: MENU_ENUM.PURCHASE_HISTORY },
@@ -43,7 +40,7 @@ export default function MyPage() {
 
   return (
     <section>
-      <UserInfo userId={userId} />
+      <UserInfo userId={userId ?? ''} />
 
       <Tabs
         defaultValue={mypageMenus[0].value}

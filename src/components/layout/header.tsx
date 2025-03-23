@@ -8,7 +8,7 @@ import { forwardRef, useEffect } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import { useGetCategories } from '@/services/category.hooks';
 import { Heart, Search } from 'lucide-react';
@@ -37,9 +37,8 @@ import { useCategoryStore } from '@/stores/global-store';
 
 export default function Header() {
   const router = useRouter();
-
-  // const tab = params?.get('tab');
-  const tab = 'BEST';
+  const params = useSearchParams();
+  const tab = params?.get('tab');
 
   const registerOpen = useSignupStore((state) => state.open);
   const userInfo = useAuthStore((state) => state);
@@ -95,13 +94,22 @@ export default function Header() {
         <div className="flex items-center justify-between">
           <Tabs defaultValue={tab || ''} className="max-lg:hidden">
             <TabsList>
+              <TabsTrigger
+                value={'ALL'}
+                onClick={() => {
+                  router.push(`/main?tab=ALL`);
+                }}
+              >
+                ALL
+              </TabsTrigger>
+
               {getCategoriesData?.map((category) => {
                 return (
                   <TabsTrigger
                     value={category.value}
                     key={category.value}
                     onClick={() => {
-                      router.push(`main?tab=${category.value}`);
+                      router.push(`/main?tab=${category.value}`);
                     }}
                   >
                     {category.label}
@@ -120,7 +128,7 @@ export default function Header() {
                       <ListItem
                         key={category.value}
                         title={category.label}
-                        href={`main?tab=${category.value}`}
+                        href={`/main?tab=${category.value}`}
                       />
                     ))}
                   </ul>

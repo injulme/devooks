@@ -6,10 +6,23 @@ import { EbookApiCreateEbookRequest, EbookApiModifyEbookRequest } from '@leesm05
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 /** 전자책 목록 조회 */
-export const useGetEbooks = () => {
+export const useGetEbooks = ({
+  categoryIdList,
+  page,
+  count,
+}: {
+  categoryIdList?: string;
+  page: number;
+  count: number;
+}) => {
   return useQuery({
-    queryKey: [ebookAPI.getEbooks.name],
-    queryFn: () => ebookAPI.getEbooks({ page: 1, count: 10 }),
+    queryKey: [ebookAPI.getEbooks.name, page, count, categoryIdList],
+    queryFn: () =>
+      ebookAPI.getEbooks({
+        page,
+        count,
+        categoryIdList,
+      }),
     select: ({ data }) => data,
   });
 };

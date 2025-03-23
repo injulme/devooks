@@ -1,10 +1,12 @@
 import Withdrawal from './WITHDRAWAL';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+import { useRouter } from 'next/navigation';
+
 import { useGetProfile, useModifyProfile } from '@/services/member.hooks';
-import { CheckEmailRequest, ModifyProfileRequest } from '@leesm0518/devooks-api';
+import { ModifyProfileRequest } from '@leesm0518/devooks-api';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -22,45 +24,29 @@ import { Textarea } from '@/components/ui/textarea';
 import { useAuthStore } from '@/stores/auth-store';
 import { useCategoryStore } from '@/stores/global-store';
 
-class ModifyProfileRequestFormField implements ModifyProfileRequest {
-  constructor(
-    public nickname?: string,
-    public email?: string,
-    public phoneNumber?: string,
-    public favoriteCategoryIdList?: string[],
-    public introduction?: string,
-    public blogLink?: string,
-    public instagramLink?: string,
-    public youtubeLink?: string,
-  ) {}
-}
-
 export default function Profile() {
   const categories = useCategoryStore((state) => state.categories);
   const userId = useAuthStore((state) => state.id);
 
+  const router = useRouter();
   const { data: memberData } = useGetProfile(userId ?? '');
   const { mutate: patchMemberProfile } = useModifyProfile();
 
-  const form = useForm<ModifyProfileRequestFormField>({
+  const form = useForm<ModifyProfileRequest>({
     values: {
       nickname: memberData?.profile.nickname,
       email: memberData?.profile.email,
       phoneNumber: memberData?.profile.phoneNumber,
-      favoriteCategoryIdList: memberData?.profile.favoriteCategoryIdList,
+      favoriteCategoryIdList: memberData?.profile.favoriteCategoryIdList ?? [],
       introduction: memberData?.profile.introduction,
       blogLink: memberData?.profile.blogLink,
       instagramLink: memberData?.profile.instagramLink,
       youtubeLink: memberData?.profile.youtubeLink,
-    } as ModifyProfileRequestFormField,
+    } as ModifyProfileRequest,
   });
 
-  const onSubmit = (data: ModifyProfileRequestFormField) => {
+  const onSubmit = (data: ModifyProfileRequest) => {
     console.log('submit', data);
-
-    // delete data.blogLink;
-    // delete data.instagramLink;
-    // delete data.youtubeLink;
 
     patchMemberProfile({
       modifyProfileRequest: {
@@ -199,7 +185,15 @@ export default function Profile() {
             />
 
             <div className="pt-8 text-center">
-              <Button type="submit">수정하기</Button>
+              <Button
+                type="button"
+                variant="secondary"
+                className="mr-2"
+                onClick={() => router.back()}
+              >
+                취소하기
+              </Button>
+              <Button type="submit">저장하기</Button>
             </div>
           </form>
         </Form>

@@ -78,14 +78,15 @@ export default function MyPageEdit() {
     if (!mainImageFile) return;
     const imageData = await getFileData(mainImageFile);
 
-    patchMemberImage({ image: imageData });
+    patchMemberImage({ modifyProfileImageRequest: { image: imageData } });
   };
 
   useEffect(() => {
     if (!isImageSuccess) return;
-    setMemberNickname(responseImage?.member.nickname);
-    setMemberProfileImagePath(responseImage?.member.profileImagePath);
-    authInfo.updateProfileImage(responseImage?.member.profileImagePath);
+
+    setMemberNickname(responseImage?.data.member.nickname);
+    setMemberProfileImagePath(responseImage?.data.member.profileImagePath);
+    authInfo.updateProfileImage(responseImage?.data.member.profileImagePath);
   }, [isImageSuccess]);
 
   useEffect(() => {

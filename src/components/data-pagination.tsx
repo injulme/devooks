@@ -21,10 +21,8 @@ export default function DataPagination<TData>({ table }: DataPaginationProps<TDa
   const params = useSearchParams();
 
   const query = qs.parse(params.toString());
+  delete query.page;
   const queryString = qs.stringify(query, { addQueryPrefix: true });
-
-  // TODO: 페이지네이션 파라미터 어떻게 처리할지
-  console.log(params.toString(), query, queryString);
 
   const page = params.get('page');
 
@@ -45,14 +43,12 @@ export default function DataPagination<TData>({ table }: DataPaginationProps<TDa
 
   const onLinkPreviousPage = () => {
     const previousPage = currentPage - 1 <= 0 ? 1 : currentPage - 1;
-    // const query = { ...query, page: previousPage };
-
-    return `${pathname}?tab=wishlist&page=${previousPage}`;
+    return `${pathname}${queryString}&page=${previousPage}`;
   };
 
   const onLinkNextPage = () => {
     const nextPage = currentPage + 1 >= pageCount ? pageCount : currentPage + 1;
-    return `${pathname}?tab=wishlist&page=${nextPage}`;
+    return `${pathname}${queryString}&page=${nextPage}`;
   };
 
   return (
@@ -69,7 +65,7 @@ export default function DataPagination<TData>({ table }: DataPaginationProps<TDa
 
                 return (
                   <PaginationLink
-                    href={`${pathname}?tab=wishlist&page=${currentPageIndex}`}
+                    href={`${pathname}${queryString}&page=${currentPageIndex}`}
                     key={currentPageIndex}
                     isActive={currentPageIndex === currentPage}
                     onClick={() => handlePageChange(currentPageIndex)}
