@@ -7,7 +7,7 @@ import { EbookView } from '@leesm0518/devooks-api';
 import { createColumnHelper } from '@tanstack/react-table';
 
 import DataPagination from '@/components/data-pagination';
-import BookContainer from '@/components/ebook/book-container';
+import BookCard from '@/components/ebook/book-card';
 
 import useTable from '@/hooks/useTable';
 
@@ -38,7 +38,7 @@ export default function Wishlist() {
       <div className="grid gap-x-8 gap-y-12 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
         {table.getRowModel().rows?.length ? (
           table.getRowModel().rows?.map((ebook) => {
-            return <BookContainer bookData={ebook.original} key={ebook.id} />;
+            return <BookCard bookData={ebook.original} key={ebook.id} />;
           })
         ) : (
           <div className="col-span-full">
