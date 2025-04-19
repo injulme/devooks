@@ -11,13 +11,17 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import { useGetCategories } from '@/services/category.hooks';
-import { Heart, Search } from 'lucide-react';
-
-import Logo from '@/assets/images/devooks_logo.png';
+import { BookOpen, Heart, Menu, Search, ShoppingCart } from 'lucide-react';
 
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { IconInput } from '@/components/ui/icon-input';
 import {
   NavigationMenu,
@@ -27,7 +31,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Separator } from '@/components/ui/separator';
 
 import { cn } from '@/lib/utils';
 
@@ -51,21 +55,87 @@ export default function Header() {
   }, [getCategoriesData]);
 
   return (
-    <header className="sticky top-0 z-[99] bg-white shadow dark:bg-background">
-      <div className="mx-auto flex max-w-screen-xl flex-col justify-center gap-2 px-6 pt-4">
+    <header className="sticky top-0 z-[99] border-b border-gray-100 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+      <div className="mx-auto flex max-w-screen-xl flex-col justify-center px-6 py-3">
         <div className="flex items-center justify-between">
-          <Link href="/">
-            <Image src={Logo} alt="devooks 로고" height={32} />
-          </Link>
-          <div className="flex items-center gap-2">
-            {/* 책 등록 */}
-            <Button variant="ghost">
-              <Link href="/book/add">책 등록</Link>
+          <div className="flex items-center gap-6">
+            <Link href="/" className="flex items-center gap-2">
+              <BookOpen className="h-6 w-6 text-slate-900 dark:text-white" />
+              <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
+                readit
+              </span>
+            </Link>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="flex items-center gap-1 text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
+                >
+                  <Menu className="h-4 w-4" />
+                  <span>카테고리</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="z-[100] w-48" sideOffset={8}>
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  onClick={() => router.push('/main?tab=ALL')}
+                >
+                  전체
+                </DropdownMenuItem>
+
+                {getCategoriesData?.map((category) => (
+                  <DropdownMenuItem
+                    key={category.value}
+                    className="cursor-pointer"
+                    onClick={() => router.push(`/main?tab=${category.value}`)}
+                  >
+                    {category.label}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+
+          <div className="mx-6 max-w-md flex-1">
+            <IconInput
+              placeholder="찾으시는 PDF가 있으신가요?"
+              icon={Search}
+              className="border-gray-200 focus-within:border-slate-400 dark:border-slate-700 dark:focus-within:border-slate-500"
+              iconProps={{ behavior: 'append', className: 'stroke-slate-400' }}
+            />
+          </div>
+
+          <div className="flex items-center gap-1.5">
+            {/* PDF 등록 버튼 */}
+            <Button
+              variant="outline"
+              size="sm"
+              className="border-gray-200 text-slate-700 hover:bg-slate-50 hover:text-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
+            >
+              <Link href="/book/add">PDF 등록</Link>
+            </Button>
+
+            {/* 장바구니 */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
+              onClick={() => router.push('/cart')}
+            >
+              <ShoppingCart className="h-5 w-5" />
+              <span className="sr-only">장바구니</span>
             </Button>
 
             {/* 찜 */}
-            <Button variant="ghost" size="icon" onClick={() => router.push('/mypage')}>
-              <Heart className="h-[1.2rem] w-[1.2rem] transition-all" />
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
+              onClick={() => router.push('/mypage')}
+            >
+              <Heart className="h-5 w-5" />
               <span className="sr-only">북마크</span>
             </Button>
 
@@ -77,70 +147,24 @@ export default function Header() {
 
             {/* 로그인 */}
             {userInfo.id ? (
-              <Avatar onClick={() => router.push('/mypage')} className="cursor-pointer">
+              <Avatar
+                onClick={() => router.push('/mypage')}
+                className="cursor-pointer border border-gray-200 dark:border-slate-700"
+              >
                 <AvatarImage
                   src={userInfo.profileImagePath}
                   alt={`${userInfo.nickname} 작가의 프로필 사진`}
                   className="object-cover"
                 />
-                <AvatarFallback>{userInfo.nickname?.substring(0, 2)}</AvatarFallback>
+                <AvatarFallback className="bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                  {userInfo.nickname?.substring(0, 2)}
+                </AvatarFallback>
               </Avatar>
             ) : (
               <LoginDialog />
             )}
             {registerOpen && <RegisterDialog />}
           </div>
-        </div>
-        <div className="flex items-center justify-between">
-          <Tabs defaultValue={tab || ''} className="max-lg:hidden">
-            <TabsList>
-              <TabsTrigger
-                value={'ALL'}
-                onClick={() => {
-                  router.push(`/main?tab=ALL`);
-                }}
-              >
-                ALL
-              </TabsTrigger>
-
-              {getCategoriesData?.map((category) => {
-                return (
-                  <TabsTrigger
-                    value={category.value}
-                    key={category.value}
-                    onClick={() => {
-                      router.push(`/main?tab=${category.value}`);
-                    }}
-                  >
-                    {category.label}
-                  </TabsTrigger>
-                );
-              })}
-            </TabsList>
-          </Tabs>
-          <NavigationMenu className="lg:hidden">
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger>카테고리</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[144px]">
-                    {getCategoriesData?.map((category) => (
-                      <ListItem
-                        key={category.value}
-                        title={category.label}
-                        href={`/main?tab=${category.value}`}
-                      />
-                    ))}
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
-          <IconInput
-            placeholder="검색어를 입력해주세요."
-            icon={Search}
-            iconProps={{ behavior: 'append', className: 'stroke-slate-600' }}
-          />
         </div>
       </div>
     </header>
@@ -154,7 +178,7 @@ const ListItem = forwardRef<React.ElementRef<'a'>, React.ComponentPropsWithoutRe
           <a
             ref={ref}
             className={cn(
-              'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
+              'block select-none space-y-1 rounded-md p-3 leading-none text-zinc-200 no-underline outline-none transition-colors hover:bg-zinc-800 hover:text-white focus:bg-zinc-800 focus:text-white',
               className,
             )}
             {...props}

@@ -7,15 +7,19 @@ import { Heart } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 
+import { cn } from '@/lib/utils';
+
 /** relative에 영향을 받음, group hover에 영향을 받음 */
 export default function WishlistButton({
   wishlistId,
   disabled,
   ebookId,
+  className,
 }: {
   wishlistId?: string | null;
   disabled?: boolean;
   ebookId?: string;
+  className?: string;
 }) {
   const [_wishlistId, setWishlistId] = useState<string | null | undefined>(wishlistId);
   const {
@@ -53,7 +57,10 @@ export default function WishlistButton({
     <Button
       type="button"
       variant="ghost"
-      className="absolute right-3 top-2 z-10 rounded-full bg-white/30 p-3 transition-all group-hover:bg-white/50"
+      className={cn(
+        'absolute right-3 top-2 z-10 rounded-full bg-white/30 p-3 transition-all hover:bg-white/70',
+        className,
+      )}
       disabled={disabled || !ebookId}
       onClick={(e) => onHandleWishlist(e, !!_wishlistId)}
     >
